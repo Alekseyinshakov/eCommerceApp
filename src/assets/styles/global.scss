@@ -1,5 +1,5 @@
-@import url('normalize.scss');
-// @import url('vars.scss');
+//@use './_vars' as *;
+@import url('_normalize.scss');
 
 *,
 *::before,
