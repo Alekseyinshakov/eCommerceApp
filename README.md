@@ -1,12 +1,16 @@
 # eCommerce application
+
 ## About The Project
+
 eCommercial is an application developed by a team of beginner frontend developers:
 [Alex Alonkin](https://github.com/nevox-alexxx),
 [Inna Fedorova](https://github.com/IFMA25),
 [Alexey Inshakov](https://github.com/Alekseyinshakov)
-under the guidance of a mentor: [Erkhan Denis](https://github.com/ErkhanDV) as final part of the frontend course at RS-School. 
+under the guidance of a mentor: [Erkhan Denis](https://github.com/ErkhanDV) as final part of the frontend course at RS-School.
 The purpose of this work is to strengthen the knowledge and skills acquired during the course and to gain skills in working on a project in a team.
+
 ## Tools and technologies
+
 <table>
   <tr>
     <td>
@@ -91,15 +95,18 @@ The purpose of this work is to strengthen the knowledge and skills acquired duri
 </table>
 
 ## Getting Started
+
 To get a local copy up and running follow these simple steps.
-1. Clone the repo: <pre> ```git clone https://github.com/Alekseyinshakov/eCommerceApp.git ``` </pre>
-2. Install NPM packages: <pre> ```npm install ``` </pre>
-3. Run the application in development mode: <pre> ```npm run dev ``` </pre>
+
+1. Clone the repo: <pre> `git clone https://github.com/Alekseyinshakov/eCommerceApp.git ` </pre>
+2. Install NPM packages: <pre> `npm install ` </pre>
+3. Run the application in development mode: <pre> `npm run dev ` </pre>
 4. After launching, go to the address in your browser: http://localhost:5173 (the port may differ - see in the terminal).
 
 ## Available commands
-- ```npm run build ``` - Assembles the project for production.
-- ```npm run preview ```- Local preview of production build.
-- ```npm run lint ```- Runs ESLint to analyze code quality.
-- ```npm run format ```- Autoformat the entire project with Prettier.
-- ```npm run test ```- Runs tests using Vitest.
+
+- `npm run build ` - Assembles the project for production.
+- `npm run preview `- Local preview of production build.
+- `npm run lint `- Runs ESLint to analyze code quality.
+- `npm run format `- Autoformat the entire project with Prettier.
+- `npm run test `- Runs tests using Vitest.

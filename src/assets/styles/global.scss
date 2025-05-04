@@ -1,0 +1,13 @@
+//@use './_vars' as *;
+@import url('_normalize.scss');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 20px;
+  font-family: sans-serif;
+}
