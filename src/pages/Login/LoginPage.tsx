@@ -1,4 +1,6 @@
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
+import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+
 import './LoginPage.scss'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,18 +34,7 @@ export function LoginPage() {
             </button>
           </form>
         </div>
-
-        <div className="log-in-alt">
-          <div className="divider">
-            <span className="divider__text">Or login with</span>
-          </div>
-          <button className="log-in-alt__button" type="submit">
-            Login with Google
-          </button>
-          <button className="log-in-alt__button" type="submit">
-            Login with Facebook
-          </button>
-        </div>
+        <RegisterAlt />
       </div>
     </main>
   )
