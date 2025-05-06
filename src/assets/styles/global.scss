@@ -1,4 +1,4 @@
-//@use './_vars' as *;
+@use './_vars' as *;
 @import url('_normalize.scss');
 
 *,
@@ -10,4 +10,7 @@
 body {
   font-size: 20px;
   font-family: sans-serif;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: $light-background-color;
 }
