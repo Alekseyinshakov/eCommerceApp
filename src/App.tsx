@@ -1,7 +1,12 @@
+import { Outlet } from 'react-router-dom'
 import '@assets/styles/global.scss'
 
 function App() {
-  return <div>Test test</div>
+  return (
+    <div>
+      <Outlet />
+    </div>
+  )
 }
 
 export default App
