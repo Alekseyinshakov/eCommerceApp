@@ -1,11 +1,12 @@
 .header {
-  height: 78px;
+  min-height: 78px;
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   border-bottom: 1px solid $main-light-color-transparent;
   nav {
-    height: 100%;
   }
 }
 
@@ -48,8 +49,28 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  @media (max-width: 992px) {
+    margin-bottom: 10px;
+  }
 }
 
 .search {
   cursor: pointer;
+  display: flex;
+}
+
+.cart {
+  display: flex;
+}
+
+@media (max-width: 992px) {
+  .logo {
+    margin-top: 10px;
+  }
+  .header {
+    justify-content: center;
+  }
+  .navItem {
+    padding: 0 15px;
+  }
 }

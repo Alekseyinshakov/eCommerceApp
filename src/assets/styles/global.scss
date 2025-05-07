@@ -13,8 +13,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: $light-background-color;
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 0 25px;
+  @media (max-width: 500px) {
+    padding: 0 10px;
+  }
 }
 
 .container {
@@ -47,4 +49,10 @@ a {
   &:hover {
     background-color: $main-light-color-hover;
   }
+}
+
+.btn-logut {
+  padding-left: 35px;
+  background: url(public/images/icons/logout-icon.svg) $main-light-color
+    no-repeat 9px center / 20px 20px;
 }
