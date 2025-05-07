@@ -1,0 +1,56 @@
+@use '../../assets/styles/vars' as *;
+
+.log-in-alt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+
+  &__button {
+    display: block;
+    min-width: 300px;
+    min-height: 40px;
+    padding: 10px 15px;
+
+    font-size: 13px;
+
+    text-align: center;
+    text-decoration: none;
+
+    border: 1px solid $disable-light-color;
+    color: $second-text-light-color;
+    border-radius: 5px;
+
+    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: $light-background-color;
+
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: $main-light-color-hover;
+    }
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0;
+  min-width: 300px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+  }
+
+  &__text {
+    padding: 0 1rem;
+    color: $second-text-light-color;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+}
