@@ -12,4 +12,11 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, 'src/pages'),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@assets/styles/_vars.scss" as *;`,
+      },
+    },
+  },
 })
