@@ -13,4 +13,38 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: $light-background-color;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.button {
+  border-radius: 6px;
+  height: 35px;
+  background-color: $main-light-color;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  padding: 8px 17px;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  &:hover {
+    background-color: $main-light-color-hover;
+  }
 }

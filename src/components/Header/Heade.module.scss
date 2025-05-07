@@ -1,0 +1,55 @@
+.header {
+  height: 78px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $main-light-color-transparent;
+  nav {
+    height: 100%;
+  }
+}
+
+.navList {
+  height: 100%;
+  display: flex;
+}
+
+.navItem {
+  height: 100%;
+  display: flex;
+  padding: 0 25px;
+  a {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #3d3d3d;
+    transition: color 0.2s;
+    &:hover {
+      color: $main-light-color;
+    }
+    &.activeLink {
+      font-weight: bold;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $main-light-color;
+      }
+    }
+  }
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search {
+  cursor: pointer;
+}
