@@ -1,9 +1,21 @@
-.authPage {
-  height: 86vh;
-
+.main {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 78px);
+}
+
+@media screen and (max-height: 750px) {
+  .main {
+    margin-top: 20px;
+  }
+}
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .loginBlock {
@@ -32,31 +44,31 @@
     align-items: center;
     flex-direction: column;
     gap: 20px;
-  }
 
-  .form input {
-    width: 300px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid $disable-light-color;
-    text-decoration: none;
-    font-size: 14px;
-    color: $disable-light-color;
-    background-color: $light-background-color;
+    input {
+      width: 300px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid $disable-light-color;
+      text-decoration: none;
+      font-size: 14px;
+      color: $disable-light-color;
+      background-color: $light-background-color;
 
-    padding: 10px 15px;
-  }
+      padding: 10px 15px;
 
-  .form input:focus {
-    outline: none;
-    border: 2px solid $main-light-color;
-    box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
-    color: black;
-  }
+      &:focus {
+        outline: none;
+        border: 2px solid $main-light-color;
+        box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
+        color: black;
+      }
 
-  .form input::placeholder {
-    color: $disable-light-color;
-    letter-spacing: 0.03em;
+      &::placeholder {
+        color: $disable-light-color;
+        letter-spacing: 0.03em;
+      }
+    }
   }
 
   .forgetful {
