@@ -71,6 +71,10 @@
     }
   }
 
+  .passwordText {
+    letter-spacing: 0.16em;
+  }
+
   .forgetful {
     width: 300px;
     font-size: 14px;
@@ -109,4 +113,12 @@
       background-color: $main-light-color-hover;
     }
   }
+}
+
+.errorMsg {
+  color: red;
+  font-size: 14px;
+  text-align: left;
+  max-width: 300px;
+  width: 100%;
 }
