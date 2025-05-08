@@ -25,7 +25,12 @@ export function SignUpPage() {
           <div className={authHint}>
             Enter your email and password to register.
           </div>
-          <form className={form} autoComplete="off" onSubmit={handleSubmit}>
+          <form
+            className={form}
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            role="form"
+          >
             <input name="name" type="text" placeholder="Username" required />
             <input
               name="email"
