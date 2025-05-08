@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useAuthPageText } from '@hooks/useAuthPageText'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
@@ -10,6 +11,7 @@ const { authPage, authBlock, logIn, loginHint, form, forgetful, button } =
 
 export function LoginPage() {
   const navigate = useNavigate()
+  const { submitText } = useAuthPageText()
 
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -25,12 +27,7 @@ export function LoginPage() {
             Enter your username and password to login.
           </div>
           <form className={form} autoComplete="off" onSubmit={handleSubmit}>
-            <input
-              name="email"
-              type="email"
-              placeholder="Enter your email address"
-              required
-            />
+            <input name="email" type="email" placeholder="Username" required />
             <input
               name="password"
               type="password"
@@ -40,7 +37,7 @@ export function LoginPage() {
             <div className={forgetful}>Forgot password?</div>
 
             <button className={button} type="submit">
-              Sign In
+              {submitText}
             </button>
           </form>
         </div>

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useAuthPageText } from '@hooks/useAuthPageText'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
@@ -9,6 +10,7 @@ const { authPage, authBlock, logIn, loginHint, form, button } = styles
 
 export function SignUpPage() {
   const navigate = useNavigate()
+  const { submitText } = useAuthPageText()
 
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -21,7 +23,7 @@ export function SignUpPage() {
         <RegisterNav />
         <div className={logIn}>
           <div className={loginHint}>
-            Enter your username and password to login.
+            Enter your email and password to register.
           </div>
           <form className={form} autoComplete="off" onSubmit={handleSubmit}>
             <input name="name" type="text" placeholder="Username" required />
@@ -45,7 +47,7 @@ export function SignUpPage() {
             />
 
             <button className={button} type="submit">
-              Sign In
+              {submitText}
             </button>
           </form>
         </div>
