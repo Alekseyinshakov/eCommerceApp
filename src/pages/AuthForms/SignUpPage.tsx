@@ -1,10 +1,10 @@
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 
-import './LoginPage.scss'
+import './AuthForm.scss'
 import { useNavigate } from 'react-router-dom'
 
-export function LoginPage() {
+export function SignUpPage() {
   const navigate = useNavigate()
 
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
@@ -25,9 +25,25 @@ export function LoginPage() {
             autoComplete="off"
             onSubmit={handleSubmit}
           >
-            <input name="email" type="email" required />
-            <input name="password" type="password" required />
-            <div className="log-in__forgetful">Forgot password?</div>
+            <input name="name" type="text" placeholder="Username" required />
+            <input
+              name="email"
+              type="email"
+              placeholder="Enter your email address"
+              required
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Confirm password"
+              required
+            />
 
             <button className="log-in__button" type="submit">
               Sign In
