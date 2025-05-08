@@ -1,4 +1,4 @@
-.login-page {
+.authPage {
   height: 86vh;
 
   display: flex;
@@ -6,12 +6,12 @@
   justify-content: center;
 }
 
-.login-block {
+.loginBlock {
   width: 500px;
   height: 600px;
 }
 
-.log-in {
+.logIn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,7 +19,7 @@
 
   margin: 40px 0px 30px 0px;
 
-  &__hint {
+  .loginHint {
     width: 300px;
     font-size: 13px;
     margin-bottom: 15px;
@@ -27,14 +27,14 @@
     text-align: left;
   }
 
-  &__form {
+  .form {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
   }
 
-  &__form input {
+  .form input {
     width: 300px;
     height: 40px;
     border-radius: 5px;
@@ -47,19 +47,19 @@
     padding: 10px 15px;
   }
 
-  &__form input:focus {
+  .form input:focus {
     outline: none;
     border: 2px solid $main-light-color;
     box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
     color: black;
   }
 
-  &__form input::placeholder {
+  .form input::placeholder {
     color: $disable-light-color;
     letter-spacing: 0.03em;
   }
 
-  &__forgetful {
+  .forgetful {
     width: 300px;
     font-size: 14px;
     color: $main-light-color;
@@ -73,7 +73,7 @@
     }
   }
 
-  &__button {
+  .button {
     display: block;
     width: 100%;
     min-height: 40px;

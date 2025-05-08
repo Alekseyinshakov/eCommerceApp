@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
+
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 
-import './AuthForm.scss'
-import { useNavigate } from 'react-router-dom'
+import styles from './AuthForm.module.scss'
+
+const { authPage, authBlock, logIn, loginHint, form, button } = styles
 
 export function SignUpPage() {
   const navigate = useNavigate()
@@ -13,18 +16,14 @@ export function SignUpPage() {
   }
 
   return (
-    <main className="login-page">
-      <div className="login-block">
+    <main className={authPage}>
+      <div className={authBlock}>
         <RegisterNav />
-        <div className="log-in">
-          <div className="log-in__hint">
+        <div className={logIn}>
+          <div className={loginHint}>
             Enter your username and password to login.
           </div>
-          <form
-            className="log-in__form"
-            autoComplete="off"
-            onSubmit={handleSubmit}
-          >
+          <form className={form} autoComplete="off" onSubmit={handleSubmit}>
             <input name="name" type="text" placeholder="Username" required />
             <input
               name="email"
@@ -45,7 +44,7 @@ export function SignUpPage() {
               required
             />
 
-            <button className="log-in__button" type="submit">
+            <button className={button} type="submit">
               Sign In
             </button>
           </form>
