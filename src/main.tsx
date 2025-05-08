@@ -5,8 +5,8 @@ import App from './App'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
 import { ErrorPage } from '@pages/ErrorPage/ErrorPage'
-import { SignUpPage } from '@pages/SignUp/SignUpPage'
-import { LoginPage } from '@pages/Login/LoginPage'
+import { SignUpPage } from '@pages/AuthForms/SignUpPage'
+import { LoginPage } from '@pages/AuthForms/LoginPage'
 import { HomePage } from '@pages/Home/HomePage'
 
 const router = createBrowserRouter([

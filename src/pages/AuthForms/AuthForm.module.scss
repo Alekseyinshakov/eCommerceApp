@@ -1,17 +1,29 @@
-.login-page {
-  height: 100vh;
-
+.main {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 78px);
 }
 
-.login-block {
+@media screen and (max-height: 750px) {
+  .main {
+    margin-top: 20px;
+  }
+}
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loginBlock {
   width: 500px;
   height: 600px;
 }
 
-.log-in {
+.auth {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,41 +31,47 @@
 
   margin: 40px 0px 30px 0px;
 
-  &__hint {
+  .authHint {
     width: 300px;
     font-size: 13px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: $second-text-light-color;
     text-align: left;
   }
 
-  &__form {
+  .form {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
+
+    input {
+      width: 300px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid $disable-light-color;
+      text-decoration: none;
+      font-size: 14px;
+      color: $disable-light-color;
+      background-color: $light-background-color;
+
+      padding: 10px 15px;
+
+      &:focus {
+        outline: none;
+        border: 2px solid $main-light-color;
+        box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
+        color: black;
+      }
+
+      &::placeholder {
+        color: $disable-light-color;
+        letter-spacing: 0.03em;
+      }
+    }
   }
 
-  &__form input {
-    width: 300px;
-    height: 40px;
-    border-radius: 5px;
-    border: 1px solid $disable-light-color;
-    text-decoration: none;
-    font-size: 14px;
-    color: $disable-light-color;
-
-    padding: 10px 15px;
-  }
-
-  &__form input:focus {
-    outline: none;
-    border: 2px solid $main-light-color;
-    box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
-    color: black;
-  }
-
-  &__forgetful {
+  .forgetful {
     width: 300px;
     font-size: 14px;
     color: $main-light-color;
@@ -67,7 +85,7 @@
     }
   }
 
-  &__button {
+  .button {
     display: block;
     width: 100%;
     min-height: 40px;
