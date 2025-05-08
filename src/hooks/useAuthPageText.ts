@@ -8,7 +8,7 @@ export function useAuthPageText() {
 
   const submitText = isLogin ? 'Login' : isRegister ? 'Register' : 'Submit' //'Submit' fallback
 
-  const btnText = isLogin ? 'Login' : isRegister ? 'Continue' : 'Continue'
+  const btnText = isLogin ? 'Login' : isRegister ? 'Continue' : 'Continue' //'Continue' fallback
 
   const thirdPartyText = isLogin
     ? 'Or login with'

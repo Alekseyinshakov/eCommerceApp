@@ -6,8 +6,7 @@ import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 
 import styles from './AuthForm.module.scss'
 
-const { authPage, authBlock, logIn, loginHint, form, forgetful, button } =
-  styles
+const { authPage, authBlock, auth, authHint, form, forgetful, button } = styles
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -22,8 +21,8 @@ export function LoginPage() {
     <main className={authPage}>
       <div className={authBlock}>
         <RegisterNav />
-        <div className={logIn}>
-          <div className={loginHint}>
+        <div className={auth}>
+          <div className={authHint}>
             Enter your username and password to login.
           </div>
           <form className={form} autoComplete="off" onSubmit={handleSubmit}>
