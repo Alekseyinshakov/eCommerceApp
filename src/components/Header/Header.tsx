@@ -37,7 +37,7 @@ function Header() {
           <li className={navItem}>
             <NavLink
               className={({ isActive }) => (isActive ? activeLink : '')}
-              to="/plat-care"
+              to="/plant-care"
             >
               Plant Care
             </NavLink>
