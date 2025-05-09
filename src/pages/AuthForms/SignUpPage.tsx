@@ -25,6 +25,7 @@ const {
   inputGroup,
   groupOne,
   inputGroupTwo,
+  passwordText,
 } = styles
 
 export function SignUpPage() {
@@ -36,6 +37,7 @@ export function SignUpPage() {
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   })
 
   const [errors, setErrors] = useState({
@@ -43,16 +45,23 @@ export function SignUpPage() {
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
   })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    const confirmPasswordError =
+      formData.password !== formData.confirmPassword
+        ? 'Passwords do not match'
+        : ''
 
     const newErrors = {
       firstName: validateName(formData.firstName),
       lastName: validateName(formData.lastName),
       email: validateEmail(formData.email),
       password: validatePassword(formData.password),
+      confirmPassword: confirmPasswordError,
     }
 
     setErrors(newErrors)
@@ -65,15 +74,28 @@ export function SignUpPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value }
 
-    if (name === 'firstName' || name === 'lastName') {
-      setErrors((prev) => ({ ...prev, [name]: validateName(value) }))
-    } else if (name === 'email') {
-      setErrors((prev) => ({ ...prev, email: validateEmail(value) }))
-    } else if (name === 'password') {
-      setErrors((prev) => ({ ...prev, password: validatePassword(value) }))
-    }
+      const updatedErrors = {
+        ...errors,
+        firstName:
+          name === 'firstName' ? validateName(value) : errors.firstName,
+        lastName: name === 'lastName' ? validateName(value) : errors.lastName,
+        email: name === 'email' ? validateEmail(value) : errors.email,
+        password:
+          name === 'password' ? validatePassword(value) : errors.password,
+        confirmPassword:
+          name === 'confirmPassword' || name === 'password'
+            ? updated.password !== updated.confirmPassword
+              ? 'Passwords do not match'
+              : ''
+            : errors.confirmPassword,
+      }
+
+      setErrors(updatedErrors)
+      return updated
+    })
   }
 
   return (
@@ -110,27 +132,36 @@ export function SignUpPage() {
                 />
               </div>
 
-              {/* <FormInput
+              <FormInput
                 name="email"
                 type="email"
                 placeholder="Email (e.g., example@email.com)"
-                required
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
               />
 
               <FormInput
                 name="password"
                 type="password"
                 placeholder="Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)"
-                required
+                className={passwordText}
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
               />
 
               <FormInput
                 name="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
-                required
+                className={passwordText}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                error={errors.confirmPassword}
               />
 
+              {/*
               <FormInput
                 name="dob"
                 type="date"
