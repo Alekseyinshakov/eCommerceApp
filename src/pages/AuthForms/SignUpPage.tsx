@@ -3,6 +3,7 @@ import { useAuthPageText } from '@hooks/useAuthPageText'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
 
@@ -43,13 +44,14 @@ export function SignUpPage() {
               onSubmit={handleSubmit}
             >
               <div className={inputGroup}>
-                <input
+                <FormInput
                   name="firstName"
                   type="text"
                   placeholder="First Name"
                   required
                 />
-                <input
+
+                <FormInput
                   name="lastName"
                   type="text"
                   placeholder="Last Name"
@@ -57,28 +59,28 @@ export function SignUpPage() {
                 />
               </div>
 
-              <input
+              <FormInput
                 name="email"
                 type="email"
                 placeholder="Email (e.g., example@email.com)"
                 required
               />
 
-              <input
+              <FormInput
                 name="password"
                 type="password"
                 placeholder="Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)"
                 required
               />
 
-              <input
+              <FormInput
                 name="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
                 required
               />
 
-              <input
+              <FormInput
                 name="dob"
                 type="date"
                 placeholder="Date of Birth"
@@ -87,25 +89,30 @@ export function SignUpPage() {
 
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
-                  <input
+                  <FormInput
                     name="street"
                     type="text"
                     placeholder="Street Address"
                     required
                   />
 
-                  <input name="city" type="text" placeholder="City" required />
+                  <FormInput
+                    name="city"
+                    type="text"
+                    placeholder="City"
+                    required
+                  />
                 </div>
 
                 <div className={groupOne}>
-                  <input
+                  <FormInput
                     name="postalCode"
                     type="text"
                     placeholder="Postal Code"
                     required
                   />
 
-                  <input
+                  <FormInput
                     name="country"
                     type="text"
                     placeholder="Country"
@@ -118,7 +125,7 @@ export function SignUpPage() {
                     <option value="Ukraine" />
                     <option value="Germany" />
                     <option value="France" />
-                    {/* можна розширити список */}
+                    {/* you can expand the list */}
                   </datalist>
                 </div>
               </div>
