@@ -158,44 +158,49 @@ export function SignUpPage() {
                 />
               </div>
 
-              <FormInput
-                name="email"
-                type="email"
-                placeholder="Email (e.g., example@email.com)"
-                value={formData.email}
-                onChange={handleChange}
-                error={errors.email}
-              />
+              <div className={inputGroupTwo}>
+                <div className={groupOne}>
+                  <FormInput
+                    name="email"
+                    type="email"
+                    placeholder="Email (e.g., example@email.com)"
+                    value={formData.email}
+                    onChange={handleChange}
+                    error={errors.email}
+                  />
 
-              <FormInput
-                name="password"
-                type="password"
-                placeholder="Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)"
-                className={passwordText}
-                value={formData.password}
-                onChange={handleChange}
-                error={errors.password}
-              />
+                  <FormInput
+                    name="dob"
+                    type="date"
+                    placeholder="Date of Birth"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    error={errors.dob}
+                  />
+                </div>
 
-              <FormInput
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                className={passwordText}
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                error={errors.confirmPassword}
-              />
+                <div className={groupOne}>
+                  <FormInput
+                    name="password"
+                    type="password"
+                    placeholder="Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)"
+                    className={passwordText}
+                    value={formData.password}
+                    onChange={handleChange}
+                    error={errors.password}
+                  />
 
-              <FormInput
-                name="dob"
-                type="date"
-                placeholder="Date of Birth"
-                value={formData.dob}
-                onChange={handleChange}
-                error={errors.dob}
-              />
-
+                  <FormInput
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password"
+                    className={passwordText}
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    error={errors.confirmPassword}
+                  />
+                </div>
+              </div>
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
                   <FormInput
