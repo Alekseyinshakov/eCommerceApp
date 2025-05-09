@@ -5,9 +5,13 @@ import App from './App'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
 import { ErrorPage } from '@pages/ErrorPage/ErrorPage'
-import { SignUpPage } from '@pages/SignUp/SignUpPage'
-import { LoginPage } from '@pages/Login/LoginPage'
+import { SignUpPage } from '@pages/AuthForms/SignUpPage'
+import { LoginPage } from '@pages/AuthForms/LoginPage'
 import { HomePage } from '@pages/Home/HomePage'
+import { ShopPage } from '@pages/Shop/ShopPage'
+import { AboutPage } from '@pages/About/AboutPage'
+import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
+import { CartPage } from '@pages/Cart/CartPage'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +34,22 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <HomePage />,
+      },
+      {
+        path: '/shop',
+        element: <ShopPage />,
+      },
+      {
+        path: '/about',
+        element: <AboutPage />,
+      },
+      {
+        path: '/plant-care',
+        element: <PlantCarePage />,
+      },
+      {
+        path: '/cart',
+        element: <CartPage />,
       },
     ],
   },

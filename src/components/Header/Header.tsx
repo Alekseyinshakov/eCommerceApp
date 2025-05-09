@@ -1,8 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
 import styles from './Header.module.scss'
-import logoSvg from '../../../public/images/Logo.svg'
-import findIcon from '../../../public/images/icons/find-icon.svg'
-import cartIcon from '../../../public/images/icons/cart-icon.svg'
 
 const { header, logo, navList, navItem, activeLink, rightSide, search, cart } =
   styles
@@ -10,7 +7,7 @@ const { header, logo, navList, navItem, activeLink, rightSide, search, cart } =
 function Header() {
   return (
     <header className={header}>
-      <img className={logo} src={logoSvg} alt="logo" />
+      <img className={logo} src="images/Logo.svg" alt="logo" />
       <nav>
         <ul className={navList}>
           <li className={navItem}>
@@ -40,7 +37,7 @@ function Header() {
           <li className={navItem}>
             <NavLink
               className={({ isActive }) => (isActive ? activeLink : '')}
-              to="/plat-care"
+              to="/plant-care"
             >
               Plant Care
             </NavLink>
@@ -49,10 +46,10 @@ function Header() {
       </nav>
       <div className={rightSide}>
         <div className={search}>
-          <img src={findIcon} alt="search" />
+          <img src="images/icons/find-icon.svg" alt="search" />
         </div>
         <Link to="/cart" className={cart}>
-          <img src={cartIcon} alt="cart" />
+          <img src="images/icons/cart-icon.svg" alt="cart" />
         </Link>
         <Link to="/log-in" className="button">
           Login

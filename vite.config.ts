@@ -10,6 +10,7 @@ export default defineConfig({
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@hooks': path.resolve(__dirname, 'src/hooks'),
     },
   },
   css: {
@@ -18,5 +19,10 @@ export default defineConfig({
         additionalData: `@use "@assets/styles/_vars.scss" as *;`,
       },
     },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './test/setup.ts',
   },
 })

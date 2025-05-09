@@ -1,0 +1,55 @@
+import { useNavigate } from 'react-router-dom'
+import { useAuthPageText } from '@hooks/useAuthPageText'
+
+import { RegisterNav } from '@components/RegisterNav/RegisterNav'
+import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+
+import styles from './AuthForm.module.scss'
+
+const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
+  styles
+
+export function LoginPage() {
+  const navigate = useNavigate()
+  const { submitText } = useAuthPageText()
+
+  const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    navigate('/home')
+  }
+
+  return (
+    <main className={main}>
+      <div className={authPage}>
+        <div className={authBlock}>
+          <RegisterNav />
+          <div className={auth}>
+            <div className={authHint}>
+              Enter your username and password to login.
+            </div>
+            <form className={form} autoComplete="off" onSubmit={handleSubmit}>
+              <input
+                name="email"
+                type="email"
+                placeholder="Username"
+                required
+              />
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                required
+              />
+              <div className={forgetful}>Forgot password?</div>
+
+              <button className={button} type="submit">
+                {submitText}
+              </button>
+            </form>
+          </div>
+          <RegisterAlt />
+        </div>
+      </div>
+    </main>
+  )
+}
