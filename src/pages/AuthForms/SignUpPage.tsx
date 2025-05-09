@@ -1,5 +1,12 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useAuthPageText } from '@hooks/useAuthPageText'
+
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+} from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
@@ -24,9 +31,49 @@ export function SignUpPage() {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
 
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  })
+
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  })
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    navigate('/home')
+
+    const newErrors = {
+      firstName: validateName(formData.firstName),
+      lastName: validateName(formData.lastName),
+      email: validateEmail(formData.email),
+      password: validatePassword(formData.password),
+    }
+
+    setErrors(newErrors)
+
+    const hasErrors = Object.values(newErrors).some(Boolean)
+    if (!hasErrors) {
+      navigate('/home')
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+
+    if (name === 'firstName' || name === 'lastName') {
+      setErrors((prev) => ({ ...prev, [name]: validateName(value) }))
+    } else if (name === 'email') {
+      setErrors((prev) => ({ ...prev, email: validateEmail(value) }))
+    } else if (name === 'password') {
+      setErrors((prev) => ({ ...prev, password: validatePassword(value) }))
+    }
   }
 
   return (
@@ -48,18 +95,22 @@ export function SignUpPage() {
                   name="firstName"
                   type="text"
                   placeholder="First Name"
-                  required
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  error={errors.firstName}
                 />
 
                 <FormInput
                   name="lastName"
                   type="text"
                   placeholder="Last Name"
-                  required
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  error={errors.lastName}
                 />
               </div>
 
-              <FormInput
+              {/* <FormInput
                 name="email"
                 type="email"
                 placeholder="Email (e.g., example@email.com)"
@@ -85,11 +136,11 @@ export function SignUpPage() {
                 type="date"
                 placeholder="Date of Birth"
                 required
-              />
+              /> */}
 
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
-                  <FormInput
+                  {/* <FormInput
                     name="street"
                     type="text"
                     placeholder="Street Address"
@@ -101,11 +152,11 @@ export function SignUpPage() {
                     type="text"
                     placeholder="City"
                     required
-                  />
+                  /> */}
                 </div>
 
                 <div className={groupOne}>
-                  <FormInput
+                  {/* <FormInput
                     name="postalCode"
                     type="text"
                     placeholder="Postal Code"
@@ -118,7 +169,7 @@ export function SignUpPage() {
                     placeholder="Country"
                     required
                     list="country-list"
-                  />
+                  /> */}
                   <datalist id="country-list">
                     <option value="Canada" />
                     <option value="United States" />

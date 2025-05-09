@@ -49,6 +49,10 @@
     flex-direction: column;
     gap: 20px;
 
+    .borderRed {
+      border: 1px solid #ff3939;
+    }
+
     input {
       width: 300px;
       height: 40px;
@@ -81,7 +85,7 @@
     flex-direction: column;
     gap: 20px;
 
-    input {
+    .input {
       width: 300px;
       height: 40px;
       border-radius: 5px;
@@ -149,6 +153,12 @@
       background-color: $main-light-color-hover;
     }
   }
+}
+
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .errorMsg {
