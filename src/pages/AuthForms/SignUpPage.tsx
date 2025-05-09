@@ -7,6 +7,10 @@ import {
   validatePassword,
   validateName,
   validateDate,
+  validateStreet,
+  validateCity,
+  validatePostalCode,
+  validateCountry,
 } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
@@ -40,6 +44,10 @@ export function SignUpPage() {
     password: '',
     confirmPassword: '',
     dob: '',
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
   })
 
   const [errors, setErrors] = useState({
@@ -49,6 +57,10 @@ export function SignUpPage() {
     password: '',
     confirmPassword: '',
     dob: '',
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
   })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -66,6 +78,10 @@ export function SignUpPage() {
       password: validatePassword(formData.password),
       confirmPassword: confirmPasswordError,
       dob: validateDate(formData.dob),
+      street: validateStreet(formData.street),
+      city: validateCity(formData.city),
+      postalCode: validatePostalCode(formData.postalCode),
+      country: validateCountry(formData.country),
     }
 
     setErrors(newErrors)
@@ -96,6 +112,11 @@ export function SignUpPage() {
               : ''
             : errors.confirmPassword,
         dob: name === 'dob' ? validateDate(value) : errors.dob,
+        street: name === 'street' ? validateStreet(value) : errors.street,
+        city: name === 'city' ? validateCity(value) : errors.city,
+        postalCode:
+          name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
+        country: name === 'country' ? validateCountry(value) : errors.country,
       }
 
       setErrors(updatedErrors)
@@ -177,43 +198,54 @@ export function SignUpPage() {
 
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
-                  {/* <FormInput
+                  <FormInput
                     name="street"
                     type="text"
                     placeholder="Street Address"
-                    required
+                    value={formData.street}
+                    onChange={handleChange}
+                    error={errors.street}
                   />
 
                   <FormInput
                     name="city"
                     type="text"
                     placeholder="City"
-                    required
-                  /> */}
+                    value={formData.city}
+                    onChange={handleChange}
+                    error={errors.city}
+                  />
                 </div>
 
                 <div className={groupOne}>
-                  {/* <FormInput
+                  <FormInput
                     name="postalCode"
                     type="text"
                     placeholder="Postal Code"
-                    required
+                    value={formData.postalCode}
+                    onChange={handleChange}
+                    error={errors.postalCode}
                   />
 
                   <FormInput
                     name="country"
                     type="text"
                     placeholder="Country"
-                    required
                     list="country-list"
-                  /> */}
+                    value={formData.country}
+                    onChange={handleChange}
+                    error={errors.country}
+                  />
                   <datalist id="country-list">
                     <option value="Canada" />
                     <option value="United States" />
                     <option value="Ukraine" />
                     <option value="Germany" />
                     <option value="France" />
-                    {/* you can expand the list */}
+                    <option value="Russia" />
+                    <option value="Belarus" />
+                    <option value="Poland" />
+                    {/* can expand the list */}
                   </datalist>
                 </div>
               </div>

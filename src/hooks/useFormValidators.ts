@@ -1,3 +1,14 @@
+const allowedCountries = [
+  'Canada',
+  'United States',
+  'Ukraine',
+  'Germany',
+  'France',
+  'Russia',
+  'Belarus',
+  'Poland',
+]
+
 export const validateEmail = (value: string): string => {
   const trimmed = value.trim()
   if (trimmed !== value) return 'Email must not have leading/trailing spaces'
@@ -44,6 +55,54 @@ export const validateDate = (value: string): string => {
 
   if (inputDate > thirteenYearsAgo) {
     return 'You must be at least 13 years old'
+  }
+
+  return ''
+}
+
+export const validateStreet = (value: string): string => {
+  const trimmed = value.trim()
+  if (trimmed.length === 0) {
+    return 'Street is required'
+  }
+
+  return ''
+}
+
+export const validateCity = (value: string): string => {
+  const trimmed = value.trim()
+  if (trimmed.length === 0) {
+    return 'City is required'
+  }
+  if (!/^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ'’ -]+$/.test(trimmed)) {
+    return 'City must contain only letters (no numbers or special characters)'
+  }
+
+  return ''
+}
+
+export const validatePostalCode = (value: string): string => {
+  const trimmed = value.trim()
+  if (!trimmed) {
+    return 'Postal code is required'
+  }
+
+  const usRegex = /^\d{5}(-\d{4})?$/
+  const canadaRegex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/
+
+  if (!usRegex.test(trimmed) && !canadaRegex.test(trimmed)) {
+    return 'Invalid postal code format (e.g., 12345 or A1B 2C3)'
+  }
+
+  return ''
+}
+
+export const validateCountry = (value: string): string => {
+  const trimmed = value.trim()
+  if (!trimmed) return 'Country is required'
+
+  if (!allowedCountries.includes(trimmed)) {
+    return 'Invalid country selected'
   }
 
   return ''
