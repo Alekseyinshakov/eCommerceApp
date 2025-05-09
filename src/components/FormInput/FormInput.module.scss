@@ -1,3 +1,9 @@
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
 .input {
   width: 300px;
   height: 40px;
@@ -8,6 +14,7 @@
   color: $disable-light-color;
   background-color: $light-background-color;
   padding: 10px 15px;
+  padding-right: 40px;
 
   &:focus {
     outline: none;
@@ -22,14 +29,25 @@
   }
 }
 
-.borderRed {
-  border: 1px solid $error-color;
+.iconButton {
+  position: absolute;
+  top: 57.5%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  color: $disable-light-color;
+
+  &:hover {
+    color: black;
+  }
 }
 
-.inputBox {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.borderRed {
+  border: 1px solid $error-color;
 }
 
 .errorMsg {
@@ -37,7 +55,13 @@
   font-size: 14px;
   text-align: left;
   max-width: 300px;
+  display: flex;
+  margin-top: 5px;
   width: 100%;
+}
+
+.passwordText {
+  letter-spacing: 0.16em;
 }
 
 @media screen and (max-width: 650px) {

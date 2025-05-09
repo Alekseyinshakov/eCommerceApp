@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './FormInput.module.scss'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 interface FormInputProps {
   name: string
@@ -24,26 +25,45 @@ const FormInput: React.FC<FormInputProps> = ({
   onChange,
   error,
 }) => {
+  const [showPassword, setShowPassword] = useState(false)
+
+  const isPassword = type === 'password'
+  const inputType = isPassword && showPassword ? 'text' : type
+
   const inputClassName = [
     styles.input,
     className && styles[className],
     error && styles.borderRed,
+    isPassword && styles.withIcon,
+    isPassword && styles.passwordText,
   ]
     .filter(Boolean)
     .join(' ')
 
   return (
     <div className={styles.inputBox}>
-      <input
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        required={required}
-        list={list}
-        className={inputClassName}
-        value={value}
-        onChange={onChange}
-      />
+      <div className={styles.inputWrapper}>
+        <input
+          name={name}
+          type={inputType}
+          placeholder={placeholder}
+          required={required}
+          list={list}
+          className={inputClassName}
+          value={value}
+          onChange={onChange}
+        />
+        {isPassword && (
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={() => setShowPassword((prev) => !prev)}
+            aria-label="Toggle password visibility"
+          >
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </button>
+        )}
+      </div>
       {error && <span className={styles.errorMsg}>{error}</span>}
     </div>
   )
