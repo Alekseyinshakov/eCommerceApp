@@ -15,7 +15,6 @@
 
 .link {
   text-decoration: none;
-  font-family: 'Sansation', sans-serif;
   color: $second-text-light-color;
   transition: color 0.2s ease-in-out;
 }
@@ -26,4 +25,10 @@
 
 .active {
   color: $main-light-color;
+}
+
+@media screen and (max-width: 580px) {
+  .navigate-block {
+    margin-top: 20px;
+  }
 }

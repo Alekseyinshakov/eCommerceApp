@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useAuthPageText } from '@hooks/useAuthPageText'
+import { validateEmail, validatePassword } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
 
@@ -13,9 +16,41 @@ export function LoginPage() {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
 
-  const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    navigate('/home')
+
+    const newErrors = {
+      email: validateEmail(formData.email),
+      password: validatePassword(formData.password),
+    }
+
+    setErrors(newErrors)
+
+    const hasErrors = Object.values(newErrors).some(Boolean)
+    if (!hasErrors) {
+      navigate('/home')
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+
+    if (name === 'email') {
+      setErrors((prev) => ({ ...prev, email: validateEmail(value) }))
+    } else if (name === 'password') {
+      setErrors((prev) => ({ ...prev, password: validatePassword(value) }))
+    }
   }
 
   return (
@@ -25,21 +60,28 @@ export function LoginPage() {
           <RegisterNav />
           <div className={auth}>
             <div className={authHint}>
-              Enter your username and password to login.
+              Enter your email and password to login.
             </div>
             <form className={form} autoComplete="off" onSubmit={handleSubmit}>
-              <input
+              <FormInput
                 name="email"
                 type="email"
-                placeholder="Username"
-                required
+                placeholder="Enter your email address"
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
               />
-              <input
+
+              <FormInput
                 name="password"
                 type="password"
                 placeholder="Password"
-                required
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
+                className="passwordText"
               />
+
               <div className={forgetful}>Forgot password?</div>
 
               <button className={button} type="submit">
