@@ -18,6 +18,10 @@
   width: 100%;
 }
 
+.authReg {
+  display: flex;
+}
+
 .loginBlock {
   width: 500px;
   height: 600px;
@@ -40,6 +44,38 @@
   }
 
   .form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    input {
+      width: 300px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid $disable-light-color;
+      text-decoration: none;
+      font-size: 14px;
+      color: $disable-light-color;
+      background-color: $light-background-color;
+
+      padding: 10px 15px;
+
+      &:focus {
+        outline: none;
+        border: 2px solid $main-light-color;
+        box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
+        color: black;
+      }
+
+      &::placeholder {
+        color: $disable-light-color;
+        letter-spacing: 0.03em;
+      }
+    }
+  }
+
+  .formSignUp {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -121,4 +157,21 @@
   text-align: left;
   max-width: 300px;
   width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.groupOne {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputGroupTwo {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
 }
