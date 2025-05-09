@@ -6,6 +6,7 @@ import {
   validateEmail,
   validatePassword,
   validateName,
+  validateDate,
 } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
@@ -38,6 +39,7 @@ export function SignUpPage() {
     email: '',
     password: '',
     confirmPassword: '',
+    dob: '',
   })
 
   const [errors, setErrors] = useState({
@@ -46,6 +48,7 @@ export function SignUpPage() {
     email: '',
     password: '',
     confirmPassword: '',
+    dob: '',
   })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -62,6 +65,7 @@ export function SignUpPage() {
       email: validateEmail(formData.email),
       password: validatePassword(formData.password),
       confirmPassword: confirmPasswordError,
+      dob: validateDate(formData.dob),
     }
 
     setErrors(newErrors)
@@ -91,6 +95,7 @@ export function SignUpPage() {
               ? 'Passwords do not match'
               : ''
             : errors.confirmPassword,
+        dob: name === 'dob' ? validateDate(value) : errors.dob,
       }
 
       setErrors(updatedErrors)
@@ -161,13 +166,14 @@ export function SignUpPage() {
                 error={errors.confirmPassword}
               />
 
-              {/*
               <FormInput
                 name="dob"
                 type="date"
                 placeholder="Date of Birth"
-                required
-              /> */}
+                value={formData.dob}
+                onChange={handleChange}
+                error={errors.dob}
+              />
 
               <div className={inputGroupTwo}>
                 <div className={groupOne}>

@@ -28,3 +28,23 @@ export const validateName = (value: string): string => {
   }
   return ''
 }
+
+export const validateDate = (value: string): string => {
+  if (!value) return 'Date of birth is required'
+
+  const inputDate = new Date(value)
+  if (isNaN(inputDate.getTime())) return 'Invalid date format'
+
+  const today = new Date()
+  const thirteenYearsAgo = new Date(
+    today.getFullYear() - 13,
+    today.getMonth(),
+    today.getDate()
+  )
+
+  if (inputDate > thirteenYearsAgo) {
+    return 'You must be at least 13 years old'
+  }
+
+  return ''
+}
