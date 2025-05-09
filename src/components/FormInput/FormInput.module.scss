@@ -39,3 +39,9 @@
   max-width: 300px;
   width: 100%;
 }
+
+@media screen and (max-width: 650px) {
+  .input {
+    width: 250px;
+  }
+}

@@ -117,3 +117,19 @@
   display: flex;
   gap: 10px;
 }
+
+@media screen and (max-width: 580px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+
+  .groupOne {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inputGroupTwo {
+    flex-direction: column;
+  }
+}
