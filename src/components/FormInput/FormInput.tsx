@@ -1,7 +1,5 @@
 import React from 'react'
-import styles from '@pages/AuthForms/AuthForm.module.scss'
-
-const { input, borderRed, inputBox, errorMsg } = styles
+import styles from './FormInput.module.scss'
 
 interface FormInputProps {
   name: string
@@ -27,15 +25,15 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
 }) => {
   const inputClassName = [
-    input,
-    styles[className] || className,
-    error && borderRed,
+    styles.input,
+    className && styles[className],
+    error && styles.borderRed,
   ]
     .filter(Boolean)
     .join(' ')
 
   return (
-    <div className={inputBox}>
+    <div className={styles.inputBox}>
       <input
         name={name}
         type={type}
@@ -46,7 +44,7 @@ const FormInput: React.FC<FormInputProps> = ({
         value={value}
         onChange={onChange}
       />
-      {error && <span className={errorMsg}>{error}</span>}
+      {error && <span className={styles.errorMsg}>{error}</span>}
     </div>
   )
 }

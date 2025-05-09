@@ -48,35 +48,6 @@
     align-items: center;
     flex-direction: column;
     gap: 20px;
-
-    .borderRed {
-      border: 1px solid #ff3939;
-    }
-
-    input {
-      width: 300px;
-      height: 40px;
-      border-radius: 5px;
-      border: 1px solid $disable-light-color;
-      text-decoration: none;
-      font-size: 14px;
-      color: $disable-light-color;
-      background-color: $light-background-color;
-
-      padding: 10px 15px;
-
-      &:focus {
-        outline: none;
-        border: 2px solid $main-light-color;
-        box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
-        color: black;
-      }
-
-      &::placeholder {
-        color: $disable-light-color;
-        letter-spacing: 0.03em;
-      }
-    }
   }
 
   .formSignUp {
@@ -84,31 +55,6 @@
     align-items: center;
     flex-direction: column;
     gap: 20px;
-
-    .input {
-      width: 300px;
-      height: 40px;
-      border-radius: 5px;
-      border: 1px solid $disable-light-color;
-      text-decoration: none;
-      font-size: 14px;
-      color: $disable-light-color;
-      background-color: $light-background-color;
-
-      padding: 10px 15px;
-
-      &:focus {
-        outline: none;
-        border: 2px solid $main-light-color;
-        box-shadow: 0 0 4px rgba(83, 139, 99, 0.2);
-        color: black;
-      }
-
-      &::placeholder {
-        color: $disable-light-color;
-        letter-spacing: 0.03em;
-      }
-    }
   }
 
   .passwordText {
@@ -153,20 +99,6 @@
       background-color: $main-light-color-hover;
     }
   }
-}
-
-.inputBox {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.errorMsg {
-  color: red;
-  font-size: 14px;
-  text-align: left;
-  max-width: 300px;
-  width: 100%;
 }
 
 .inputGroup {
