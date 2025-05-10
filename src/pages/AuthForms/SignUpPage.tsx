@@ -296,7 +296,6 @@ export function SignUpPage() {
                     <option value="Russia" />
                     <option value="Belarus" />
                     <option value="Poland" />
-                    {/* can expand the list */}
                   </datalist>
                 </div>
               </div>

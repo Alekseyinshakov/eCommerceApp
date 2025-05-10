@@ -46,6 +46,6 @@ export const registerCustomer = async (data: {
       },
     })
     .execute()
-  console.log('Registration successful:', response.body)
+  console.log(response.body)
   return response.body
 }
