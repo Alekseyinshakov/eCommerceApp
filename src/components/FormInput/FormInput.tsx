@@ -60,7 +60,7 @@ const FormInput: React.FC<FormInputProps> = ({
             onClick={() => setShowPassword((prev) => !prev)}
             aria-label="Toggle password visibility"
           >
-            {showPassword ? <FiEyeOff /> : <FiEye />}
+            {showPassword ? <FiEye /> : <FiEyeOff />}
           </button>
         )}
       </div>
