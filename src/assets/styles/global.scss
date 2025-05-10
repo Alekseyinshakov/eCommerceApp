@@ -1,4 +1,5 @@
-//@use './_vars' as *;
+@use './_vars' as *;
+@import url('_fonts.scss');
 @import url('_normalize.scss');
 
 *,
@@ -7,7 +8,61 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  color: $title-color;
+}
+
 body {
+  font-family: 'Cera Pro', sans-serif;
   font-size: 20px;
-  font-family: sans-serif;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: $light-background-color;
+  padding: 0 25px;
+  @media (max-width: 500px) {
+    padding: 0 10px;
+  }
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.button {
+  border-radius: 6px;
+  height: 35px;
+  background-color: $main-light-color;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  padding: 8px 17px;
+  column-gap: 5px;
+  &:hover {
+    background-color: $main-light-color-hover;
+  }
+}
+
+.btn-logut {
+  padding-left: 35px;
+  background: url(images/icons/logout-icon.svg) $main-light-color no-repeat 9px
+    center / 20px 20px;
 }

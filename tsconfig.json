@@ -24,7 +24,8 @@
     "paths": {
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*"],
+      "@hooks/*": ["hooks/*"]
     },
     "types": ["vitest/globals", "@testing-library/jest-dom", "node"]
   },
