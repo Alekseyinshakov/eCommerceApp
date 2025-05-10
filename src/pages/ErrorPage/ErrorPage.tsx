@@ -1,6 +1,6 @@
 import Header from '@components/Header/Header'
 import styles from './ErrorPage.module.scss'
-import { Link, Links } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const { title, text } = styles
 
