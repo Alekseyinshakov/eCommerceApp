@@ -44,10 +44,10 @@ export const registerCustomer = async (data: {
   const address = hasAddress
     ? [
         {
-          streetName: data.street || '',
-          city: data.city || '',
-          postalCode: data.postalCode || '',
-          country: data.country || '',
+          streetName: data.street,
+          city: data.city,
+          postalCode: data.postalCode,
+          country: data.country,
         },
       ]
     : []

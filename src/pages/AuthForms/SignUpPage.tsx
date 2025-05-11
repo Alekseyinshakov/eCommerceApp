@@ -102,37 +102,36 @@ export function SignUpPage() {
 
     setErrors(newErrors)
 
-    // const hasErrors = Object.values(newErrors).some(Boolean)
-    // if (!hasErrors) {
-    //   navigate('/home')
-    // }
+    const hasErrors = Object.values(newErrors).some(Boolean)
+    if (!hasErrors) {
+      try {
+        await registerCustomer({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          dateOfBirth: formData.dob,
+          country: countryCodeMap[formData.country],
+          street: formData.street,
+          city: formData.city,
+          postalCode: formData.postalCode,
+        })
 
-    try {
-      await registerCustomer({
-        email: formData.email,
-        password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        dateOfBirth: formData.dob,
-        country: countryCodeMap[formData.country],
-        street: formData.street,
-        city: formData.city,
-        postalCode: formData.postalCode,
-      })
-
-      setNotification('Registration successful!')
-      navigate('/log-in')
-    } catch (error) {
-      const err = error as { body?: ErrorResponse }
-      const duplicateError = err.body?.errors?.find(
-        (e): e is DuplicateFieldError =>
-          e.code === 'DuplicateField' && e.field === 'email'
-      )
-      if (duplicateError) {
-        setErrors((prev) => ({
-          ...prev,
-          email: duplicateError.message,
-        }))
+        setNotification('Registration successful!')
+        navigate('/log-in')
+      } catch (error) {
+        const err = error as { body?: ErrorResponse }
+        const duplicateError = err.body?.errors?.find(
+          (e): e is DuplicateFieldError =>
+            e.code === 'DuplicateField' && e.field === 'email'
+        )
+        if (duplicateError) {
+          setErrors((prev) => ({
+            ...prev,
+            email: duplicateError.message,
+          }))
+        }
+        setNotification('Registration failed. Please try again.')
       }
     }
   }
