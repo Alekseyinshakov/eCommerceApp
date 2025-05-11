@@ -20,6 +20,7 @@ import styles from './AuthForm.module.scss'
 import { registerCustomer } from '@api/apiClient'
 import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
+import { loginCustomer } from '@api/auth'
 
 const {
   main,
@@ -118,7 +119,10 @@ export function SignUpPage() {
         })
 
         setNotification('Registration successful!')
-        navigate('/log-in')
+
+        const customer = await loginCustomer(formData.email, formData.password)
+        console.log('Logged in as:', customer)
+        navigate('/home')
       } catch (error) {
         const err = error as { body?: ErrorResponse }
         const duplicateError = err.body?.errors?.find(
