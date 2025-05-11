@@ -1,10 +1,17 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
 
 const { header, logo, navList, navItem, activeLink, rightSide, search, cart } =
   styles
 
 function Header() {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('customer_token')
+    navigate('/log-in')
+  }
+
   return (
     <header className={header}>
       <img className={logo} src="images/Logo.svg" alt="logo" />
@@ -57,9 +64,9 @@ function Header() {
         <Link to="/sign-up" className="button">
           Register
         </Link>
-        <Link to="/sign-up" className={`button btn-logut`}>
+        <button onClick={handleLogout} className={`button btn-logut`}>
           Logout
-        </Link>
+        </button>
       </div>
     </header>
   )

@@ -7,6 +7,9 @@ import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
+import { loginCustomer } from '@api/auth'
+import { useNotification } from '@components/Notification/NotifficationContext'
+
 import styles from './AuthForm.module.scss'
 
 const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
@@ -15,6 +18,7 @@ const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
 export function LoginPage() {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
+  const { setNotification } = useNotification()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -26,7 +30,7 @@ export function LoginPage() {
     password: '',
   })
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const newErrors = {
@@ -37,8 +41,21 @@ export function LoginPage() {
     setErrors(newErrors)
 
     const hasErrors = Object.values(newErrors).some(Boolean)
+
     if (!hasErrors) {
-      navigate('/home')
+      try {
+        const { email, password } = formData
+        const customer = await loginCustomer(email, password)
+        console.log('Logged in as:', customer)
+        navigate('/home')
+      } catch (err) {
+        console.error(err)
+        setNotification('Invalid email or password')
+        setErrors({
+          email: 'Invalid email or password',
+          password: 'Invalid email or password',
+        })
+      }
     }
   }
 
@@ -70,6 +87,7 @@ export function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 error={errors.email}
+                required
               />
 
               <FormInput
@@ -80,6 +98,7 @@ export function LoginPage() {
                 onChange={handleChange}
                 error={errors.password}
                 className="passwordText"
+                required
               />
 
               <div className={forgetful}>Forgot password?</div>

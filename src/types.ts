@@ -10,3 +10,10 @@ declare global {
     }
   }
 }
+
+export interface NotificationContextType {
+  showNotification: boolean
+  message: string
+  setNotification: (message: string) => void
+  deleteNotification: () => void
+}

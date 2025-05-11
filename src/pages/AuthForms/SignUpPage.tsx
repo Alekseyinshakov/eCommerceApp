@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuthPageText } from '@hooks/useAuthPageText'
-
 import {
   validateEmail,
   validatePassword,
@@ -18,6 +17,9 @@ import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
+import { registerCustomer } from '@api/apiClient'
+import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
+import { useNotification } from '@components/Notification/NotifficationContext'
 
 const {
   main,
@@ -34,6 +36,7 @@ const {
 } = styles
 
 export function SignUpPage() {
+  const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
 
@@ -61,9 +64,21 @@ export function SignUpPage() {
     city: '',
     postalCode: '',
     country: '',
+    registration: '',
   })
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const countryCodeMap: Record<string, string> = {
+    Canada: 'CA',
+    'United States': 'US',
+    Ukraine: 'UA',
+    Germany: 'DE',
+    France: 'FR',
+    Russia: 'RU',
+    Belarus: 'BY',
+    Poland: 'PL',
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const confirmPasswordError =
@@ -82,13 +97,43 @@ export function SignUpPage() {
       city: validateCity(formData.city),
       postalCode: validatePostalCode(formData.postalCode),
       country: validateCountry(formData.country),
+      registration: '',
     }
 
     setErrors(newErrors)
 
-    const hasErrors = Object.values(newErrors).some(Boolean)
-    if (!hasErrors) {
-      navigate('/home')
+    // const hasErrors = Object.values(newErrors).some(Boolean)
+    // if (!hasErrors) {
+    //   navigate('/home')
+    // }
+
+    try {
+      await registerCustomer({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        dateOfBirth: formData.dob,
+        country: countryCodeMap[formData.country],
+        street: formData.street,
+        city: formData.city,
+        postalCode: formData.postalCode,
+      })
+
+      setNotification('Registration successful!')
+      navigate('/log-in')
+    } catch (error) {
+      const err = error as { body?: ErrorResponse }
+      const duplicateError = err.body?.errors?.find(
+        (e): e is DuplicateFieldError =>
+          e.code === 'DuplicateField' && e.field === 'email'
+      )
+      if (duplicateError) {
+        setErrors((prev) => ({
+          ...prev,
+          email: duplicateError.message,
+        }))
+      }
     }
   }
 
@@ -133,6 +178,7 @@ export function SignUpPage() {
             <div className={authHint}>
               Enter your details to create an account.
             </div>
+
             <form
               className={formSignUp}
               autoComplete="off"
@@ -146,6 +192,7 @@ export function SignUpPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   error={errors.firstName}
+                  required
                 />
 
                 <FormInput
@@ -155,6 +202,7 @@ export function SignUpPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   error={errors.lastName}
+                  required
                 />
               </div>
 
@@ -167,6 +215,7 @@ export function SignUpPage() {
                     value={formData.email}
                     onChange={handleChange}
                     error={errors.email}
+                    required
                   />
 
                   <FormInput
@@ -176,6 +225,7 @@ export function SignUpPage() {
                     value={formData.dob}
                     onChange={handleChange}
                     error={errors.dob}
+                    required
                   />
                 </div>
 
@@ -188,6 +238,7 @@ export function SignUpPage() {
                     value={formData.password}
                     onChange={handleChange}
                     error={errors.password}
+                    required
                   />
 
                   <FormInput
@@ -198,6 +249,7 @@ export function SignUpPage() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     error={errors.confirmPassword}
+                    required
                   />
                 </div>
               </div>
@@ -210,6 +262,7 @@ export function SignUpPage() {
                     value={formData.street}
                     onChange={handleChange}
                     error={errors.street}
+                    required
                   />
 
                   <FormInput
@@ -219,6 +272,7 @@ export function SignUpPage() {
                     value={formData.city}
                     onChange={handleChange}
                     error={errors.city}
+                    required
                   />
                 </div>
 
@@ -230,6 +284,7 @@ export function SignUpPage() {
                     value={formData.postalCode}
                     onChange={handleChange}
                     error={errors.postalCode}
+                    required
                   />
 
                   <FormInput
@@ -240,6 +295,7 @@ export function SignUpPage() {
                     value={formData.country}
                     onChange={handleChange}
                     error={errors.country}
+                    required
                   />
                   <datalist id="country-list">
                     <option value="Canada" />
@@ -250,7 +306,6 @@ export function SignUpPage() {
                     <option value="Russia" />
                     <option value="Belarus" />
                     <option value="Poland" />
-                    {/* can expand the list */}
                   </datalist>
                 </div>
               </div>
