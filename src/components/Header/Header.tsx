@@ -64,7 +64,7 @@ function Header() {
         <Link to="/sign-up" className="button">
           Register
         </Link>
-        <button onClick={handleLogout} className={`button btn-logut`}>
+        <button onClick={handleLogout} className={`button btn-logout`}>
           Logout
         </button>
       </div>
