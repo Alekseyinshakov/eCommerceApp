@@ -48,8 +48,7 @@ export function LoginPage() {
     if (!hasErrors) {
       try {
         const { email, password } = formData
-        const customer = await loginCustomer(email, password)
-        console.log('Logged in as:', customer)
+        await loginCustomer(email, password)
 
         setEmail(email)
 

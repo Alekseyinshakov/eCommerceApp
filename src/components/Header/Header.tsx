@@ -72,7 +72,7 @@ function Header() {
             Register
           </Link>
         )}
-        <div>{email}</div>
+        <div className={styles.userEmail}>{email}</div>
         {email && (
           <button onClick={handleLogout} className={`button btn-logout`}>
             Logout

@@ -12,6 +12,7 @@ import { ShopPage } from '@pages/Shop/ShopPage'
 import { AboutPage } from '@pages/About/AboutPage'
 import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
 import { CartPage } from '@pages/Cart/CartPage'
+import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
 
 const router = createBrowserRouter([
   {
@@ -25,11 +26,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/sign-up',
-        element: <SignUpPage />,
+        element: (
+          <RedirectIfAuth>
+            <SignUpPage />
+          </RedirectIfAuth>
+        ),
       },
       {
         path: '/log-in',
-        element: <LoginPage />,
+        element: (
+          <RedirectIfAuth>
+            <LoginPage />
+          </RedirectIfAuth>
+        ),
       },
       {
         path: '/home',

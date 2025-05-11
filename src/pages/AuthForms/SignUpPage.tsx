@@ -21,6 +21,7 @@ import { registerCustomer } from '@api/apiClient'
 import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
+import { useAuthStore } from '../../store/authStore'
 
 const {
   main,
@@ -40,6 +41,7 @@ export function SignUpPage() {
   const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
+  const setEmail = useAuthStore((state) => state.setEmail)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -120,8 +122,9 @@ export function SignUpPage() {
 
         setNotification('Registration successful!')
 
-        const customer = await loginCustomer(formData.email, formData.password)
-        console.log('Logged in as:', customer)
+        await loginCustomer(formData.email, formData.password)
+
+        setEmail(formData.email)
         navigate('/home')
       } catch (error) {
         const err = error as { body?: ErrorResponse }

@@ -48,6 +48,8 @@ a {
 }
 
 .button {
+  outline: none;
+  border: none;
   border-radius: 6px;
   height: 35px;
   background-color: $main-light-color;
