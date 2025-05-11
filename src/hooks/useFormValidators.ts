@@ -11,6 +11,7 @@ const allowedCountries = [
 
 export const validateEmail = (value: string): string => {
   const trimmed = value.trim()
+  if (!trimmed) return 'Email is required'
   if (trimmed !== value) return 'Email must not have leading/trailing spaces'
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!regex.test(trimmed)) return 'Invalid email format'

@@ -192,6 +192,7 @@ export function SignUpPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   error={errors.firstName}
+                  required
                 />
 
                 <FormInput
@@ -201,6 +202,7 @@ export function SignUpPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   error={errors.lastName}
+                  required
                 />
               </div>
 
@@ -213,6 +215,7 @@ export function SignUpPage() {
                     value={formData.email}
                     onChange={handleChange}
                     error={errors.email}
+                    required
                   />
 
                   <FormInput
@@ -222,6 +225,7 @@ export function SignUpPage() {
                     value={formData.dob}
                     onChange={handleChange}
                     error={errors.dob}
+                    required
                   />
                 </div>
 
@@ -234,6 +238,7 @@ export function SignUpPage() {
                     value={formData.password}
                     onChange={handleChange}
                     error={errors.password}
+                    required
                   />
 
                   <FormInput
@@ -244,6 +249,7 @@ export function SignUpPage() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     error={errors.confirmPassword}
+                    required
                   />
                 </div>
               </div>
@@ -256,6 +262,7 @@ export function SignUpPage() {
                     value={formData.street}
                     onChange={handleChange}
                     error={errors.street}
+                    required
                   />
 
                   <FormInput
@@ -265,6 +272,7 @@ export function SignUpPage() {
                     value={formData.city}
                     onChange={handleChange}
                     error={errors.city}
+                    required
                   />
                 </div>
 
@@ -276,6 +284,7 @@ export function SignUpPage() {
                     value={formData.postalCode}
                     onChange={handleChange}
                     error={errors.postalCode}
+                    required
                   />
 
                   <FormInput
@@ -286,6 +295,7 @@ export function SignUpPage() {
                     value={formData.country}
                     onChange={handleChange}
                     error={errors.country}
+                    required
                   />
                   <datalist id="country-list">
                     <option value="Canada" />
