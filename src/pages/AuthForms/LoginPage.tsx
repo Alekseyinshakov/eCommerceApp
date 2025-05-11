@@ -11,11 +11,14 @@ import { loginCustomer } from '@api/auth'
 import { useNotification } from '@components/Notification/NotifficationContext'
 
 import styles from './AuthForm.module.scss'
+import { useAuthStore } from '../../store/authStore'
 
 const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
   styles
 
 export function LoginPage() {
+  const setEmail = useAuthStore((state) => state.setEmail)
+
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const { setNotification } = useNotification()
@@ -47,6 +50,9 @@ export function LoginPage() {
         const { email, password } = formData
         const customer = await loginCustomer(email, password)
         console.log('Logged in as:', customer)
+
+        setEmail(email)
+
         navigate('/home')
       } catch (err) {
         console.error(err)
