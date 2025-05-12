@@ -21,7 +21,7 @@ import { registerCustomer } from '@api/apiClient'
 import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
-import { useAuthStore } from '../../store/authStore'
+import { useAuthStore } from '@store/authStore'
 
 const {
   main,

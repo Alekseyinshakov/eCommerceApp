@@ -11,7 +11,7 @@ import { loginCustomer } from '@api/auth'
 import { useNotification } from '@components/Notification/NotifficationContext'
 
 import styles from './AuthForm.module.scss'
-import { useAuthStore } from '../../store/authStore'
+import { useAuthStore } from '@store/authStore'
 
 const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
   styles

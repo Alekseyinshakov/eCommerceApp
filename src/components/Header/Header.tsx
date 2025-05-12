@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
-import { useAuthStore } from '../../store/authStore'
+import { useAuthStore } from '@store/authStore'
 
 const { header, logo, navList, navItem, activeLink, rightSide, search, cart } =
   styles
