@@ -55,7 +55,7 @@ nav {
     visibility: hidden;
     flex-direction: column;
     position: fixed;
-    top: 78px;
+    top: 84px;
     right: 0;
     background-color: $main-light-color;
     width: 75%;
@@ -69,7 +69,7 @@ nav {
   }
   @media (max-width: 670px) {
     width: 100%;
-    top: 68px;
+    top: 66px;
   }
 }
 
