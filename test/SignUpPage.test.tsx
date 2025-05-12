@@ -1,9 +1,9 @@
-import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, vi } from 'vitest'
 
-// === MOKs MUST BE PRE-IMPORTED FOR COMPONENTS ===
+import { NotificationProvider } from '../src/components/Notification/UseNotification'
+
 const navigateMock = vi.fn()
 
 vi.mock('react-router-dom', async () => {
@@ -21,34 +21,85 @@ vi.mock('@hooks/useAuthPageText', () => ({
   }),
 }))
 
+vi.mock('@api/registerCustomer', () => ({
+  registerCustomer: vi.fn().mockResolvedValueOnce({}),
+}))
+
 import { SignUpPage } from '../src/pages/AuthForms/SignUpPage'
 
 describe('SignUpPage', () => {
   it('renders all input fields and the submit button', () => {
     render(
-      <MemoryRouter>
-        <SignUpPage />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter>
+          <SignUpPage />
+        </MemoryRouter>
+      </NotificationProvider>
     )
 
-    expect(screen.getByPlaceholderText('Username')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Last Name')).toBeInTheDocument()
     expect(
-      screen.getByPlaceholderText('Enter your email address')
+      screen.getByPlaceholderText('Email (e.g., example@email.com)')
     ).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: /register/i })
+      screen.getByPlaceholderText(
+        'Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)'
+      )
     ).toBeInTheDocument()
   })
 
   it('navigates to /home after form submission', async () => {
     render(
-      <MemoryRouter>
-        <SignUpPage />
-      </MemoryRouter>
+      <NotificationProvider>
+        <MemoryRouter>
+          <SignUpPage />
+        </MemoryRouter>
+      </NotificationProvider>
     )
 
-    fireEvent.submit(screen.getByRole('form'))
+    const randomEmail = `user${Date.now()}@example.com`
+
+    fireEvent.change(screen.getByPlaceholderText('First Name'), {
+      target: { value: 'John' },
+    })
+    fireEvent.change(screen.getByPlaceholderText('Last Name'), {
+      target: { value: 'Doe' },
+    })
+    fireEvent.change(
+      screen.getByPlaceholderText('Email (e.g., example@email.com)'),
+      {
+        target: { value: randomEmail },
+      }
+    )
+    fireEvent.change(screen.getByPlaceholderText('Date of Birth'), {
+      target: { value: '1990-01-01' },
+    })
+    fireEvent.change(
+      screen.getByPlaceholderText(
+        'Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)'
+      ),
+      {
+        target: { value: 'Password1' },
+      }
+    )
+    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
+      target: { value: 'Password1' },
+    })
+    fireEvent.change(screen.getByPlaceholderText('Street Address'), {
+      target: { value: '123 Main St' },
+    })
+    fireEvent.change(screen.getByPlaceholderText('City'), {
+      target: { value: 'Kyiv' },
+    })
+    fireEvent.change(screen.getByPlaceholderText('Postal Code'), {
+      target: { value: '01001' },
+    })
+    fireEvent.change(screen.getByPlaceholderText('Country'), {
+      target: { value: 'Ukraine' },
+    })
+
+    fireEvent.submit(screen.getByTestId('signup-form'))
 
     await waitFor(() => {
       expect(navigateMock).toHaveBeenCalledWith('/home')

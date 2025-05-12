@@ -189,6 +189,7 @@ export function SignUpPage() {
               className={formSignUp}
               autoComplete="off"
               onSubmit={handleSubmit}
+              data-testid="signup-form"
             >
               <div className={inputGroup}>
                 <FormInput
