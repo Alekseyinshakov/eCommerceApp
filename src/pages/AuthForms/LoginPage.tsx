@@ -92,7 +92,6 @@ export function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 error={errors.email}
-                required
               />
 
               <FormInput
@@ -103,7 +102,6 @@ export function LoginPage() {
                 onChange={handleChange}
                 error={errors.password}
                 className="passwordText"
-                required
               />
 
               <div className={forgetful}>Forgot password?</div>
