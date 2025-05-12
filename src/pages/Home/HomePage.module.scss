@@ -1,9 +1,11 @@
-.wrapper {
+.home {
   background: linear-gradient(
     135deg,
     rgba(245, 245, 245, 0.5) 0%,
     rgba(245, 245, 245, 0.5) 100%
   );
+}
+.homeContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
