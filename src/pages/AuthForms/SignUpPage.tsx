@@ -13,7 +13,7 @@ import {
 } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
@@ -312,7 +312,7 @@ export function SignUpPage() {
               </button>
             </form>
           </div>
-          <RegisterAlt />
+          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>

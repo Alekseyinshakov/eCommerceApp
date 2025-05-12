@@ -4,7 +4,7 @@ import { useAuthPageText } from '@hooks/useAuthPageText'
 import { validateEmail, validatePassword } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import { loginCustomer } from '@api/auth'
@@ -13,8 +13,7 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 import styles from './AuthForm.module.scss'
 import { useAuthStore } from '@store/authStore'
 
-const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
-  styles
+const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
 export function LoginPage() {
   const setEmail = useAuthStore((state) => state.setEmail)
@@ -104,14 +103,14 @@ export function LoginPage() {
                 className="passwordText"
               />
 
-              <div className={forgetful}>Forgot password?</div>
+              {/* <div className={forgetful}>Forgot password?</div> */}
 
               <button className={button} type="submit">
                 {submitText}
               </button>
             </form>
           </div>
-          <RegisterAlt />
+          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>
