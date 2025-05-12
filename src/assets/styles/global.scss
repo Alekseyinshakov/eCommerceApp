@@ -48,6 +48,8 @@ a {
 }
 
 .button {
+  outline: none;
+  border: none;
   border-radius: 6px;
   height: 35px;
   background-color: $main-light-color;
@@ -61,8 +63,8 @@ a {
   }
 }
 
-.btn-logut {
+.btn-logout {
   padding-left: 35px;
-  background: url(images/icons/logout-icon.svg) $main-light-color no-repeat 9px
-    center / 20px 20px;
+  background: url('/images/icons/logout-icon.svg') $main-light-color no-repeat
+    9px center / 20px 20px;
 }

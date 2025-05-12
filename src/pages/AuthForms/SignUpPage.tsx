@@ -13,13 +13,15 @@ import {
 } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
 import { registerCustomer } from '@api/apiClient'
 import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
+import { loginCustomer } from '@api/auth'
+import { useAuthStore } from '@store/authStore'
 
 const {
   main,
@@ -39,6 +41,7 @@ export function SignUpPage() {
   const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
+  const setEmail = useAuthStore((state) => state.setEmail)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -102,37 +105,40 @@ export function SignUpPage() {
 
     setErrors(newErrors)
 
-    // const hasErrors = Object.values(newErrors).some(Boolean)
-    // if (!hasErrors) {
-    //   navigate('/home')
-    // }
+    const hasErrors = Object.values(newErrors).some(Boolean)
+    if (!hasErrors) {
+      try {
+        await registerCustomer({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          dateOfBirth: formData.dob,
+          country: countryCodeMap[formData.country],
+          street: formData.street,
+          city: formData.city,
+          postalCode: formData.postalCode,
+        })
 
-    try {
-      await registerCustomer({
-        email: formData.email,
-        password: formData.password,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        dateOfBirth: formData.dob,
-        country: countryCodeMap[formData.country],
-        street: formData.street,
-        city: formData.city,
-        postalCode: formData.postalCode,
-      })
+        setNotification('Registration successful!')
 
-      setNotification('Registration successful!')
-      navigate('/log-in')
-    } catch (error) {
-      const err = error as { body?: ErrorResponse }
-      const duplicateError = err.body?.errors?.find(
-        (e): e is DuplicateFieldError =>
-          e.code === 'DuplicateField' && e.field === 'email'
-      )
-      if (duplicateError) {
-        setErrors((prev) => ({
-          ...prev,
-          email: duplicateError.message,
-        }))
+        await loginCustomer(formData.email, formData.password)
+
+        setEmail(formData.email)
+        navigate('/home')
+      } catch (error) {
+        const err = error as { body?: ErrorResponse }
+        const duplicateError = err.body?.errors?.find(
+          (e): e is DuplicateFieldError =>
+            e.code === 'DuplicateField' && e.field === 'email'
+        )
+        if (duplicateError) {
+          setErrors((prev) => ({
+            ...prev,
+            email: duplicateError.message,
+          }))
+        }
+        setNotification('Registration failed. Please try again.')
       }
     }
   }
@@ -183,6 +189,7 @@ export function SignUpPage() {
               className={formSignUp}
               autoComplete="off"
               onSubmit={handleSubmit}
+              data-testid="signup-form"
             >
               <div className={inputGroup}>
                 <FormInput
@@ -192,7 +199,6 @@ export function SignUpPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   error={errors.firstName}
-                  required
                 />
 
                 <FormInput
@@ -202,7 +208,6 @@ export function SignUpPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   error={errors.lastName}
-                  required
                 />
               </div>
 
@@ -215,7 +220,6 @@ export function SignUpPage() {
                     value={formData.email}
                     onChange={handleChange}
                     error={errors.email}
-                    required
                   />
 
                   <FormInput
@@ -225,7 +229,6 @@ export function SignUpPage() {
                     value={formData.dob}
                     onChange={handleChange}
                     error={errors.dob}
-                    required
                   />
                 </div>
 
@@ -238,7 +241,6 @@ export function SignUpPage() {
                     value={formData.password}
                     onChange={handleChange}
                     error={errors.password}
-                    required
                   />
 
                   <FormInput
@@ -249,7 +251,6 @@ export function SignUpPage() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     error={errors.confirmPassword}
-                    required
                   />
                 </div>
               </div>
@@ -262,7 +263,6 @@ export function SignUpPage() {
                     value={formData.street}
                     onChange={handleChange}
                     error={errors.street}
-                    required
                   />
 
                   <FormInput
@@ -272,7 +272,6 @@ export function SignUpPage() {
                     value={formData.city}
                     onChange={handleChange}
                     error={errors.city}
-                    required
                   />
                 </div>
 
@@ -284,7 +283,6 @@ export function SignUpPage() {
                     value={formData.postalCode}
                     onChange={handleChange}
                     error={errors.postalCode}
-                    required
                   />
 
                   <FormInput
@@ -295,7 +293,6 @@ export function SignUpPage() {
                     value={formData.country}
                     onChange={handleChange}
                     error={errors.country}
-                    required
                   />
                   <datalist id="country-list">
                     <option value="Canada" />
@@ -315,7 +312,7 @@ export function SignUpPage() {
               </button>
             </form>
           </div>
-          <RegisterAlt />
+          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>

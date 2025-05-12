@@ -1,14 +1,18 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
+import { useAuthStore } from '@store/authStore'
 
 const { header, logo, navList, navItem, activeLink, rightSide, search, cart } =
   styles
 
 function Header() {
   const navigate = useNavigate()
+  const setEmail = useAuthStore((state) => state.setEmail)
+
+  const email = useAuthStore((state) => state.email)
 
   const handleLogout = () => {
-    localStorage.removeItem('customer_token')
+    setEmail(null)
     navigate('/log-in')
   }
 
@@ -58,15 +62,22 @@ function Header() {
         <Link to="/cart" className={cart}>
           <img src="images/icons/cart-icon.svg" alt="cart" />
         </Link>
-        <Link to="/log-in" className="button">
-          Login
-        </Link>
-        <Link to="/sign-up" className="button">
-          Register
-        </Link>
-        <button onClick={handleLogout} className={`button btn-logut`}>
-          Logout
-        </button>
+        {!email && (
+          <Link to="/log-in" className="button">
+            Login
+          </Link>
+        )}
+        {!email && (
+          <Link to="/sign-up" className="button">
+            Register
+          </Link>
+        )}
+        <div className={styles.userEmail}>{email}</div>
+        {email && (
+          <button onClick={handleLogout} className={`button btn-logout`}>
+            Logout
+          </button>
+        )}
       </div>
     </header>
   )
