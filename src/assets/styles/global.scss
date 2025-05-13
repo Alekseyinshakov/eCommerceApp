@@ -25,15 +25,17 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: $light-background-color;
-  padding: 0 25px;
-  @media (max-width: 500px) {
-    padding: 0 10px;
-  }
 }
 
 .container {
   max-width: 1440px;
   margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  @media (max-width: 500px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 ul {
@@ -46,10 +48,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-.button {
+button {
   outline: none;
   border: none;
+  cursor: pointer;
+}
+.button {
   border-radius: 6px;
   height: 35px;
   background-color: $main-light-color;
@@ -67,4 +71,9 @@ a {
   padding-left: 35px;
   background: url('/images/icons/logout-icon.svg') $main-light-color no-repeat
     9px center / 20px 20px;
+  @media (max-width: 425px) {
+    width: 35px;
+    padding: 8px 10px;
+    font-size: 0;
+  }
 }

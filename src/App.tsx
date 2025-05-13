@@ -6,10 +6,8 @@ import { NotificationProvider } from '@components/Notification/UseNotification'
 function App() {
   return (
     <NotificationProvider>
-      <div className="container">
-        <Header />
-        <Outlet />
-      </div>
+      <Header />
+      <Outlet />
     </NotificationProvider>
   )
 }
