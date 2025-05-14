@@ -1,5 +1,7 @@
 # eCommerce application
 
+[Deploy](https://pushnili-e-commerce.netlify.app/home),
+
 ## About The Project
 
 eCommercial is an application developed by a team of beginner frontend developers:
