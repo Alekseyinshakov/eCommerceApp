@@ -54,7 +54,12 @@ export function SignUpPage() {
     city: '',
     postalCode: '',
     country: '',
+    billingStreet: '',
+    billingCity: '',
+    billingPostalCode: '',
+    billingCountry: '',
   })
+  console.log(formData)
 
   const [errors, setErrors] = useState({
     firstName: '',
@@ -67,6 +72,10 @@ export function SignUpPage() {
     city: '',
     postalCode: '',
     country: '',
+    billingStreet: '',
+    billingCity: '',
+    billingPostalCode: '',
+    billingCountry: '',
     registration: '',
   })
 
@@ -100,6 +109,10 @@ export function SignUpPage() {
       city: validateCity(formData.city),
       postalCode: validatePostalCode(formData.postalCode),
       country: validateCountry(formData.country),
+      billingStreet: validateStreet(formData.billingStreet),
+      billingCity: validateCity(formData.billingCity),
+      billingPostalCode: validatePostalCode(formData.billingPostalCode),
+      billingCountry: validateCountry(formData.billingCountry),
       registration: '',
     }
 
@@ -168,6 +181,21 @@ export function SignUpPage() {
         postalCode:
           name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
         country: name === 'country' ? validateCountry(value) : errors.country,
+
+        billingStreet:
+          name === 'billingStreet'
+            ? validateStreet(value)
+            : errors.billingStreet,
+        billingCity:
+          name === 'billingCity' ? validateCity(value) : errors.billingCity,
+        billingPostalCode:
+          name === 'billingPostalCode'
+            ? validatePostalCode(value)
+            : errors.billingPostalCode,
+        billingCountry:
+          name === 'billingCountry'
+            ? validateCountry(value)
+            : errors.billingCountry,
       }
 
       setErrors(updatedErrors)
@@ -254,6 +282,9 @@ export function SignUpPage() {
                   />
                 </div>
               </div>
+
+              <div>Shipping address</div>
+
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
                   <FormInput
@@ -293,6 +324,59 @@ export function SignUpPage() {
                     value={formData.country}
                     onChange={handleChange}
                     error={errors.country}
+                  />
+                  <datalist id="country-list">
+                    <option value="Canada" />
+                    <option value="United States" />
+                    <option value="Ukraine" />
+                    <option value="Germany" />
+                    <option value="France" />
+                    <option value="Russia" />
+                    <option value="Belarus" />
+                    <option value="Poland" />
+                  </datalist>
+                </div>
+              </div>
+              <div>Billing Address</div>
+              <div className={inputGroupTwo}>
+                <div className={groupOne}>
+                  <FormInput
+                    name="billingStreet"
+                    type="text"
+                    placeholder="Street Address"
+                    value={formData.billingStreet}
+                    onChange={handleChange}
+                    error={errors.billingStreet}
+                  />
+
+                  <FormInput
+                    name="billingCity"
+                    type="text"
+                    placeholder="City"
+                    value={formData.billingCity}
+                    onChange={handleChange}
+                    error={errors.billingCity}
+                  />
+                </div>
+
+                <div className={groupOne}>
+                  <FormInput
+                    name="billingPostalCode"
+                    type="text"
+                    placeholder="Postal Code"
+                    value={formData.billingPostalCode}
+                    onChange={handleChange}
+                    error={errors.billingPostalCode}
+                  />
+
+                  <FormInput
+                    name="billingCountry"
+                    type="text"
+                    placeholder="Country"
+                    list="country-list"
+                    value={formData.billingCountry}
+                    onChange={handleChange}
+                    error={errors.billingCountry}
                   />
                   <datalist id="country-list">
                     <option value="Canada" />
