@@ -5,6 +5,11 @@
   min-height: calc(100vh - 78px);
 }
 
+.regMain {
+  margin-top: 20px;
+  align-items: start;
+}
+
 @media screen and (max-height: 750px) {
   .main {
     margin-top: 20px;
@@ -116,6 +121,7 @@
 
 .subtitleWrapper {
   width: 100%;
+  color: $title-color;
 }
 
 .checkboxLabel {
@@ -129,6 +135,10 @@
 
 .formSubtitle {
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 580px) {
