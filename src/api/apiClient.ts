@@ -37,20 +37,31 @@ export const registerCustomer = async (data: {
   city: string
   postalCode: string
   country: string
+
+  billingStreet: string
+  billingCity: string
+  billingPostalCode: string
+  billingCountry: string
+  defaultShippingAddress: boolean
+  defaultBillingAddress: boolean
 }) => {
-  const hasAddress = Boolean(
-    data.street && data.city && data.postalCode && data.country
-  )
-  const address = hasAddress
-    ? [
-        {
-          streetName: data.street,
-          city: data.city,
-          postalCode: data.postalCode,
-          country: data.country,
-        },
-      ]
-    : []
+  console.log('Registering customer', data)
+
+  const addresses = [
+    {
+      streetName: data.street,
+      city: data.city,
+      postalCode: data.postalCode,
+      country: data.country,
+    },
+    {
+      streetName: data.billingStreet,
+      city: data.billingCity,
+      postalCode: data.billingPostalCode,
+      country: data.billingCountry,
+    },
+  ]
+
   const response = await apiRoot
     .customers()
     .post({
@@ -60,9 +71,11 @@ export const registerCustomer = async (data: {
         firstName: data.firstName,
         lastName: data.lastName,
         dateOfBirth: data.dateOfBirth,
-        addresses: address,
-        defaultShippingAddress: hasAddress ? 0 : undefined,
-        defaultBillingAddress: hasAddress ? 0 : undefined,
+        addresses,
+        shippingAddresses: [0],
+        billingAddresses: [1],
+        defaultShippingAddress: data.defaultShippingAddress ? 0 : undefined,
+        defaultBillingAddress: data.defaultBillingAddress ? 1 : undefined,
       },
     })
     .execute()

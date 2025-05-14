@@ -134,6 +134,13 @@ export function SignUpPage() {
           street: formData.street,
           city: formData.city,
           postalCode: formData.postalCode,
+
+          billingStreet: formData.billingStreet,
+          billingCity: formData.billingCity,
+          billingPostalCode: formData.billingPostalCode,
+          billingCountry: countryCodeMap[formData.billingCountry],
+          defaultShippingAddress,
+          defaultBillingAddress,
         })
 
         setNotification('Registration successful!')
@@ -429,7 +436,7 @@ export function SignUpPage() {
                   <FormInput
                     name="billingStreet"
                     type="text"
-                    placeholder="Street Address 2"
+                    placeholder="Street Address"
                     value={formData.billingStreet}
                     onChange={handleChange}
                     error={errors.billingStreet}
