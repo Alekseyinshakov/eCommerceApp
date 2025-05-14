@@ -283,7 +283,13 @@ export function SignUpPage() {
                 </div>
               </div>
 
-              <div>Shipping address</div>
+              <div className={styles.subtitleWrapper}>
+                <div className={styles.formSubtitle}>Shipping Address</div>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" />
+                  Set as default shipping address
+                </label>
+              </div>
 
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
@@ -337,7 +343,19 @@ export function SignUpPage() {
                   </datalist>
                 </div>
               </div>
-              <div>Billing Address</div>
+              <label className={styles.checkboxLabel}>
+                <input type="checkbox" />
+                Use the same address for billing
+              </label>
+
+              <div className={styles.subtitleWrapper}>
+                <div className={styles.formSubtitle}>Billing Address</div>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" />
+                  Set as default billing address
+                </label>
+              </div>
+
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
                   <FormInput
