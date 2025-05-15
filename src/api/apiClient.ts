@@ -44,23 +44,33 @@ export const registerCustomer = async (data: {
   billingCountry: string
   defaultShippingAddress: boolean
   defaultBillingAddress: boolean
+  useSameAddress: boolean
 }) => {
   console.log('Registering customer', data)
 
-  const addresses = [
-    {
-      streetName: data.street,
-      city: data.city,
-      postalCode: data.postalCode,
-      country: data.country,
-    },
-    {
-      streetName: data.billingStreet,
-      city: data.billingCity,
-      postalCode: data.billingPostalCode,
-      country: data.billingCountry,
-    },
-  ]
+  const addresses = data.useSameAddress
+    ? [
+        {
+          streetName: data.street,
+          city: data.city,
+          postalCode: data.postalCode,
+          country: data.country,
+        },
+      ]
+    : [
+        {
+          streetName: data.street,
+          city: data.city,
+          postalCode: data.postalCode,
+          country: data.country,
+        },
+        {
+          streetName: data.billingStreet,
+          city: data.billingCity,
+          postalCode: data.billingPostalCode,
+          country: data.billingCountry,
+        },
+      ]
 
   const response = await apiRoot
     .customers()
@@ -73,9 +83,13 @@ export const registerCustomer = async (data: {
         dateOfBirth: data.dateOfBirth,
         addresses,
         shippingAddresses: [0],
-        billingAddresses: [1],
+        billingAddresses: [data.useSameAddress ? 0 : 1],
         defaultShippingAddress: data.defaultShippingAddress ? 0 : undefined,
-        defaultBillingAddress: data.defaultBillingAddress ? 1 : undefined,
+        defaultBillingAddress: data.defaultBillingAddress
+          ? data.useSameAddress
+            ? 0
+            : 1
+          : undefined,
       },
     })
     .execute()

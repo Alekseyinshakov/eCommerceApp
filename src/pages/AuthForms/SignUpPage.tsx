@@ -141,6 +141,7 @@ export function SignUpPage() {
           billingCountry: countryCodeMap[formData.billingCountry],
           defaultShippingAddress,
           defaultBillingAddress,
+          useSameAddress,
         })
 
         setNotification('Registration successful!')
@@ -392,16 +393,7 @@ export function SignUpPage() {
                     onChange={handleChange}
                     error={errors.country}
                   />
-                  <datalist id="country-list">
-                    <option value="Canada" />
-                    <option value="United States" />
-                    <option value="Ukraine" />
-                    <option value="Germany" />
-                    <option value="France" />
-                    <option value="Russia" />
-                    <option value="Belarus" />
-                    <option value="Poland" />
-                  </datalist>
+                  <CountryList />
                 </div>
               </div>
               <label className={styles.checkboxLabel}>
@@ -471,16 +463,7 @@ export function SignUpPage() {
                     onChange={handleChange}
                     error={errors.billingCountry}
                   />
-                  <datalist id="country-list">
-                    <option value="Canada" />
-                    <option value="United States" />
-                    <option value="Ukraine" />
-                    <option value="Germany" />
-                    <option value="France" />
-                    <option value="Russia" />
-                    <option value="Belarus" />
-                    <option value="Poland" />
-                  </datalist>
+                  <CountryList />
                 </div>
               </div>
 
@@ -493,5 +476,20 @@ export function SignUpPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+function CountryList() {
+  return (
+    <datalist id="country-list">
+      <option value="Canada" />
+      <option value="United States" />
+      <option value="Ukraine" />
+      <option value="Germany" />
+      <option value="France" />
+      <option value="Russia" />
+      <option value="Belarus" />
+      <option value="Poland" />
+    </datalist>
   )
 }

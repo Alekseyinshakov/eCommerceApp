@@ -1,6 +1,6 @@
 # eCommerce application
 
-[Deploy](https://pushnili-e-commerce.netlify.app/home),
+[Deploy](https://pushnili-e-commerce.netlify.app/home)
 
 ## About The Project
 
