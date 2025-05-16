@@ -224,7 +224,7 @@
   flex-direction: row-reverse;
   gap: 40px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 995px) {
     flex-direction: row;
     gap: 20px;
   }

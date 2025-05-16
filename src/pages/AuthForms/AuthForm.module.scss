@@ -2,12 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 78px);
+  min-height: calc(100vh - 75px);
+
+  @media (max-width: 995px) {
+    min-height: calc(100vh - 175px);
+  }
 }
 
 .regMain {
-  margin-top: 20px;
-  align-items: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 75px);
+
+  @media (max-width: 995px) {
+    min-height: calc(100vh - 175px);
+  }
 }
 
 @media screen and (max-height: 750px) {
@@ -128,6 +138,7 @@
   font-size: 0.7em;
   color: $title-color;
   width: 100%;
+
   input {
     margin-right: 5px;
   }
