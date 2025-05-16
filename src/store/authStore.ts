@@ -1,21 +1,27 @@
 import { create } from 'zustand'
 
+type User = {
+  firstName: string
+  lastName: string
+  email: string
+}
+
 type AuthStore = {
-  email: string | null
-  setEmail: (email: string | null) => void
+  user: User | null
+  setUser: (user: User | null) => void
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  email: localStorage.getItem('customer_email'),
+  user: JSON.parse(localStorage.getItem('user_data') || 'null') as User | null,
 
-  setEmail: (email) => {
-    if (email) {
-      localStorage.setItem('customer_email', email)
-      set({ email })
+  setUser: (user: User | null) => {
+    if (user) {
+      localStorage.setItem('user_data', JSON.stringify(user))
+      set({ user })
     } else {
-      localStorage.removeItem('customer_email')
+      localStorage.removeItem('user_data')
       localStorage.removeItem('customer_token')
-      set({ email: null })
+      set({ user: null })
     }
   },
 }))

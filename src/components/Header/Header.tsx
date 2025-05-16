@@ -14,31 +14,83 @@ const {
   cart,
   burgerMenu,
   open,
+  centerMob,
+  hederElem,
 } = styles
 
 function Header() {
   const navigate = useNavigate()
-  const setEmail = useAuthStore((state) => state.setEmail)
+  const setUser = useAuthStore((state) => state.setUser)
 
-  const email = useAuthStore((state) => state.email)
+  const email = useAuthStore((state) => state.user?.email)
 
   const handleLogout = () => {
-    setEmail(null)
+    setUser(null)
     navigate('/log-in')
   }
 
   const [isOpen, setIsOpen] = useState(false)
-  const navRef = useRef<HTMLUListElement>(null)
+  const [isMounted, setIsMounted] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
+
+  const handleToggleMenu = () => {
+    if (isOpen) {
+      setIsOpen(false)
+      setTimeout(() => {
+        setIsMounted(false)
+      }, 300)
+    } else {
+      setIsMounted(true)
+      setTimeout(() => {
+        setIsOpen(true)
+      }, 10)
+    }
+  }
 
   useEffect(() => {
-    const handleMenuClose = (event: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 995) {
         setIsOpen(false)
+        setIsMounted(false)
+        document.body.style.overflow = 'auto'
       }
     }
-    document.addEventListener('mousedown', handleMenuClose)
+
+    window.addEventListener('resize', handleResize)
     return () => {
-      document.removeEventListener('mousedown', handleMenuClose)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target as Node) &&
+        window.innerWidth <= 995
+      ) {
+        setIsOpen(false)
+        setTimeout(() => {
+          setIsMounted(false)
+        }, 300)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
 
@@ -50,74 +102,80 @@ function Header() {
             <img src="images/Logo.svg" alt="logo" width={150} height={35} />
           </NavLink>
         </div>
-        <nav className={`${isOpen ? open : ''}`} ref={navRef}>
-          <ul className={navList}>
-            <li className={navItem}>
-              <NavLink
-                className={({ isActive }) => (isActive ? activeLink : '')}
-                to="/home"
-                onClick={() => setIsOpen(false)}
-              >
-                Home
-              </NavLink>
-            </li>
-            <li className={navItem}>
-              <NavLink
-                className={({ isActive }) => (isActive ? activeLink : '')}
-                to="/shop"
-                onClick={() => setIsOpen(false)}
-              >
-                Shop
-              </NavLink>
-            </li>
-            <li className={navItem}>
-              <NavLink
-                className={({ isActive }) => (isActive ? activeLink : '')}
-                to="/about"
-                onClick={() => setIsOpen(false)}
-              >
-                About
-              </NavLink>
-            </li>
-            <li className={navItem}>
-              <NavLink
-                className={({ isActive }) => (isActive ? activeLink : '')}
-                to="/plant-care"
-                onClick={() => setIsOpen(false)}
-              >
-                Plant Care
-              </NavLink>
-            </li>
-          </ul>
-          <button
-            className={`${burgerMenu}`}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span></span>
-          </button>
-        </nav>
-        <div className={rightSide}>
-          <button className={search}></button>
-          <Link to="/cart" className={cart}>
-            <img src="images/icons/cart-icon.svg" alt="cart" />
-          </Link>
-          {email ? (
-            <>
-              <div className={styles.userEmail}>{email}</div>
-              <button onClick={handleLogout} className="button btn-logout">
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/log-in" className="button">
-                Login
+        <div className={centerMob}>
+          <div className={hederElem}>
+            <div className={rightSide}>
+              <button className={search}></button>
+              <Link to="/cart" className={cart}>
+                <img src="images/icons/cart-icon.svg" alt="cart" />
               </Link>
-              <Link to="/sign-up" className="button">
-                Register
-              </Link>
-            </>
-          )}
+              {email ? (
+                <>
+                  <div className={styles.userEmail}>{email}</div>
+                  <button onClick={handleLogout} className="button btn-logout">
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/log-in" className="button">
+                    Login
+                  </Link>
+                  <Link to="/sign-up" className="button">
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
+            <div>
+              <nav
+                ref={navRef}
+                className={`${isMounted ? styles.mounted : ''} ${isOpen ? open : ''}`}
+              >
+                <ul className={navList}>
+                  <li className={navItem}>
+                    <NavLink
+                      className={({ isActive }) => (isActive ? activeLink : '')}
+                      to="/home"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Home
+                    </NavLink>
+                  </li>
+                  <li className={navItem}>
+                    <NavLink
+                      className={({ isActive }) => (isActive ? activeLink : '')}
+                      to="/shop"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Shop
+                    </NavLink>
+                  </li>
+                  <li className={navItem}>
+                    <NavLink
+                      className={({ isActive }) => (isActive ? activeLink : '')}
+                      to="/about"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      About
+                    </NavLink>
+                  </li>
+                  <li className={navItem}>
+                    <NavLink
+                      className={({ isActive }) => (isActive ? activeLink : '')}
+                      to="/plant-care"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Plant Care
+                    </NavLink>
+                  </li>
+                </ul>
+                <button className={burgerMenu} onClick={handleToggleMenu}>
+                  <span></span>
+                </button>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </header>

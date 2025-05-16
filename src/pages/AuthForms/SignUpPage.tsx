@@ -41,7 +41,7 @@ export function SignUpPage() {
   const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
-  const setEmail = useAuthStore((state) => state.setEmail)
+  const setUser = useAuthStore((state) => state.setUser)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -54,6 +54,10 @@ export function SignUpPage() {
     city: '',
     postalCode: '',
     country: '',
+    billingStreet: '',
+    billingCity: '',
+    billingPostalCode: '',
+    billingCountry: '',
   })
 
   const [errors, setErrors] = useState({
@@ -67,8 +71,16 @@ export function SignUpPage() {
     city: '',
     postalCode: '',
     country: '',
+    billingStreet: '',
+    billingCity: '',
+    billingPostalCode: '',
+    billingCountry: '',
     registration: '',
   })
+
+  const [useSameAddress, setUseSameAddress] = useState(true)
+  const [defaultShippingAddress, setDefaultShippingAddress] = useState(true)
+  const [defaultBillingAddress, setDefaultBillingAddress] = useState(true)
 
   const countryCodeMap: Record<string, string> = {
     Canada: 'CA',
@@ -100,6 +112,10 @@ export function SignUpPage() {
       city: validateCity(formData.city),
       postalCode: validatePostalCode(formData.postalCode),
       country: validateCountry(formData.country),
+      billingStreet: validateStreet(formData.billingStreet),
+      billingCity: validateCity(formData.billingCity),
+      billingPostalCode: validatePostalCode(formData.billingPostalCode),
+      billingCountry: validateCountry(formData.billingCountry),
       registration: '',
     }
 
@@ -118,13 +134,28 @@ export function SignUpPage() {
           street: formData.street,
           city: formData.city,
           postalCode: formData.postalCode,
+
+          billingStreet: formData.billingStreet,
+          billingCity: formData.billingCity,
+          billingPostalCode: formData.billingPostalCode,
+          billingCountry: countryCodeMap[formData.billingCountry],
+          defaultShippingAddress,
+          defaultBillingAddress,
+          useSameAddress,
         })
 
         setNotification('Registration successful!')
 
         await loginCustomer(formData.email, formData.password)
 
-        setEmail(formData.email)
+        const userData = {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        }
+
+        setUser(userData)
+
         navigate('/home')
       } catch (error) {
         const err = error as { body?: ErrorResponse }
@@ -146,6 +177,30 @@ export function SignUpPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => {
+      if (useSameAddress) {
+        if (name === 'street') {
+          setFormData((prev) => ({
+            ...prev,
+            billingStreet: value,
+          }))
+        } else if (name === 'city') {
+          setFormData((prev) => ({
+            ...prev,
+            billingCity: value,
+          }))
+        } else if (name === 'postalCode') {
+          setFormData((prev) => ({
+            ...prev,
+            billingPostalCode: value,
+          }))
+        } else if (name === 'country') {
+          setFormData((prev) => ({
+            ...prev,
+            billingCountry: value,
+          }))
+        }
+      }
+
       const updated = { ...prev, [name]: value }
 
       const updatedErrors = {
@@ -168,6 +223,21 @@ export function SignUpPage() {
         postalCode:
           name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
         country: name === 'country' ? validateCountry(value) : errors.country,
+
+        billingStreet:
+          name === 'billingStreet'
+            ? validateStreet(value)
+            : errors.billingStreet,
+        billingCity:
+          name === 'billingCity' ? validateCity(value) : errors.billingCity,
+        billingPostalCode:
+          name === 'billingPostalCode'
+            ? validatePostalCode(value)
+            : errors.billingPostalCode,
+        billingCountry:
+          name === 'billingCountry'
+            ? validateCountry(value)
+            : errors.billingCountry,
       }
 
       setErrors(updatedErrors)
@@ -175,8 +245,29 @@ export function SignUpPage() {
     })
   }
 
+  const sameAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUseSameAddress(e.target.checked)
+    if (e.target.checked) {
+      setFormData((prev) => ({
+        ...prev,
+        billingStreet: prev.street,
+        billingCity: prev.city,
+        billingPostalCode: prev.postalCode,
+        billingCountry: prev.country,
+      }))
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        billingStreet: '',
+        billingCity: '',
+        billingPostalCode: '',
+        billingCountry: '',
+      }))
+    }
+  }
+
   return (
-    <main className={main}>
+    <main className={`${main} ${styles.regMain}`}>
       <div className={authPage}>
         <div className={authBlock}>
           <RegisterNav />
@@ -254,6 +345,21 @@ export function SignUpPage() {
                   />
                 </div>
               </div>
+
+              <div className={styles.subtitleWrapper}>
+                <div className={styles.formSubtitle}>Shipping Address</div>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={defaultShippingAddress}
+                    onChange={() => {
+                      setDefaultShippingAddress(!defaultShippingAddress)
+                    }}
+                  />
+                  Set as default shipping address
+                </label>
+              </div>
+
               <div className={inputGroupTwo}>
                 <div className={groupOne}>
                   <FormInput
@@ -294,16 +400,77 @@ export function SignUpPage() {
                     onChange={handleChange}
                     error={errors.country}
                   />
-                  <datalist id="country-list">
-                    <option value="Canada" />
-                    <option value="United States" />
-                    <option value="Ukraine" />
-                    <option value="Germany" />
-                    <option value="France" />
-                    <option value="Russia" />
-                    <option value="Belarus" />
-                    <option value="Poland" />
-                  </datalist>
+                  <CountryList />
+                </div>
+              </div>
+              <label className={styles.checkboxLabel}>
+                <input
+                  checked={useSameAddress}
+                  type="checkbox"
+                  onChange={sameAddressHandler}
+                />
+                Use the same address for billing
+              </label>
+
+              <div
+                className={`${styles.subtitleWrapper} ${useSameAddress ? styles.hidden : ''}`}
+              >
+                <div className={styles.formSubtitle}>Billing Address</div>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={defaultBillingAddress}
+                    onChange={() => {
+                      setDefaultBillingAddress(!defaultBillingAddress)
+                    }}
+                  />
+                  Set as default billing address
+                </label>
+              </div>
+
+              <div
+                className={`${inputGroupTwo} ${useSameAddress ? styles.hidden : ''}`}
+              >
+                <div className={groupOne}>
+                  <FormInput
+                    name="billingStreet"
+                    type="text"
+                    placeholder="Street Address"
+                    value={formData.billingStreet}
+                    onChange={handleChange}
+                    error={errors.billingStreet}
+                  />
+
+                  <FormInput
+                    name="billingCity"
+                    type="text"
+                    placeholder="City"
+                    value={formData.billingCity}
+                    onChange={handleChange}
+                    error={errors.billingCity}
+                  />
+                </div>
+
+                <div className={groupOne}>
+                  <FormInput
+                    name="billingPostalCode"
+                    type="text"
+                    placeholder="Postal Code"
+                    value={formData.billingPostalCode}
+                    onChange={handleChange}
+                    error={errors.billingPostalCode}
+                  />
+
+                  <FormInput
+                    name="billingCountry"
+                    type="text"
+                    placeholder="Country"
+                    list="country-list"
+                    value={formData.billingCountry}
+                    onChange={handleChange}
+                    error={errors.billingCountry}
+                  />
+                  <CountryList />
                 </div>
               </div>
 
@@ -316,5 +483,20 @@ export function SignUpPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+function CountryList() {
+  return (
+    <datalist id="country-list">
+      <option value="Canada" />
+      <option value="United States" />
+      <option value="Ukraine" />
+      <option value="Germany" />
+      <option value="France" />
+      <option value="Russia" />
+      <option value="Belarus" />
+      <option value="Poland" />
+    </datalist>
   )
 }

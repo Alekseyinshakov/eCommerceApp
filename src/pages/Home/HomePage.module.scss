@@ -15,10 +15,10 @@
 
 .content {
   max-width: 557px;
+  padding-top: 68px;
 }
 
 .subtitle {
-  margin-top: 68px;
   font-weight: 500;
   font-size: 14px;
   line-height: 114%;
@@ -57,12 +57,29 @@
   }
 }
 
+.hello {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 114%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $title-color;
+  margin-bottom: 7px;
+  span {
+    color: $main-light-color;
+  }
+}
+
 @media (max-width: 670px) {
   .wrapper {
     padding: 0 15px;
     text-align: center;
   }
-  .subtitle {
+
+  .content {
+    padding-top: 68px;
+  }
+  .hello {
     margin-top: 28px;
   }
   .title {

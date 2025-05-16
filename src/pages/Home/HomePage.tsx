@@ -1,14 +1,29 @@
 import { Link } from 'react-router-dom'
 import styles from './HomePage.module.scss'
+import { useAuthStore } from '@store/authStore'
 
-const { homeContainer, content, subtitle, title, text, imgWrapper, home } =
-  styles
+const {
+  homeContainer,
+  content,
+  subtitle,
+  hello,
+  title,
+  text,
+  imgWrapper,
+  home,
+} = styles
 
 export function HomePage() {
+  const firstName = useAuthStore((state) => state.user?.firstName)
   return (
     <section className={home}>
       <div className={`container ${homeContainer}`}>
         <div className={content}>
+          {firstName && (
+            <div className={hello}>
+              <span>HELLO,</span> {firstName}!
+            </div>
+          )}
           <h2 className={subtitle}>Welcome to GreenShop</h2>
           <h1 className={title}>
             Let’s Make a Better <span>Planet</span>

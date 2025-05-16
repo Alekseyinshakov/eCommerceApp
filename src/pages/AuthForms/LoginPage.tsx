@@ -16,7 +16,7 @@ import { useAuthStore } from '@store/authStore'
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
 export function LoginPage() {
-  const setEmail = useAuthStore((state) => state.setEmail)
+  const setUser = useAuthStore((state) => state.setUser)
 
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
@@ -46,10 +46,18 @@ export function LoginPage() {
 
     if (!hasErrors) {
       try {
-        const { email, password } = formData
-        await loginCustomer(email, password)
+        const { firstName, lastName, email } = await loginCustomer(
+          formData.email,
+          formData.password
+        )
 
-        setEmail(email)
+        if (firstName && lastName && email) {
+          setUser({
+            firstName,
+            lastName,
+            email,
+          })
+        }
 
         navigate('/home')
       } catch (err) {
