@@ -18,12 +18,12 @@ const {
 
 function Header() {
   const navigate = useNavigate()
-  const setEmail = useAuthStore((state) => state.setEmail)
+  const setUser = useAuthStore((state) => state.setUser)
 
-  const email = useAuthStore((state) => state.email)
+  const email = useAuthStore((state) => state.user?.email)
 
   const handleLogout = () => {
-    setEmail(null)
+    setUser(null)
     navigate('/log-in')
   }
 

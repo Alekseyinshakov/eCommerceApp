@@ -41,7 +41,7 @@ export function SignUpPage() {
   const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
-  const setEmail = useAuthStore((state) => state.setEmail)
+  const setUser = useAuthStore((state) => state.setUser)
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -148,7 +148,14 @@ export function SignUpPage() {
 
         await loginCustomer(formData.email, formData.password)
 
-        setEmail(formData.email)
+        const userData = {
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        }
+
+        setUser(userData)
+
         navigate('/home')
       } catch (error) {
         const err = error as { body?: ErrorResponse }
