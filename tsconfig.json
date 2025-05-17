@@ -25,7 +25,9 @@
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@api/*": ["api/*"],
+      "@store/*": ["store/*"]
     },
     "types": ["vitest/globals", "@testing-library/jest-dom", "node"]
   },

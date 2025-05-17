@@ -11,6 +11,10 @@ const allowedCountries = [
 
 export const validateEmail = (value: string): string => {
   const trimmed = value.trim()
+  if (!trimmed) return 'Email is required'
+
+  if (trimmed.includes(' ')) return 'Email must not contain spaces'
+
   if (trimmed !== value) return 'Email must not have leading/trailing spaces'
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!regex.test(trimmed)) return 'Invalid email format'
@@ -18,13 +22,14 @@ export const validateEmail = (value: string): string => {
 }
 
 export const validatePassword = (value: string): string => {
-  if (value.trim() !== value)
-    return 'Password must not have leading/trailing spaces'
+  const trimmed = value.trim()
+  if (trimmed !== value) return 'Password must not have leading/trailing spaces'
   if (value.length < 8) return 'Password must be at least 8 characters'
   if (!/[A-Z]/.test(value))
     return 'Password must contain at least one uppercase letter'
   if (!/[a-z]/.test(value))
     return 'Password must contain at least one lowercase letter'
+  if (trimmed.includes(' ')) return 'Password must not contain spaces'
   if (!/[0-9]/.test(value)) return 'Password must contain at least one digit'
   return ''
 }

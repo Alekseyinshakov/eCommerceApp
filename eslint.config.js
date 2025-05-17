@@ -32,6 +32,7 @@ export default defineConfig([
         { allowConstantExport: true },
       ],
       'prettier/prettier': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
     },
     settings: {
       react: {

@@ -1,4 +1,4 @@
-import { apiRoot } from '../apiClient'
+import { apiRoot } from '@api/apiClient'
 import { useState } from 'react'
 
 export const TestRequestButton = () => {

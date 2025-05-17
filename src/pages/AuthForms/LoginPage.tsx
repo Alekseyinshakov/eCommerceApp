@@ -4,17 +4,23 @@ import { useAuthPageText } from '@hooks/useAuthPageText'
 import { validateEmail, validatePassword } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
+// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
-import styles from './AuthForm.module.scss'
+import { loginCustomer } from '@api/auth'
+import { useNotification } from '@components/Notification/NotifficationContext'
 
-const { main, authPage, authBlock, auth, authHint, form, forgetful, button } =
-  styles
+import styles from './AuthForm.module.scss'
+import { useAuthStore } from '@store/authStore'
+
+const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
 export function LoginPage() {
+  const setUser = useAuthStore((state) => state.setUser)
+
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
+  const { setNotification } = useNotification()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -26,7 +32,7 @@ export function LoginPage() {
     password: '',
   })
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const newErrors = {
@@ -37,8 +43,31 @@ export function LoginPage() {
     setErrors(newErrors)
 
     const hasErrors = Object.values(newErrors).some(Boolean)
+
     if (!hasErrors) {
-      navigate('/home')
+      try {
+        const { firstName, lastName, email } = await loginCustomer(
+          formData.email,
+          formData.password
+        )
+
+        if (firstName && lastName && email) {
+          setUser({
+            firstName,
+            lastName,
+            email,
+          })
+        }
+
+        navigate('/home')
+      } catch (err) {
+        console.error(err)
+        setNotification('Invalid email or password')
+        setErrors({
+          email: 'Invalid email or password',
+          password: 'Invalid email or password',
+        })
+      }
     }
   }
 
@@ -82,14 +111,14 @@ export function LoginPage() {
                 className="passwordText"
               />
 
-              <div className={forgetful}>Forgot password?</div>
+              {/* <div className={forgetful}>Forgot password?</div> */}
 
               <button className={button} type="submit">
                 {submitText}
               </button>
             </form>
           </div>
-          <RegisterAlt />
+          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>
