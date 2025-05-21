@@ -54,19 +54,16 @@
   }
 
   @media (max-width: 995px) {
-    opacity: 0;
-    visibility: hidden;
     flex-direction: column;
     position: fixed;
     top: 120px;
-    right: 0;
+    right: -100%;
     background-color: $main-light-color;
-    width: 75%;
+    width: 100%;
     align-items: center;
     gap: 25px;
     font-size: 28px;
     padding: 35px 45px;
-    transform: translate(100%);
     transition: transform 0.3s ease;
   }
 
@@ -116,21 +113,15 @@
 
 .mounted {
   .navList {
-    visibility: visible;
-    opacity: 0;
     transform: translate(100%);
-    transition:
-      transform 0.3s ease,
-      opacity 0.3s ease;
+    transition: transform 0.3s ease;
     width: 100vw;
   }
 }
 
 .open {
   & .navList {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(0);
+    transform: translate(-100%);
     z-index: 20;
     width: 100vw;
   }

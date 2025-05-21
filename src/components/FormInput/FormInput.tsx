@@ -24,7 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
   value,
   onChange,
   error,
-}) => {
+}: FormInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const isPassword = type === 'password'

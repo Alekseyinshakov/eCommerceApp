@@ -33,19 +33,19 @@ function Header() {
   const [isMounted, setIsMounted] = useState(false)
   const navRef = useRef<HTMLElement>(null)
 
-  const handleToggleMenu = () => {
-    if (isOpen) {
-      setIsOpen(false)
-      setTimeout(() => {
-        setIsMounted(false)
-      }, 300)
-    } else {
-      setIsMounted(true)
-      setTimeout(() => {
-        setIsOpen(true)
-      }, 10)
-    }
-  }
+  // const handleToggleMenu = () => {
+  //   if (isOpen) {
+  //     setIsOpen(false)
+  //     setTimeout(() => {
+  //       setIsMounted(false)
+  //     }, 300)
+  //   } else {
+  //     setIsMounted(true)
+  //     setTimeout(() => {
+  //       setIsOpen(true)
+  //     }, 10)
+  //   }
+  // }
 
   useEffect(() => {
     if (isOpen) {
@@ -82,9 +82,9 @@ function Header() {
         window.innerWidth <= 995
       ) {
         setIsOpen(false)
-        setTimeout(() => {
-          setIsMounted(false)
-        }, 300)
+        // setTimeout(() => {
+        //   setIsMounted(false)
+        // }, 300)
       }
     }
 
@@ -170,7 +170,10 @@ function Header() {
                     </NavLink>
                   </li>
                 </ul>
-                <button className={burgerMenu} onClick={handleToggleMenu}>
+                <button
+                  className={burgerMenu}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
                   <span></span>
                 </button>
               </nav>
