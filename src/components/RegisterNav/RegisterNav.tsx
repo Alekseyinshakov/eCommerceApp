@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import './RegisterNav.scss'
 
-export function RegisterNav() {
+export const RegisterNav = () => {
   const location = useLocation()
   const currentPath = location.pathname
 
@@ -13,9 +13,7 @@ export function RegisterNav() {
       >
         Login
       </Link>
-
       <div className="navigate-border"></div>
-
       <Link
         to="/sign-up"
         className={`link ${currentPath === '/sign-up' ? 'active' : ''}`}

@@ -1,6 +1,6 @@
 import styles from './CartPage.module.scss'
 
-export function CartPage() {
+export const CartPage = () => {
   return (
     <div className="container">
       <h2 className={styles.title}>Cart</h2>

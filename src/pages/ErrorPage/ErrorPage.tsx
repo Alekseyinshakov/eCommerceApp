@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const { title, text } = styles
 
-export function ErrorPage() {
+export const ErrorPage = () => {
   return (
     <div className="container">
       <Header />

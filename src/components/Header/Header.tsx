@@ -18,7 +18,14 @@ const {
   hederElem,
 } = styles
 
-function Header() {
+const routes = [
+  { path: '/home', label: 'Home' },
+  { path: '/shop', label: 'Shop' },
+  { path: '/about', label: 'About' },
+  { path: '/plant-care', label: 'Plant Care' },
+]
+
+const Header = () => {
   const navigate = useNavigate()
   const setUser = useAuthStore((state) => state.setUser)
 
@@ -30,22 +37,7 @@ function Header() {
   }
 
   const [isOpen, setIsOpen] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
   const navRef = useRef<HTMLElement>(null)
-
-  // const handleToggleMenu = () => {
-  //   if (isOpen) {
-  //     setIsOpen(false)
-  //     setTimeout(() => {
-  //       setIsMounted(false)
-  //     }, 300)
-  //   } else {
-  //     setIsMounted(true)
-  //     setTimeout(() => {
-  //       setIsOpen(true)
-  //     }, 10)
-  //   }
-  // }
 
   useEffect(() => {
     if (isOpen) {
@@ -63,7 +55,6 @@ function Header() {
     const handleResize = () => {
       if (window.innerWidth > 995) {
         setIsOpen(false)
-        setIsMounted(false)
         document.body.style.overflow = 'auto'
       }
     }
@@ -82,9 +73,6 @@ function Header() {
         window.innerWidth <= 995
       ) {
         setIsOpen(false)
-        // setTimeout(() => {
-        //   setIsMounted(false)
-        // }, 300)
       }
     }
 
@@ -99,7 +87,7 @@ function Header() {
       <div className={`container ${headerContainer}`}>
         <div className={logo}>
           <NavLink to="/home">
-            <img src="images/Logo.svg" alt="logo" width={150} height={35} />
+            <img src="images/Logo.svg" alt="logo" />
           </NavLink>
         </div>
         <div className={centerMob}>
@@ -128,47 +116,21 @@ function Header() {
               )}
             </div>
             <div>
-              <nav
-                ref={navRef}
-                className={`${isMounted ? styles.mounted : ''} ${isOpen ? open : ''}`}
-              >
+              <nav ref={navRef} className={`${isOpen ? open : ''}`}>
                 <ul className={navList}>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/home"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Home
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/shop"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Shop
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/about"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      About
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/plant-care"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Plant Care
-                    </NavLink>
-                  </li>
+                  {routes.map(({ path, label }) => (
+                    <li key={label} className={navItem}>
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? activeLink : ''
+                        }
+                        to={path}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {label}
+                      </NavLink>
+                    </li>
+                  ))}
                 </ul>
                 <button
                   className={burgerMenu}

@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, vi } from 'vitest'
-
 import { NotificationProvider } from '../src/components/Notification/UseNotification'
 
 const navigateMock = vi.fn()

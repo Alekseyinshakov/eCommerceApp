@@ -4,7 +4,6 @@ import { useAuthPageText } from '@hooks/useAuthPageText'
 import { validateEmail, validatePassword } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import { loginCustomer } from '@api/auth'
@@ -15,7 +14,7 @@ import { useAuthStore } from '@store/authStore'
 
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
-export function LoginPage() {
+export const LoginPage = () => {
   const setUser = useAuthStore((state) => state.setUser)
 
   const navigate = useNavigate()
@@ -100,7 +99,6 @@ export function LoginPage() {
                 onChange={handleChange}
                 error={errors.email}
               />
-
               <FormInput
                 name="password"
                 type="password"
@@ -110,15 +108,11 @@ export function LoginPage() {
                 error={errors.password}
                 className="passwordText"
               />
-
-              {/* <div className={forgetful}>Forgot password?</div> */}
-
               <button className={button} type="submit">
                 {submitText}
               </button>
             </form>
           </div>
-          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>

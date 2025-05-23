@@ -3,7 +3,7 @@ import '@assets/styles/global.scss'
 import Header from '@components/Header/Header'
 import { NotificationProvider } from '@components/Notification/UseNotification'
 
-function App() {
+const App = () => {
   return (
     <NotificationProvider>
       <Header />

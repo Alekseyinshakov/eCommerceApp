@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styles from './FormInput.module.scss'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import classNames from 'classnames'
 
 interface FormInputProps {
   name: string
@@ -30,15 +31,24 @@ const FormInput: React.FC<FormInputProps> = ({
   const isPassword = type === 'password'
   const inputType = isPassword && showPassword ? 'text' : type
 
-  const inputClassName = [
+  // const inputClassName = [
+  //   styles.input,
+  //   className && styles[className],
+  //   error && styles.borderRed,
+  //   isPassword && styles.withIcon,
+  //   isPassword && styles.passwordText,
+  // ]
+  //   .filter(Boolean)
+  //   .join(' ')
+
+  const inputClassName = classNames(
     styles.input,
     className && styles[className],
-    error && styles.borderRed,
-    isPassword && styles.withIcon,
-    isPassword && styles.passwordText,
-  ]
-    .filter(Boolean)
-    .join(' ')
+    {
+      [styles.borderRed]: !!error,
+      [styles.passwordText]: isPassword,
+    }
+  )
 
   return (
     <div className={styles.inputBox}>

@@ -1,6 +1,6 @@
 import styles from './PlantCare.module.scss'
 
-export function PlantCarePage() {
+export const PlantCarePage = () => {
   return (
     <div className="container">
       <h2 className={styles.title}>Plant Care</h2>

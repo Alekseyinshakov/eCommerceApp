@@ -28,6 +28,11 @@
 }
 
 .logo {
+  width: 150px;
+  height: 35px;
+  a {
+    display: block;
+  }
   @media (max-width: 995px) {
     display: flex;
     align-items: center;
