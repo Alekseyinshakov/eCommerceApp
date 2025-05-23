@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
 
-export function useAuthPageText() {
+export const useAuthPageText = () => {
   const { pathname } = useLocation()
 
   const isLogin = pathname.startsWith('/log-in')

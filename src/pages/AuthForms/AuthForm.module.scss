@@ -70,20 +70,6 @@
     gap: 10px;
   }
 
-  .forgetful {
-    width: 300px;
-    font-size: 14px;
-    color: $main-light-color;
-    cursor: pointer;
-    text-align: right;
-    margin-bottom: 10px;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: $main-light-color-hover;
-    }
-  }
-
   .button {
     display: block;
     width: 100%;

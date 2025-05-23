@@ -13,7 +13,6 @@ import {
 } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
@@ -22,6 +21,7 @@ import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
+import { CountryList } from './helpersCountry'
 
 const {
   main,
@@ -37,7 +37,7 @@ const {
   passwordText,
 } = styles
 
-export function SignUpPage() {
+export const SignUpPage = () => {
   const { setNotification } = useNotification()
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
@@ -177,31 +177,24 @@ export function SignUpPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => {
+      let updated = { ...prev, [name]: value }
+
       if (useSameAddress) {
-        if (name === 'street') {
-          setFormData((prev) => ({
-            ...prev,
-            billingStreet: value,
-          }))
-        } else if (name === 'city') {
-          setFormData((prev) => ({
-            ...prev,
-            billingCity: value,
-          }))
-        } else if (name === 'postalCode') {
-          setFormData((prev) => ({
-            ...prev,
-            billingPostalCode: value,
-          }))
-        } else if (name === 'country') {
-          setFormData((prev) => ({
-            ...prev,
-            billingCountry: value,
-          }))
+        switch (name) {
+          case 'street':
+            updated = { ...updated, billingStreet: value }
+            break
+          case 'city':
+            updated = { ...updated, billingCity: value }
+            break
+          case 'postalCode':
+            updated = { ...updated, billingPostalCode: value }
+            break
+          case 'country':
+            updated = { ...updated, billingCountry: value }
+            break
         }
       }
-
-      const updated = { ...prev, [name]: value }
 
       const updatedErrors = {
         ...errors,
@@ -223,7 +216,6 @@ export function SignUpPage() {
         postalCode:
           name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
         country: name === 'country' ? validateCountry(value) : errors.country,
-
         billingStreet:
           name === 'billingStreet'
             ? validateStreet(value)
@@ -479,24 +471,8 @@ export function SignUpPage() {
               </button>
             </form>
           </div>
-          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>
-  )
-}
-
-function CountryList() {
-  return (
-    <datalist id="country-list">
-      <option value="Canada" />
-      <option value="United States" />
-      <option value="Ukraine" />
-      <option value="Germany" />
-      <option value="France" />
-      <option value="Russia" />
-      <option value="Belarus" />
-      <option value="Poland" />
-    </datalist>
   )
 }

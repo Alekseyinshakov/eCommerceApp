@@ -37,7 +37,6 @@ export const registerCustomer = async (data: {
   city: string
   postalCode: string
   country: string
-
   billingStreet: string
   billingCity: string
   billingPostalCode: string
@@ -108,7 +107,7 @@ export const buildCustomerClient = (email: string, password: string) => {
       clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
       user: {
         username: email,
-        password: password,
+        password,
       },
     },
     scopes,

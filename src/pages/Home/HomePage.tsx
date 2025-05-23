@@ -13,7 +13,7 @@ const {
   home,
 } = styles
 
-export function HomePage() {
+export const HomePage = () => {
   const firstName = useAuthStore((state) => state.user?.firstName)
   return (
     <section className={home}>

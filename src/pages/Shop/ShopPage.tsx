@@ -1,7 +1,7 @@
 import { TestRequestButton } from '@components/TestRequestButton'
 import styles from './ShopPage.module.scss'
 
-export function ShopPage() {
+export const ShopPage = () => {
   return (
     <div className="container">
       <h2 className={styles.title}>Shop</h2>
