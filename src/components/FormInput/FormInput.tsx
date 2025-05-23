@@ -15,7 +15,7 @@ interface FormInputProps {
   error?: string
 }
 
-const FormInput: React.FC<FormInputProps> = ({
+const FormInput = ({
   name,
   type = 'text',
   placeholder,
@@ -30,16 +30,6 @@ const FormInput: React.FC<FormInputProps> = ({
 
   const isPassword = type === 'password'
   const inputType = isPassword && showPassword ? 'text' : type
-
-  // const inputClassName = [
-  //   styles.input,
-  //   className && styles[className],
-  //   error && styles.borderRed,
-  //   isPassword && styles.withIcon,
-  //   isPassword && styles.passwordText,
-  // ]
-  //   .filter(Boolean)
-  //   .join(' ')
 
   const inputClassName = classNames(
     styles.input,
