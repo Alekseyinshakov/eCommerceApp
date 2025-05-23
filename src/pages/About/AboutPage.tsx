@@ -1,6 +1,6 @@
 import styles from './AboutPage.module.scss'
 
-export function AboutPage() {
+export const AboutPage = () => {
   return (
     <div className="container">
       <h2 className={styles.title}>About Us</h2>
