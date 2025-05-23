@@ -1,0 +1,6 @@
+echo "Running ESLint on staged files..."
+npx eslint $(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts|tsx)$') --fix
+
+echo "Running prettier on staged files..."
+npx prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+git update-index --again

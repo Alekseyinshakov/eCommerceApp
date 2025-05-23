@@ -1,0 +1,167 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 75px);
+
+  @media (max-width: 995px) {
+    min-height: calc(100vh - 175px);
+  }
+}
+
+.regMain {
+  margin-top: 80px;
+  align-items: start;
+  min-height: auto;
+  @media (max-width: 995px) {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .main {
+    margin-top: 20px;
+  }
+}
+
+.authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.authReg {
+  display: flex;
+}
+
+.loginBlock {
+  width: 500px;
+  height: 600px;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  margin: 40px 0px 30px 0px;
+
+  .authHint {
+    width: 300px;
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: $second-text-light-color;
+    text-align: center;
+  }
+
+  .form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .formSignUp {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .forgetful {
+    width: 300px;
+    font-size: 14px;
+    color: $main-light-color;
+    cursor: pointer;
+    text-align: right;
+    margin-bottom: 10px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $main-light-color-hover;
+    }
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 15px;
+
+    color: $light-background-color;
+
+    font-size: 16px;
+
+    text-align: center;
+    text-decoration: none;
+
+    background-color: $main-light-color;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: $main-light-color-hover;
+    }
+  }
+}
+
+.inputGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.groupOne {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inputGroupTwo {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.subtitleWrapper {
+  width: 100%;
+  color: $title-color;
+}
+
+.checkboxLabel {
+  font-size: 0.7em;
+  color: $title-color;
+  width: 100%;
+
+  input {
+    margin-right: 5px;
+  }
+}
+
+.formSubtitle {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (max-width: 580px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+
+  .groupOne {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inputGroupTwo {
+    flex-direction: column;
+  }
+}
