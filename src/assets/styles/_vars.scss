@@ -13,3 +13,9 @@ $main-light-color-transparent: #46a35980;
 
 $title-color: #3d3d3d;
 $error-color: #ff3939;
+
+$gradient: linear-gradient(
+  135deg,
+  rgba(245, 245, 245, 0.5) 0%,
+  rgba(245, 245, 245, 0.5) 100%
+);
