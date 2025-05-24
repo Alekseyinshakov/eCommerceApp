@@ -1,13 +1,13 @@
-import styles from './ProductCart.module.scss'
+import styles from './ProductCard.module.scss'
 const { mainBlock, img, text, nameItem, priceItem } = styles
 
-type ProductCartProps = {
+type ProductCardProps = {
   name: string
   price: string | number
   image: string
 }
 
-export const ProductCart = ({ name, price, image }: ProductCartProps) => {
+export const ProductCard = ({ name, price, image }: ProductCardProps) => {
   return (
     <div className={mainBlock}>
       <img src={image} alt={name} className={img} />

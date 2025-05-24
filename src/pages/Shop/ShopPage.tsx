@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthStore } from '@store/authStore'
 
-import { ProductCart } from '@components/ProductCart/ProductCart'
+import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
 
 import styles from './ShopPage.module.scss'
@@ -20,7 +20,7 @@ export const ShopPage = () => {
         <SortingList />
         <div className={styles.productsGrid}>
           {products.map((product) => (
-            <ProductCart
+            <ProductCard
               key={product.id}
               name={product.name}
               price={product.price}
