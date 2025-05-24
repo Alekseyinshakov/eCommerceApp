@@ -27,6 +27,16 @@ body {
   background-color: $light-background-color;
 }
 
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout main {
+  flex: 1;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;

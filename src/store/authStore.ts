@@ -50,7 +50,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       const res = await apiRoot
         .productProjections()
-        .get({ queryArgs: { limit: 6 } })
+        .get({ queryArgs: { limit: 9 } })
         .execute()
 
       const items = res.body.results.map((p) => ({

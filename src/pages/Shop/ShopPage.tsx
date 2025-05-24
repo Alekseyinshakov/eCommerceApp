@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { useAuthStore } from '@store/authStore'
+
 import { ProductCart } from '@components/ProductCart/ProductCart'
+import { SortingList } from '@components/SortingList/SortingList'
+
 import styles from './ShopPage.module.scss'
 
 export const ShopPage = () => {
@@ -13,16 +16,18 @@ export const ShopPage = () => {
 
   return (
     <div className="container">
-      <p className={styles.text}>Welcome to the shop!</p>
-      <div className={styles.productsGrid}>
-        {products.map((product) => (
-          <ProductCart
-            key={product.id}
-            name={product.name}
-            price={product.price}
-            image={product.image}
-          />
-        ))}
+      <div className={styles.shopContainer}>
+        <SortingList />
+        <div className={styles.productsGrid}>
+          {products.map((product) => (
+            <ProductCart
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              image={product.image}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )
