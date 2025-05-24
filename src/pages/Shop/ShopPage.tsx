@@ -13,7 +13,6 @@ export const ShopPage = () => {
 
   return (
     <div className="container">
-      <h2 className={styles.title}>Shop</h2>
       <p className={styles.text}>Welcome to the shop!</p>
       <div className={styles.productsGrid}>
         {products.map((product) => (

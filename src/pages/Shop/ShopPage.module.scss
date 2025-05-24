@@ -5,6 +5,8 @@
 .productsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
   margin-top: 12px;
   padding: 0 40px;
+  gap: 20px;
 }

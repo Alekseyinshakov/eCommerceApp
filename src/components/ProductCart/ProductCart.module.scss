@@ -6,10 +6,29 @@
 
   width: 260px;
   height: 300px;
-  background: $gradient;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 .img {
   width: 250px;
   height: 250px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 90%;
+}
+
+.nameItem,
+.priceItem {
+  margin: 0%;
+  font-size: 14px;
+}
+
+.priceItem {
+  font-weight: bold;
+  color: $main-light-color;
 }
