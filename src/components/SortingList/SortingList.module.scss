@@ -1,5 +1,7 @@
 .aside {
   width: 310px;
   background: $gradient;
+  border: 1px solid $main-border-color;
+  border-radius: 5px;
   padding: 0 40px;
 }

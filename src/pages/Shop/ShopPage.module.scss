@@ -16,3 +16,30 @@
   gap: 20px;
   align-items: center;
 }
+
+.span {
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid $main-border-color;
+    color: black;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}

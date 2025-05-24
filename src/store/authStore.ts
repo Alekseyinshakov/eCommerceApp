@@ -20,7 +20,10 @@ type AuthStore = {
 
   loading: boolean
   products: Product[]
-  fetchProducts: () => Promise<void>
+  currentPage: number
+  totalProductsCount: number
+  setCurrentPage: (page: number) => void
+  fetchProducts: (page?: number, limit?: number) => Promise<void>
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -38,20 +41,31 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     }
   },
 
+  // --- Shop Products part ---
+  currentPage: 1,
+  setCurrentPage: (page: number) => set({ currentPage: page }),
+  totalProductsCount: 0,
   products: [],
   loading: false,
 
-  fetchProducts: async () => {
+  fetchProducts: async (page = 1, limit = 6) => {
     const state = get()
-    if (state.products.length > 0 || state.loading) return
+    if (state.loading) return
 
     set({ loading: true })
 
     try {
       const res = await apiRoot
         .productProjections()
-        .get({ queryArgs: { limit: 9 } })
+        .get({
+          queryArgs: {
+            limit,
+            offset: (page - 1) * limit,
+          },
+        })
         .execute()
+
+      const total = res.body.total
 
       const items = res.body.results.map((p) => ({
         id: p.id,
@@ -63,7 +77,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         image: p.masterVariant.images?.[0]?.url ?? '',
       }))
 
-      set({ products: items })
+      set({ products: items, totalProductsCount: total })
     } catch (error) {
       console.error('Failed to fetch products:', error)
     } finally {
