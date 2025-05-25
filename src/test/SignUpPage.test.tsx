@@ -21,7 +21,10 @@ vi.mock('@hooks/useAuthPageText', () => ({
 }))
 
 vi.mock('@api/registerCustomer', () => ({
-  registerCustomer: vi.fn().mockResolvedValueOnce({}),
+  registerCustomer: vi.fn().mockResolvedValueOnce({
+    user: { id: 1 },
+    token: 'mocked-token',
+  }),
 }))
 
 import { SignUpPage } from '../pages/AuthForms/SignUpPage'
