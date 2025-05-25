@@ -100,9 +100,11 @@ describe('SignUpPage', () => {
 
     fireEvent.submit(screen.getByTestId('signup-form'))
 
-    await waitFor(() => {
-      console.log(navigateMock.mock.calls)
-      expect(navigateMock).toHaveBeenCalledWith('/home')
-    })
+    await waitFor(
+      () => {
+        expect(navigateMock).toHaveBeenCalledWith('/home')
+      },
+      { timeout: 2000 }
+    )
   })
 })
