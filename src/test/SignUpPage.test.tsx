@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, vi } from 'vitest'
-import { NotificationProvider } from '../src/components/Notification/UseNotification'
+import { NotificationProvider } from '@components/Notification/UseNotification'
 
 const navigateMock = vi.fn()
 
@@ -24,7 +24,7 @@ vi.mock('@api/registerCustomer', () => ({
   registerCustomer: vi.fn().mockResolvedValueOnce({}),
 }))
 
-import { SignUpPage } from '../src/pages/AuthForms/SignUpPage'
+import { SignUpPage } from '../pages/AuthForms/SignUpPage'
 
 describe('SignUpPage', () => {
   it('renders all input fields and the submit button', () => {
@@ -85,22 +85,23 @@ describe('SignUpPage', () => {
     fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
       target: { value: 'Password1' },
     })
-    fireEvent.change(screen.getByPlaceholderText('Street Address'), {
+    fireEvent.change(screen.getByTestId('input-street'), {
       target: { value: '123 Main St' },
     })
-    fireEvent.change(screen.getByPlaceholderText('City'), {
+    fireEvent.change(screen.getByTestId('input-city'), {
       target: { value: 'Kyiv' },
     })
-    fireEvent.change(screen.getByPlaceholderText('Postal Code'), {
+    fireEvent.change(screen.getByTestId('input-postal-code'), {
       target: { value: '01001' },
     })
-    fireEvent.change(screen.getByPlaceholderText('Country'), {
+    fireEvent.change(screen.getByTestId('input-country'), {
       target: { value: 'Ukraine' },
     })
 
     fireEvent.submit(screen.getByTestId('signup-form'))
 
     await waitFor(() => {
+      console.log(navigateMock.mock.calls)
       expect(navigateMock).toHaveBeenCalledWith('/home')
     })
   })
