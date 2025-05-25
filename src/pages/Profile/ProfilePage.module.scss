@@ -1,7 +1,53 @@
-.row {
-  margin-bottom: 10px;
+.inner {
+  padding-top: 30px;
+  h2 {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  button {
+    padding: 5px 10px;
+  }
+}
+
+.colWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.col1 {
+  padding-right: 7px;
+  // border: 1px solid green;
+}
+
+.col2 {
+  padding-left: 7px;
+}
+
+.col1,
+.col2 {
+  width: 200px;
+  // border: 1px solid green;
 }
 
 .fieldName {
   font-weight: 600;
+  text-align: right;
+  height: 50px;
+  line-height: 50px;
+  // border: 1px solid red;
+}
+
+.fieldValue {
+  text-align: left;
+  height: 50px;
+  line-height: 50px;
+  font-style: italic;
+  // border: 1px solid red;
+}
+
+.buttonsWrap {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  column-gap: 20px;
 }
