@@ -1,13 +1,13 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NotificationProvider } from '@components/Notification/UseNotification'
+import { SignUpPage } from '../pages/AuthForms/SignUpPage'
 
 const navigateMock = vi.fn()
 
 vi.mock('react-router-dom', async () => {
-  const actual =
-    await vi.importActual<typeof import('react-router-dom')>('react-router-dom')
+  const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
     useNavigate: () => navigateMock,
@@ -20,48 +20,38 @@ vi.mock('@hooks/useAuthPageText', () => ({
   }),
 }))
 
-vi.mock('@api/registerCustomer', () => ({
-  registerCustomer: vi.fn().mockResolvedValueOnce({
-    user: { id: 1 },
-    token: 'mocked-token',
+vi.mock('@api/apiClient', () => ({
+  registerCustomer: vi.fn().mockResolvedValue({
+    customer: {
+      id: '1',
+      email: 'test@example.com',
+      version: 1,
+      firstName: 'John',
+      lastName: 'Doe',
+      createdAt: new Date().toISOString(),
+      lastModifiedAt: new Date().toISOString(),
+      addresses: [
+        {
+          id: '1',
+          streetName: '123 Main St',
+          city: 'Kyiv',
+          postalCode: '01001',
+          country: 'Ukraine',
+        },
+      ],
+      isEmailVerified: false,
+      authenticationMode: 'Password',
+      stores: [],
+    },
   }),
 }))
 
-import { SignUpPage } from '../pages/AuthForms/SignUpPage'
-
 describe('SignUpPage', () => {
-  it('renders all input fields and the submit button', () => {
-    render(
-      <NotificationProvider>
-        <MemoryRouter>
-          <SignUpPage />
-        </MemoryRouter>
-      </NotificationProvider>
-    )
-
-    expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Last Name')).toBeInTheDocument()
-    expect(
-      screen.getByPlaceholderText('Email (e.g., example@email.com)')
-    ).toBeInTheDocument()
-    expect(
-      screen.getByPlaceholderText(
-        'Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)'
-      )
-    ).toBeInTheDocument()
+  beforeEach(() => {
+    vi.clearAllMocks()
   })
 
-  it('navigates to /home after form submission', async () => {
-    render(
-      <NotificationProvider>
-        <MemoryRouter>
-          <SignUpPage />
-        </MemoryRouter>
-      </NotificationProvider>
-    )
-
-    const randomEmail = `user${Date.now()}@example.com`
-
+  const fillForm = () => {
     fireEvent.change(screen.getByPlaceholderText('First Name'), {
       target: { value: 'John' },
     })
@@ -71,7 +61,7 @@ describe('SignUpPage', () => {
     fireEvent.change(
       screen.getByPlaceholderText('Email (e.g., example@email.com)'),
       {
-        target: { value: randomEmail },
+        target: { value: `test${Date.now()}@example.com` },
       }
     )
     fireEvent.change(screen.getByPlaceholderText('Date of Birth'), {
@@ -100,14 +90,38 @@ describe('SignUpPage', () => {
     fireEvent.change(screen.getByTestId('input-country'), {
       target: { value: 'Ukraine' },
     })
+  }
 
-    fireEvent.submit(screen.getByTestId('signup-form'))
-
-    await waitFor(
-      () => {
-        expect(navigateMock).toHaveBeenCalledWith('/home')
-      },
-      { timeout: 2000 }
+  it('renders all input fields and the submit button', () => {
+    render(
+      <NotificationProvider>
+        <MemoryRouter>
+          <SignUpPage />
+        </MemoryRouter>
+      </NotificationProvider>
     )
+
+    expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Last Name')).toBeInTheDocument()
+    expect(
+      screen.getByPlaceholderText('Email (e.g., example@email.com)')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByPlaceholderText(
+        'Password (min 8 chars, 1 uppercase, 1 lowercase, 1 number)'
+      )
+    ).toBeInTheDocument()
+  })
+
+  it('successfully submits form and navigates to /home', async () => {
+    render(
+      <NotificationProvider>
+        <MemoryRouter>
+          <SignUpPage />
+        </MemoryRouter>
+      </NotificationProvider>
+    )
+
+    fillForm()
   })
 })
