@@ -12,8 +12,9 @@ import { ShopPage } from '@pages/Shop/ShopPage'
 import { AboutPage } from '@pages/About/AboutPage'
 import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
 import { CartPage } from '@pages/Cart/CartPage'
-import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
+import RedirectIfAuth from '@components/Redirects/RedirectIfAuth'
 import { ProfilePage } from '@pages/Profile/ProfilePage'
+import RedirectNonAuthToLogin from '@components/Redirects/RedirectNonAuthToLogin.tsx'
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <ProfilePage />,
+        element: (
+          <RedirectNonAuthToLogin>
+            <ProfilePage />
+          </RedirectNonAuthToLogin>
+        ),
       },
     ],
   },

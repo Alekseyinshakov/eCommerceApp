@@ -1,15 +1,38 @@
 import { useEffect, useState } from 'react'
 import styles from './ProfilePage.module.scss'
+import { getCustomerData } from '@api/getCustomerData.ts'
+// import { Customer } from '@commercetools/platform-sdk'
 
 export const ProfilePage = () => {
   const [fields, setFields] = useState([
-    { label: 'First name:', value: 'John' },
-    { label: 'Last name:', value: 'Doe' },
-    { label: 'Date of birth:', value: '1990-01-01' },
-    { label: 'Email:', value: 'jd@mail.com' },
+    { label: 'First name:', value: '' },
+    { label: 'Last name:', value: '' },
+    { label: 'Date of birth:', value: '' },
+    { label: 'Email:', value: '' },
   ])
-  setFields([])
+
   useEffect(() => {
+    async function getDataHandler() {
+      const tokenJSON = localStorage.getItem('customer_token')
+      if (tokenJSON) {
+        try {
+          const tokenObject = JSON.parse(tokenJSON)
+          const token = tokenObject.token
+          const data = await getCustomerData(token)
+          setFields([
+            { label: 'First name:', value: data.firstName! },
+            { label: 'Last name:', value: data.lastName! },
+            { label: 'Date of birth:', value: data.dateOfBirth! },
+            { label: 'Email:', value: data.email! },
+          ])
+        } catch (error) {
+          console.error('Error fetching customer data:', error)
+        }
+      }
+    }
+
+    getDataHandler()
+
     return () => {}
   }, [])
 
