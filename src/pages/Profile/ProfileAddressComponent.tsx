@@ -4,7 +4,7 @@ import { Address } from '@commercetools/platform-sdk'
 export const ProfileAddressComponent = ({ address }: { address: Address }) => {
   console.log(address)
   return (
-    <div className={styles.colWrap}>
+    <div className={styles.colWrap + ' ' + styles.addressWrap}>
       <ul className={styles.col1}>
         <li className={styles.fieldName}>Country:</li>
         <li className={styles.fieldName}>City:</li>

@@ -67,9 +67,11 @@ export const ProfilePage = () => {
         </div>
 
         <h3>Adresses:</h3>
-        {addresses.map((item) => {
-          return <ProfileAddressComponent key={item.id} address={item} />
-        })}
+        <div className={styles.addressesContainer}>
+          {addresses.map((item) => {
+            return <ProfileAddressComponent key={item.id} address={item} />
+          })}
+        </div>
 
         <div className={styles.buttonsWrap}>
           <button>Edit</button>
