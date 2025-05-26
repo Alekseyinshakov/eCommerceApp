@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useAuthStore } from '@store/authStore'
+import { useProductStore } from '@store/productStore'
 
 import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
@@ -10,13 +10,16 @@ import { SortingTab } from '@components/SortingTab/SortingTab'
 export const ShopPage = () => {
   const limit = 6
 
-  const page = useAuthStore((state) => state.currentPage)
-  const setPage = useAuthStore((state) => state.setCurrentPage)
-  const totalCount = useAuthStore((state) => state.totalProductsCount)
+  const page = useProductStore((state) => state.currentPage)
+  const setPage = useProductStore((state) => state.setCurrentPage)
+  const totalCount = useProductStore((state) => state.totalProductsCount)
   const totalPages = Math.ceil(totalCount / limit)
 
-  const products = useAuthStore((state) => state.products)
-  const fetchProducts = useAuthStore((state) => state.fetchProducts)
+  const products = useProductStore((state) => state.products)
+  const fetchProducts = useProductStore((state) => state.fetchProducts)
+
+  const setMaxPage = () => setPage(Math.max(page - 1, 1))
+  const setMinPage = () => setPage(Math.min(page + 1, totalPages))
 
   useEffect(() => {
     fetchProducts(page, limit)
@@ -40,17 +43,13 @@ export const ShopPage = () => {
           </div>
 
           <div className={styles.pagination}>
-            <button
-              onClick={() => setPage(Math.max(page - 1, 1))} //separate
-              disabled={page === 1}
-            >
+            <button onClick={setMaxPage} disabled={page === 1}>
               Prev
             </button>
+
             <span className={styles.span}>Page {page}</span>
-            <button
-              onClick={() => setPage(Math.min(page + 1, totalPages))} //separate
-              disabled={page >= totalPages}
-            >
+
+            <button onClick={setMinPage} disabled={page >= totalPages}>
               Next
             </button>
           </div>

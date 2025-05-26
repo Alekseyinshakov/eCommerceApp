@@ -1,0 +1,90 @@
+import { create } from 'zustand'
+import { apiRoot } from '@api/apiClient'
+
+type Product = {
+  id: string
+  name: string
+  price: number
+  image: string
+}
+
+type SortOption = 'default' | 'newest' | 'name-asc' | 'name-desc'
+
+type QueryArgs = {
+  limit: number
+  offset: number
+  sort?: string[]
+  filter?: string[]
+}
+
+type ProductStore = {
+  products: Product[]
+  loading: boolean
+  currentPage: number
+  totalProductsCount: number
+  sortOption: SortOption
+
+  setSortOption: (sort: SortOption) => void
+  setCurrentPage: (page: number) => void
+  fetchProducts: (page?: number, limit?: number) => Promise<void>
+}
+
+export const useProductStore = create<ProductStore>((set, get) => ({
+  products: [],
+  loading: false,
+  currentPage: 1,
+  totalProductsCount: 0,
+  sortOption: 'default',
+
+  setSortOption: (sort) => set({ sortOption: sort }),
+  setCurrentPage: (page: number) => set({ currentPage: page }),
+
+  fetchProducts: async (page = 1, limit = 6) => {
+    const { sortOption, loading } = get()
+    if (loading) return
+
+    set({ loading: true })
+
+    const queryArgs: QueryArgs = {
+      limit,
+      offset: (page - 1) * limit,
+    }
+
+    switch (sortOption) {
+      case 'name-asc':
+        queryArgs.sort = ['name.en-US asc']
+        break
+      case 'name-desc':
+        queryArgs.sort = ['name.en-US desc']
+        break
+      case 'newest':
+        queryArgs.sort = ['createdAt desc']
+        break
+    }
+
+    try {
+      const res = await apiRoot
+        .productProjections()
+        .get({ queryArgs })
+        .execute()
+
+      const total = res.body.total
+
+      const items = res.body.results.map((p) => ({
+        id: p.id,
+        name: p.name['en-US'] ?? 'No name',
+        price:
+          p.masterVariant.prices?.[0]?.value?.centAmount !== undefined
+            ? p.masterVariant.prices[0].value.centAmount / 100
+            : 0,
+        image: p.masterVariant.images?.[0]?.url ?? '',
+      }))
+
+      set({ products: items, totalProductsCount: total })
+    } catch (error) {
+      console.error('Failed to fetch products:', error)
+    } finally {
+      set({ loading: false })
+    }
+  },
+}))
