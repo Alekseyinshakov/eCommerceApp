@@ -1,0 +1,25 @@
+.sortingTab {
+  display: flex;
+  padding: 0 40px;
+  margin-bottom: 10px;
+  justify-content: end;
+  gap: 10px;
+}
+
+.select {
+  display: flex;
+  background: white;
+  border: none;
+  color: black;
+  font-size: 17px;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.label {
+  display: flex;
+  text-align: center;
+  font-size: 17px;
+}

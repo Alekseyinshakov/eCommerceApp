@@ -5,6 +5,7 @@ import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
 
 import styles from './ShopPage.module.scss'
+import { SortingTab } from '@components/SortingTab/SortingTab'
 
 export const ShopPage = () => {
   const limit = 6
@@ -26,6 +27,7 @@ export const ShopPage = () => {
       <div className={styles.shopContainer}>
         <SortingList />
         <div>
+          <SortingTab />
           <div className={styles.productsGrid}>
             {products.map((product) => (
               <ProductCard
@@ -39,14 +41,14 @@ export const ShopPage = () => {
 
           <div className={styles.pagination}>
             <button
-              onClick={() => setPage(Math.max(page - 1, 1))}
+              onClick={() => setPage(Math.max(page - 1, 1))} //separate
               disabled={page === 1}
             >
               Prev
             </button>
             <span className={styles.span}>Page {page}</span>
             <button
-              onClick={() => setPage(Math.min(page + 1, totalPages))}
+              onClick={() => setPage(Math.min(page + 1, totalPages))} //separate
               disabled={page >= totalPages}
             >
               Next
