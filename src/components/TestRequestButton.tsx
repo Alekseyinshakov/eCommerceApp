@@ -8,7 +8,7 @@ export const TestRequestButton = () => {
     try {
       const response = await apiRoot
         .products()
-        .get({ queryArgs: { limit: 5 } })
+        .get({ queryArgs: { limit: 15 } })
         .execute()
       console.log('✅ Request successful:', response.body)
       setResult(`Received ${response.body.count} product(s)`)

@@ -9,7 +9,13 @@ type Product = {
   description: string
 }
 
-type SortOption = 'default' | 'newest' | 'name-asc' | 'name-desc'
+type SortOption =
+  | 'default'
+  | 'newest'
+  | 'name-asc'
+  | 'name-desc'
+  | 'price-asc'
+  | 'price-desc'
 
 type QueryArgs = {
   limit: number
@@ -37,7 +43,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   totalProductsCount: 0,
   sortOption: 'default',
 
-  setSortOption: (sort) => set({ sortOption: sort }),
+  setSortOption: (sort) => set({ sortOption: sort, currentPage: 1 }),
   setCurrentPage: (page: number) => set({ currentPage: page }),
 
   fetchProducts: async (page = 1, limit = 6) => {
@@ -49,6 +55,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const queryArgs: QueryArgs = {
       limit,
       offset: (page - 1) * limit,
+      filter: ['variants.price.currencyCode:"USD"'],
     }
 
     switch (sortOption) {
@@ -59,18 +66,24 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         queryArgs.sort = ['name.en-US desc']
         break
       case 'newest':
-        queryArgs.sort = ['createdAt desc']
+        queryArgs.sort = ['createdAt desc'] // variants/attributes/name: new === true
+        break
+      case 'price-asc':
+        queryArgs.sort = ['price asc']
+        break
+      case 'price-desc':
+        queryArgs.sort = ['price desc']
         break
     }
 
     try {
       const res = await apiRoot
         .productProjections()
+        .search()
         .get({ queryArgs })
         .execute()
 
       const total = res.body.total
-
       const items = res.body.results.map((p) => ({
         id: p.id,
         name: p.name['en-US'] ?? 'No name',
