@@ -1,4 +1,5 @@
 .mainBlock {
+  position: relative; // 🔸 Додаємо
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -8,6 +9,12 @@
   height: 300px;
   border: 1px solid $main-border-color;
   border-radius: 5px;
+  transition: transform 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .img {
@@ -20,6 +27,15 @@
   flex-direction: column;
   align-items: start;
   width: 90%;
+  padding-bottom: 5px;
+}
+
+.nameItem {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nameItem,
@@ -31,4 +47,34 @@
 .priceItem {
   font-weight: bold;
   color: $main-light-color;
+}
+
+.description {
+  position: absolute;
+  top: 105px;
+  right: 10px;
+  width: 240px;
+  max-height: 145px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+  z-index: 2;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.descriptionText {
+  font-size: 16px;
+  margin: 5px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

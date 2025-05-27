@@ -6,6 +6,7 @@ type Product = {
   name: string
   price: number
   image: string
+  description: string
 }
 
 type SortOption = 'default' | 'newest' | 'name-asc' | 'name-desc'
@@ -78,6 +79,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
             ? p.masterVariant.prices[0].value.centAmount / 100
             : 0,
         image: p.masterVariant.images?.[0]?.url ?? '',
+        description: p.description?.['en-US'] ?? '',
       }))
 
       set({ products: items, totalProductsCount: total })
