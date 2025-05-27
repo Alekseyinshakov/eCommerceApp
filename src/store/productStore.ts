@@ -3,6 +3,7 @@ import { apiRoot } from '@api/apiClient'
 
 type Product = {
   id: string
+  slug: string
   name: string
   price: number
   image: string
@@ -86,6 +87,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const total = res.body.total
       const items = res.body.results.map((p) => ({
         id: p.id,
+        slug: p.slug?.['en-US'] ?? p.key,
         name: p.name['en-US'] ?? 'No name',
         price:
           p.masterVariant.prices?.[0]?.value?.centAmount !== undefined

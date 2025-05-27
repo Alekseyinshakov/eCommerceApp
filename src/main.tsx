@@ -13,6 +13,7 @@ import { AboutPage } from '@pages/About/AboutPage'
 import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
 import { CartPage } from '@pages/Cart/CartPage'
 import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
+import ProductDetailPage from '@pages/Shop/ProductDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: '/shop',
         element: <ShopPage />,
+      },
+      {
+        path: '/shop/:slug',
+        element: <ProductDetailPage />,
       },
       {
         path: '/about',

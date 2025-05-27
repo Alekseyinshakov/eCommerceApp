@@ -32,15 +32,18 @@ export const ShopPage = () => {
         <div>
           <SortingTab />
           <div className={styles.productsGrid}>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                name={product.name}
-                price={product.price}
-                image={product.image}
-                description={product.description}
-              />
-            ))}
+            {products.map((product) => {
+              return (
+                <ProductCard
+                  slug={product.slug}
+                  key={product.id}
+                  name={product.name}
+                  price={product.price}
+                  image={product.image}
+                  description={product.description}
+                />
+              )
+            })}
           </div>
 
           <div className={styles.pagination}>
