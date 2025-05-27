@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import { getCustomerData } from '@api/getCustomerData.ts'
-import { Address } from '@commercetools/platform-sdk'
+import { Address, Customer } from '@commercetools/platform-sdk'
 import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.tsx'
 
 export const ProfilePage = () => {
@@ -14,6 +14,8 @@ export const ProfilePage = () => {
 
   const [addresses, setAddresses] = useState<Address[]>([])
 
+  const [customerInfo, setCustomerInfo] = useState<null | Customer>(null)
+
   useEffect(() => {
     async function getDataHandler() {
       const tokenJSON = localStorage.getItem('customer_token')
@@ -23,6 +25,7 @@ export const ProfilePage = () => {
           const token = tokenObject.token
           const data = await getCustomerData(token)
           console.log(data)
+          setCustomerInfo(data)
           setFields([
             { label: 'First name:', value: data.firstName! },
             { label: 'Last name:', value: data.lastName! },
@@ -69,7 +72,13 @@ export const ProfilePage = () => {
         <h3>Adresses:</h3>
         <div className={styles.addressesContainer}>
           {addresses.map((item) => {
-            return <ProfileAddressComponent key={item.id} address={item} />
+            return (
+              <ProfileAddressComponent
+                key={item.id}
+                address={item}
+                customerInfo={customerInfo}
+              />
+            )
           })}
         </div>
 

@@ -24,10 +24,33 @@
 }
 
 .addressContainer {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.addressTypeWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 7px;
+  row-gap: 5px;
+  margin-bottom: 4px;
+}
+
+.addressType,
+.addressDefault {
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.addressType {
+  background-color: #ededed;
+}
+
+.addressDefault {
+  background-color: #b5f6ff;
 }
 
 .addressWrap {
-  margin: 20px auto;
 }
 
 .col1 {
