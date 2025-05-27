@@ -12,6 +12,9 @@
   button {
     padding: 5px 10px;
   }
+  @media (max-width: 425px) {
+    font-size: 16px;
+  }
 }
 
 .colWrap {
@@ -65,19 +68,33 @@
 .col1,
 .col2 {
   width: 50%;
-  // border: 1px solid green;
+  //border: solid 1px black;
+}
+
+.col1 {
+  @media (max-width: 725px) {
+    width: 30%;
+  }
+}
+
+.col2 {
+  @media (max-width: 725px) {
+    width: 70%;
+  }
 }
 
 .fieldName,
 .fieldValue {
-  height: 40px;
-  line-height: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .fieldName {
   font-weight: 500;
-  text-align: right;
+  justify-content: end;
   color: $title-color;
+  text-align: right;
 }
 
 .fieldValue {
