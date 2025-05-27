@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import { getCustomerData } from '@api/getCustomerData.ts'
-import { Address, Customer } from '@commercetools/platform-sdk'
+import { Customer } from '@commercetools/platform-sdk'
 import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.tsx'
 
 export const ProfilePage = () => {
-  const [fields, setFields] = useState([
-    { label: 'First name:', value: '' },
-    { label: 'Last name:', value: '' },
-    { label: 'Date of birth:', value: '' },
-    { label: 'Email:', value: '' },
-  ])
-
-  const [addresses, setAddresses] = useState<Address[]>([])
-
   const [customerInfo, setCustomerInfo] = useState<null | Customer>(null)
 
   useEffect(() => {
@@ -26,19 +17,11 @@ export const ProfilePage = () => {
           const data = await getCustomerData(token)
           console.log(data)
           setCustomerInfo(data)
-          setFields([
-            { label: 'First name:', value: data.firstName! },
-            { label: 'Last name:', value: data.lastName! },
-            { label: 'Date of birth:', value: data.dateOfBirth! },
-            { label: 'Email:', value: data.email! },
-          ])
-          setAddresses([...data.addresses])
         } catch (error) {
           console.error('Error fetching customer data:', error)
         }
       }
     }
-
     getDataHandler()
 
     return () => {}
@@ -50,28 +33,22 @@ export const ProfilePage = () => {
         <h2 className={styles.title}>Profile page</h2>
         <div className={styles.colWrap}>
           <ul className={styles.col1}>
-            {fields.map((item, i) => {
-              return (
-                <li key={i} className={styles.fieldName}>
-                  {item.label}
-                </li>
-              )
-            })}
+            <li className={styles.fieldName}>First name:</li>
+            <li className={styles.fieldName}>Last name:</li>
+            <li className={styles.fieldName}>Date of birth:</li>
+            <li className={styles.fieldName}>Email:</li>
           </ul>
           <ul className={styles.col2}>
-            {fields.map((item, i) => {
-              return (
-                <li key={i} className={styles.fieldValue}>
-                  {item.value}
-                </li>
-              )
-            })}
+            <li className={styles.fieldValue}>{customerInfo?.firstName}</li>
+            <li className={styles.fieldValue}>{customerInfo?.lastName}</li>
+            <li className={styles.fieldValue}>{customerInfo?.dateOfBirth}</li>
+            <li className={styles.fieldValue}>{customerInfo?.email}</li>
           </ul>
         </div>
 
         <h3>Adresses:</h3>
         <div className={styles.addressesContainer}>
-          {addresses.map((item) => {
+          {customerInfo?.addresses?.map((item) => {
             return (
               <ProfileAddressComponent
                 key={item.id}
