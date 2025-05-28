@@ -99,22 +99,29 @@ export const ProfilePage = () => {
   const updateMainInfo = async () => {
     if (!customerInfo) return
 
-    try {
-      const updatedCustomer = await updateCustomerData({
-        ...customerInfo,
-        ...inputValues,
-      })
+    const hasErrors =
+      errors.lastName || errors.firstName || errors.dateOfBirth || errors.email
 
-      if (updatedCustomer) {
-        console.log(updatedCustomer)
+    if (hasErrors) {
+      setNotification('Fill in the fields with correct data')
+    } else {
+      try {
+        const updatedCustomer = await updateCustomerData({
+          ...customerInfo,
+          ...inputValues,
+        })
 
-        setUser(updatedCustomer)
-        setNotification('Information successfully updated')
-        setEditMode(false)
+        if (updatedCustomer) {
+          console.log(updatedCustomer)
+
+          setUser(updatedCustomer)
+          setNotification('Information successfully updated')
+          setEditMode(false)
+        }
+      } catch (error) {
+        console.error('Error updating customer info:', error)
+        setNotification('Something went wrong :-(')
       }
-    } catch (error) {
-      console.error('Error updating customer info:', error)
-      setNotification('Something went wrong :-(')
     }
   }
 
