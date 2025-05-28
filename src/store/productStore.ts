@@ -66,7 +66,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         queryArgs.sort = ['name.en-US desc']
         break
       case 'newest':
-        queryArgs.sort = ['createdAt desc'] // variants/attributes/name: new === true
+        queryArgs.filter = ['variants.attributes.new:true']
         break
       case 'price-asc':
         queryArgs.sort = ['price asc']
