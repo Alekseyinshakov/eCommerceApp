@@ -18,6 +18,12 @@
   align-items: center;
 }
 
+.placeholder {
+  visibility: hidden;
+  width: 240px;
+  height: 300px;
+}
+
 .span {
   font-size: 14px;
 }

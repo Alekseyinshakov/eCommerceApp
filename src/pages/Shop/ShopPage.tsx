@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useProductStore } from '@store/productStore'
+import { useCategoriesStore } from '@store/categoriesStore'
 
 import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
@@ -18,6 +19,13 @@ export const ShopPage = () => {
   const products = useProductStore((state) => state.products)
   const fetchProducts = useProductStore((state) => state.fetchProducts)
 
+  const placeholdersCount = limit - products.length
+  const placeholders = Array(
+    placeholdersCount > 0 ? placeholdersCount : 0
+  ).fill(null)
+
+  const { categories, fetched, fetchCategories } = useCategoriesStore()
+
   const setMaxPage = () => setPage(Math.max(page - 1, 1))
   const setMinPage = () => setPage(Math.min(page + 1, totalPages))
 
@@ -25,25 +33,16 @@ export const ShopPage = () => {
     fetchProducts(page, limit)
   }, [fetchProducts, page])
 
+  useEffect(() => {
+    if (!fetched) {
+      fetchCategories()
+    }
+  }, [fetched, fetchCategories])
+
   return (
     <div className="container">
       <div className={styles.shopContainer}>
-        <SortingList
-          categories={[
-            { label: 'House Plants', count: 33 },
-            { label: 'Potter Plants', count: 12 },
-            { label: 'Seeds', count: 65 },
-            { label: 'Small Plants', count: 39 },
-            { label: 'Big Plants', count: 23 },
-            { label: 'Gardening', count: 13 },
-            { label: 'Accessories', count: 18 },
-          ]}
-          sizes={[
-            { label: 'Small', count: 119 },
-            { label: 'Medium', count: 86 },
-            { label: 'Large', count: 78 },
-          ]}
-        />
+        <SortingList categories={categories} />
         <div>
           <SortingTab />
           <div className={styles.productsGrid}>
@@ -55,6 +54,13 @@ export const ShopPage = () => {
                 image={product.image}
                 description={product.description}
               />
+            ))}
+
+            {placeholders.map((_, index) => (
+              <div
+                key={`placeholder-${index}`}
+                className={styles.placeholder}
+              ></div>
             ))}
           </div>
 

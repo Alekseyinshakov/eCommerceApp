@@ -41,17 +41,20 @@ export const PriceRange: React.FC = () => {
               </div>
             </div>
           )}
-          renderThumb={({ props, isDragged }) => (
-            <div {...props} className={styles.thumb}>
-              <div className={styles.thumbValue}></div>
-              <div
-                className={styles.thumbIndicator}
-                style={{
-                  backgroundColor: isDragged ? '#46a358' : '#CCC',
-                }}
-              />
-            </div>
-          )}
+          renderThumb={({ props, isDragged }) => {
+            const { key, ...restProps } = props
+            return (
+              <div key={key} {...restProps} className={styles.thumb}>
+                <div className={styles.thumbValue}></div>
+                <div
+                  className={styles.thumbIndicator}
+                  style={{
+                    backgroundColor: isDragged ? '#46a358' : '#CCC',
+                  }}
+                />
+              </div>
+            )
+          }}
         />
         <div className={styles.priceValues}>
           <span>Price: ${values[0]}</span> - <span>${values[1]}</span>

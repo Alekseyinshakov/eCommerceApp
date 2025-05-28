@@ -1,22 +1,12 @@
 import { PriceRange } from '@components/PriceRange/PriceRange'
 import styles from './SortingList.module.scss'
-
-type Category = {
-  label: string
-  count: number
-}
-
-type Size = {
-  label: string
-  count: number
-}
+import type { Category } from '@store/types'
 
 type SortingListProps = {
   categories: Category[]
-  sizes: Size[]
 }
 
-export function SortingList({ categories, sizes }: SortingListProps) {
+export function SortingList({ categories }: SortingListProps) {
   return (
     <aside className={styles.aside}>
       <form>
@@ -24,7 +14,7 @@ export function SortingList({ categories, sizes }: SortingListProps) {
           <legend>Categories</legend>
           <ul>
             {categories.map((category) => (
-              <li key={category.label}>
+              <li key={category.id}>
                 <a href="#">
                   {category.label} <span>({category.count})</span>
                 </a>
@@ -37,15 +27,7 @@ export function SortingList({ categories, sizes }: SortingListProps) {
 
         <fieldset>
           <legend>Size</legend>
-          <ul>
-            {sizes.map((size) => (
-              <li key={size.label}>
-                <a href="#">
-                  {size.label} <span>({size.count})</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <ul></ul>
         </fieldset>
       </form>
     </aside>
