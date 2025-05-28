@@ -146,15 +146,11 @@ export const SignUpPage = () => {
 
         setNotification('Registration successful!')
 
-        await loginCustomer(formData.email, formData.password)
+        const customer = await loginCustomer(formData.email, formData.password)
 
-        const userData = {
-          email: formData.email,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
+        if (customer) {
+          setUser(customer)
         }
-
-        setUser(userData)
 
         navigate('/home')
       } catch (error) {

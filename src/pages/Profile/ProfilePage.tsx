@@ -23,9 +23,9 @@ export const ProfilePage = () => {
 
   const [errors] = useState({
     firstName: 'freferff ferferf erf',
-    lastName: '',
-    email: '',
-    dob: '',
+    lastName: 'Dfrfreg ggreg ',
+    email: 'gergrg erggg',
+    dob: '2fwefr gergergg gg',
     street: '',
     city: '',
     postalCode: '',
@@ -101,11 +101,11 @@ export const ProfilePage = () => {
             <div className={styles.fieldValue}>
               {editMode ? (
                 <FormInput
-                  className={styles.resetInput}
                   onChange={handleChange}
                   value={inputValues.firstName}
                   name="firstName"
                   type="text"
+                  className={styles.resetInput}
                   error={errors.firstName}
                 />
               ) : (
@@ -118,11 +118,13 @@ export const ProfilePage = () => {
             <div className={styles.fieldName}>Last name:</div>
             <div className={styles.fieldValue}>
               {editMode ? (
-                <input
+                <FormInput
                   onChange={handleChange}
                   value={inputValues.lastName}
                   name="lastName"
                   type="text"
+                  className={styles.resetInput}
+                  error={errors.lastName}
                 />
               ) : (
                 customerInfo?.lastName
@@ -134,11 +136,13 @@ export const ProfilePage = () => {
             <div className={styles.fieldName}>Date of birth:</div>
             <div className={styles.fieldValue}>
               {editMode ? (
-                <input
+                <FormInput
                   onChange={handleChange}
                   value={inputValues.dateOfBirth}
                   name="dateOfBirth"
                   type="date"
+                  className={styles.resetInput}
+                  error={errors.dob}
                 />
               ) : (
                 customerInfo?.dateOfBirth
@@ -150,11 +154,13 @@ export const ProfilePage = () => {
             <div className={styles.fieldName}>Email:</div>
             <div className={styles.fieldValue}>
               {editMode ? (
-                <input
+                <FormInput
                   onChange={handleChange}
                   value={inputValues.email}
                   name="email"
                   type="email"
+                  className={styles.resetInput}
+                  error={errors.email}
                 />
               ) : (
                 <span className={styles.ellipsis}>{customerInfo?.email}</span>
