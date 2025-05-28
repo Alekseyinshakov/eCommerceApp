@@ -106,7 +106,7 @@ const ProductDetailPage = () => {
       }
     }
     getProduct()
-  }, [productId])
+  }, [productId, navigate])
 
   if (loading) {
     return
