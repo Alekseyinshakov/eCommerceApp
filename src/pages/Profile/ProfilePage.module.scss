@@ -1,6 +1,7 @@
 .inner {
   font-size: 18px;
   padding-top: 30px;
+  padding-bottom: 30px;
   h2 {
     margin-bottom: 40px;
     text-align: center;
@@ -18,12 +19,11 @@
 }
 
 .colWrap {
-  display: flex;
-  justify-content: center;
   background-color: #d4ffb5;
   border-radius: 20px;
   max-width: 800px;
   margin: 0 auto;
+  padding: 10px 0;
 }
 
 .addressContainer {
@@ -71,23 +71,12 @@
   //border: solid 1px black;
 }
 
-.col1 {
-  @media (max-width: 725px) {
-    width: 30%;
-  }
-}
-
-.col2 {
-  @media (max-width: 725px) {
-    width: 70%;
-  }
-}
-
 .fieldName,
 .fieldValue {
   min-height: 40px;
   display: flex;
   align-items: center;
+  width: 50%;
 }
 
 .fieldName {
@@ -95,12 +84,26 @@
   justify-content: end;
   color: $title-color;
   text-align: right;
+  @media (max-width: 725px) {
+    width: 30%;
+  }
 }
 
 .fieldValue {
   text-align: left;
   font-style: italic;
   font-weight: 400;
+
+  @media (max-width: 725px) {
+    width: 70%;
+  }
+}
+
+.ellipsis {
+  padding-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .buttonsWrap {
@@ -108,4 +111,10 @@
   display: flex;
   justify-content: center;
   column-gap: 20px;
+}
+
+.row {
+  display: flex;
+  column-gap: 10px;
+  width: 100%;
 }

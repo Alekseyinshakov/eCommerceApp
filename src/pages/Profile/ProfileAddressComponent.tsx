@@ -51,42 +51,49 @@ export const ProfileAddressComponent = ({
         )}
       </div>
       <div className={styles.colWrap + ' ' + styles.addressWrap}>
-        <ul className={styles.col1}>
-          <li className={styles.fieldName}>Country:</li>
-          <li className={styles.fieldName}>City:</li>
-          <li className={styles.fieldName}>Street:</li>
-          <li className={styles.fieldName}>Postal code:</li>
-        </ul>
-        <ul className={styles.col2}>
-          <li className={styles.fieldValue}>
+        <div className={styles.row}>
+          <div className={styles.fieldName}>Country:</div>
+          <div className={styles.fieldValue}>
             {editMode ? (
               <input value={inputValues.country} type="text" />
             ) : (
               address.country
             )}
-          </li>
-          <li className={styles.fieldValue}>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.fieldName}>City:</div>
+          <div className={styles.fieldValue}>
             {editMode ? (
               <input value={inputValues.city} type="text" />
             ) : (
               address.city
             )}
-          </li>
-          <li className={styles.fieldValue}>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.fieldName}>Street:</div>
+          <div className={styles.fieldValue}>
             {editMode ? (
               <input value={inputValues.street} type="text" />
             ) : (
               address.streetName
             )}
-          </li>
-          <li className={styles.fieldValue}>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.fieldName}>Postal code:</div>
+          <div className={styles.fieldValue}>
             {editMode ? (
               <input value={inputValues.postalCode} type="text" />
             ) : (
               address.postalCode
             )}
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   )

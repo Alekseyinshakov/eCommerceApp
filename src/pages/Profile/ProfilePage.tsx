@@ -84,14 +84,9 @@ export const ProfilePage = () => {
       <div className={styles.inner}>
         <h2 className={styles.title}>Profile page</h2>
         <div className={styles.colWrap}>
-          <ul className={styles.col1}>
-            <li className={styles.fieldName}>First name:</li>
-            <li className={styles.fieldName}>Last name:</li>
-            <li className={styles.fieldName}>Date of birth:</li>
-            <li className={styles.fieldName}>Email:</li>
-          </ul>
-          <ul className={styles.col2}>
-            <li className={styles.fieldValue}>
+          <div className={styles.row}>
+            <div className={styles.fieldName}>First name:</div>
+            <div className={styles.fieldValue}>
               {editMode ? (
                 <input
                   onChange={handleChange}
@@ -102,8 +97,12 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.firstName
               )}
-            </li>
-            <li className={styles.fieldValue}>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.fieldName}>Last name:</div>
+            <div className={styles.fieldValue}>
               {editMode ? (
                 <input
                   onChange={handleChange}
@@ -114,8 +113,12 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.lastName
               )}
-            </li>
-            <li className={styles.fieldValue}>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.fieldName}>Date of birth:</div>
+            <div className={styles.fieldValue}>
               {editMode ? (
                 <input
                   onChange={handleChange}
@@ -126,8 +129,12 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.dateOfBirth
               )}
-            </li>
-            <li className={styles.fieldValue}>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.fieldName}>Email:</div>
+            <div className={styles.fieldValue}>
               {editMode ? (
                 <input
                   onChange={handleChange}
@@ -136,10 +143,10 @@ export const ProfilePage = () => {
                   type="email"
                 />
               ) : (
-                customerInfo?.email
+                <span className={styles.ellipsis}>{customerInfo?.email}</span>
               )}
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
 
         <div className={styles.buttonsWrap}>
