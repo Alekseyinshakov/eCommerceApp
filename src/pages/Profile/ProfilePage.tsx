@@ -3,8 +3,12 @@ import styles from './ProfilePage.module.scss'
 import { getCustomerData } from '@api/getCustomerData.ts'
 import { Customer } from '@commercetools/platform-sdk'
 import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.tsx'
+import { updateCustomerData } from '@api/updateCustomerData.ts'
+// import { useAuthStore } from '@store/authStore.ts'
 
 export const ProfilePage = () => {
+  // const setUser = useAuthStore((state) => state.setUser)
+
   const [customerInfo, setCustomerInfo] = useState<null | Customer>(null)
 
   const [editMode, setEditMode] = useState(false)
@@ -51,6 +55,28 @@ export const ProfilePage = () => {
 
       return updated
     })
+  }
+
+  const updateMainInfo = async () => {
+    if (!customerInfo) return
+
+    try {
+      const updatedCustomer = await updateCustomerData({
+        ...customerInfo,
+        ...inputValues,
+      })
+
+      if (updatedCustomer) {
+        console.log(updatedCustomer)
+        setCustomerInfo(updatedCustomer)
+        // setUser({
+        //
+        // })
+        setEditMode(false)
+      }
+    } catch (error) {
+      console.error('Error updating customer info:', error)
+    }
   }
 
   return (
@@ -117,7 +143,11 @@ export const ProfilePage = () => {
         </div>
 
         <div className={styles.buttonsWrap}>
-          {editMode && <button className="button">Save</button>}
+          {editMode && (
+            <button className="button" onClick={updateMainInfo}>
+              Save
+            </button>
+          )}
           {editMode && (
             <button
               className="button"
