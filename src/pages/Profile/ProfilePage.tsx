@@ -6,6 +6,16 @@ import { updateCustomerData } from '@api/updateCustomerData.ts'
 import { useAuthStore } from '@store/authStore.ts'
 import { useNotification } from '@components/Notification/NotifficationContext.tsx'
 import FormInput from '@components/FormInput/FormInput.tsx'
+import {
+  validateCity,
+  validateCountry,
+  validateDate,
+  validateEmail,
+  validateName,
+  // validatePassword,
+  validatePostalCode,
+  validateStreet,
+} from '@hooks/useFormValidators.ts'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -21,11 +31,11 @@ export const ProfilePage = () => {
     email: '',
   })
 
-  const [errors] = useState({
-    firstName: 'freferff ferferf erf',
-    lastName: 'Dfrfreg ggreg ',
-    email: 'gergrg erggg',
-    dob: '2fwefr gergergg gg',
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    dateOfBirth: '',
     street: '',
     city: '',
     postalCode: '',
@@ -65,6 +75,23 @@ export const ProfilePage = () => {
     setInputValues((prev) => {
       const updated = { ...prev, [name]: value }
 
+      const updatedErrors = {
+        ...errors,
+        firstName:
+          name === 'firstName' ? validateName(value) : errors.firstName,
+        lastName: name === 'lastName' ? validateName(value) : errors.lastName,
+        email: name === 'email' ? validateEmail(value) : errors.email,
+        dateOfBirth:
+          name === 'dateOfBirth' ? validateDate(value) : errors.dateOfBirth,
+        street: name === 'street' ? validateStreet(value) : errors.street,
+        city: name === 'city' ? validateCity(value) : errors.city,
+        postalCode:
+          name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
+        country: name === 'country' ? validateCountry(value) : errors.country,
+      }
+
+      setErrors(updatedErrors)
+      console.log(errors)
       return updated
     })
   }
@@ -142,7 +169,7 @@ export const ProfilePage = () => {
                   name="dateOfBirth"
                   type="date"
                   className={styles.resetInput}
-                  error={errors.dob}
+                  error={errors.dateOfBirth}
                 />
               ) : (
                 customerInfo?.dateOfBirth
@@ -180,6 +207,24 @@ export const ProfilePage = () => {
               className="button"
               onClick={() => {
                 setEditMode(false)
+                if (customerInfo) {
+                  setInputValues({
+                    firstName: customerInfo.firstName!,
+                    lastName: customerInfo.lastName!,
+                    dateOfBirth: customerInfo.dateOfBirth!,
+                    email: customerInfo.email,
+                  })
+                }
+                setErrors({
+                  firstName: '',
+                  lastName: '',
+                  email: '',
+                  dateOfBirth: '',
+                  street: '',
+                  city: '',
+                  postalCode: '',
+                  country: '',
+                })
               }}
             >
               Cancel
