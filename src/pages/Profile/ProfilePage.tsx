@@ -43,7 +43,7 @@ export const ProfilePage = () => {
     getDataHandler()
 
     return () => {}
-  }, [])
+  }, [setUser])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
