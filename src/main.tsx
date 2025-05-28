@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
+import { RouterProvider, Navigate, createHashRouter } from 'react-router-dom'
 
 import { ErrorPage } from '@pages/ErrorPage/ErrorPage'
 import { SignUpPage } from '@pages/AuthForms/SignUpPage'
@@ -15,7 +15,7 @@ import { CartPage } from '@pages/Cart/CartPage'
 import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
 import ProductDetailPage from '@pages/Shop/ProductDetailPage'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
