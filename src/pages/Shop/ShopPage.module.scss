@@ -1,7 +1,8 @@
 .shopContainer {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
+  margin: 50px 0 auto;
 }
 
 .title {
@@ -35,11 +36,17 @@
     color: black;
     border-radius: 4px;
     font-size: 14px;
+    transition: background-color 0.3s;
     cursor: pointer;
 
     &:disabled {
       opacity: 0.5;
       cursor: default;
+      pointer-events: none;
+    }
+
+    &:hover {
+      border: 1px dashed$main-border-color;
     }
   }
 }

@@ -28,7 +28,22 @@ export const ShopPage = () => {
   return (
     <div className="container">
       <div className={styles.shopContainer}>
-        <SortingList />
+        <SortingList
+          categories={[
+            { label: 'House Plants', count: 33 },
+            { label: 'Potter Plants', count: 12 },
+            { label: 'Seeds', count: 65 },
+            { label: 'Small Plants', count: 39 },
+            { label: 'Big Plants', count: 23 },
+            { label: 'Gardening', count: 13 },
+            { label: 'Accessories', count: 18 },
+          ]}
+          sizes={[
+            { label: 'Small', count: 119 },
+            { label: 'Medium', count: 86 },
+            { label: 'Large', count: 78 },
+          ]}
+        />
         <div>
           <SortingTab />
           <div className={styles.productsGrid}>

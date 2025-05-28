@@ -1,0 +1,33 @@
+.priceRange {
+}
+
+.trackContainer {
+  width: 100%;
+  height: 36px;
+  display: flex;
+}
+
+.track {
+  height: 5px;
+  width: 100%;
+  border-radius: 4px;
+  align-self: center;
+}
+
+.thumb {
+  height: 15px;
+  width: 15px;
+  border: 2px solid #fafafa;
+  border-radius: 10px;
+  background-color: $main-light-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px #aaa;
+  position: relative;
+}
+
+.priceValues {
+  margin-top: 0.5rem;
+  font-size: 14px;
+}
