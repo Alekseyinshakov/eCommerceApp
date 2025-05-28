@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import { getCustomerData } from '@api/getCustomerData.ts'
-import { Customer } from '@commercetools/platform-sdk'
 import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.tsx'
 import { updateCustomerData } from '@api/updateCustomerData.ts'
-// import { useAuthStore } from '@store/authStore.ts'
+import { useAuthStore } from '@store/authStore.ts'
 
 export const ProfilePage = () => {
-  // const setUser = useAuthStore((state) => state.setUser)
-
-  const [customerInfo, setCustomerInfo] = useState<null | Customer>(null)
+  const setUser = useAuthStore((state) => state.setUser)
+  const customerInfo = useAuthStore((state) => state.user)
 
   const [editMode, setEditMode] = useState(false)
 
@@ -29,7 +27,7 @@ export const ProfilePage = () => {
           const token = tokenObject.token
           const data = await getCustomerData(token)
           console.log(data)
-          setCustomerInfo(data)
+          setUser(data)
           setInputValues({
             firstName: data.firstName!,
             lastName: data.lastName!,
@@ -68,10 +66,9 @@ export const ProfilePage = () => {
 
       if (updatedCustomer) {
         console.log(updatedCustomer)
-        setCustomerInfo(updatedCustomer)
-        // setUser({
-        //
-        // })
+
+        setUser(updatedCustomer)
+
         setEditMode(false)
       }
     } catch (error) {
