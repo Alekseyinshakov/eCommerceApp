@@ -4,10 +4,12 @@ import { getCustomerData } from '@api/getCustomerData.ts'
 import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.tsx'
 import { updateCustomerData } from '@api/updateCustomerData.ts'
 import { useAuthStore } from '@store/authStore.ts'
+import { useNotification } from '@components/Notification/NotifficationContext.tsx'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
   const customerInfo = useAuthStore((state) => state.user)
+  const { setNotification } = useNotification()
 
   const [editMode, setEditMode] = useState(false)
 
@@ -68,11 +70,12 @@ export const ProfilePage = () => {
         console.log(updatedCustomer)
 
         setUser(updatedCustomer)
-
+        setNotification('Information successfully updated')
         setEditMode(false)
       }
     } catch (error) {
       console.error('Error updating customer info:', error)
+      setNotification('Something went wrong :-(')
     }
   }
 

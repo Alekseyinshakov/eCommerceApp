@@ -54,6 +54,7 @@ export const updateCustomerData = async (
       return updateResponse.body
     } catch (error) {
       console.error('Error update customer data:', error)
+      throw error
     }
   }
 }
