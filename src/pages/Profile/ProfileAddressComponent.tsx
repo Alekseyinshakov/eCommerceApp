@@ -1,5 +1,6 @@
 import styles from './ProfilePage.module.scss'
 import { Address, Customer } from '@commercetools/platform-sdk'
+import { useState } from 'react'
 
 export const ProfileAddressComponent = ({
   address,
@@ -8,8 +9,6 @@ export const ProfileAddressComponent = ({
   address: Address
   customerInfo: Customer | null
 }) => {
-  console.log(address)
-
   let isTypeBilling: boolean = false
   let isTypeShipping: boolean = false
   let isDefaultBilling: boolean = false
@@ -29,6 +28,15 @@ export const ProfileAddressComponent = ({
       isDefaultShipping = true
     }
   }
+
+  const [editMode] = useState(false)
+
+  const [inputValues] = useState({
+    country: address.country,
+    city: address.city,
+    street: address.streetName,
+    postalCode: address.postalCode,
+  })
 
   return (
     <div className={styles.addressContainer}>
@@ -50,10 +58,34 @@ export const ProfileAddressComponent = ({
           <li className={styles.fieldName}>Postal code:</li>
         </ul>
         <ul className={styles.col2}>
-          <li className={styles.fieldValue}>{address.country}</li>
-          <li className={styles.fieldValue}>{address.city}</li>
-          <li className={styles.fieldValue}>{address.streetName}</li>
-          <li className={styles.fieldValue}>{address.postalCode}</li>
+          <li className={styles.fieldValue}>
+            {editMode ? (
+              <input value={inputValues.country} type="text" />
+            ) : (
+              address.country
+            )}
+          </li>
+          <li className={styles.fieldValue}>
+            {editMode ? (
+              <input value={inputValues.city} type="text" />
+            ) : (
+              address.city
+            )}
+          </li>
+          <li className={styles.fieldValue}>
+            {editMode ? (
+              <input value={inputValues.street} type="text" />
+            ) : (
+              address.streetName
+            )}
+          </li>
+          <li className={styles.fieldValue}>
+            {editMode ? (
+              <input value={inputValues.postalCode} type="text" />
+            ) : (
+              address.postalCode
+            )}
+          </li>
         </ul>
       </div>
     </div>
