@@ -5,6 +5,7 @@ import { ProfileAddressComponent } from '@pages/Profile/ProfileAddressComponent.
 import { updateCustomerData } from '@api/updateCustomerData.ts'
 import { useAuthStore } from '@store/authStore.ts'
 import { useNotification } from '@components/Notification/NotifficationContext.tsx'
+import FormInput from '@components/FormInput/FormInput.tsx'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -18,6 +19,17 @@ export const ProfilePage = () => {
     lastName: '',
     dateOfBirth: '',
     email: '',
+  })
+
+  const [errors] = useState({
+    firstName: 'freferff ferferf erf',
+    lastName: '',
+    email: '',
+    dob: '',
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
   })
 
   useEffect(() => {
@@ -88,11 +100,13 @@ export const ProfilePage = () => {
             <div className={styles.fieldName}>First name:</div>
             <div className={styles.fieldValue}>
               {editMode ? (
-                <input
+                <FormInput
+                  className={styles.resetInput}
                   onChange={handleChange}
                   value={inputValues.firstName}
                   name="firstName"
                   type="text"
+                  error={errors.firstName}
                 />
               ) : (
                 customerInfo?.firstName
