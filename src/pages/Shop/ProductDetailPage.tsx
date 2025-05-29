@@ -3,6 +3,7 @@ import { apiRoot } from '@api/apiClient'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import SliderProductDetails from '@components/SliderProductDetails/SliderProductDetails'
+import styles from './ShopPage.module.scss'
 
 type ProductDetail = {
   id: string
@@ -13,6 +14,7 @@ type ProductDetail = {
   size: string
   categories: string
   sku: string
+  isDiameterBased: boolean
 }
 
 type Image = {
@@ -73,6 +75,12 @@ const ProductDetailPage = () => {
 
           const categories = productData.categories || []
           const categoriesNames = await getCategoryName(categories)
+          const isDiameterBased = Boolean(
+            getAttributeValue(
+              productData.masterVariant?.attributes || [],
+              'isDiameterBased'
+            )
+          )
 
           const productDetail: ProductDetail = {
             id: productId,
@@ -88,10 +96,15 @@ const ProductDetailPage = () => {
               getAttributeValue(
                 productData.masterVariant?.attributes || [],
                 'size'
-              ) ?? ''
+              ) ??
+                getAttributeValue(
+                  productData.masterVariant?.attributes || [],
+                  'size-acces'
+                )
             ),
             categories: categoriesNames,
             sku: productData.masterVariant?.sku || '',
+            isDiameterBased,
           }
 
           setProduct(productDetail)
@@ -115,13 +128,29 @@ const ProductDetailPage = () => {
   return (
     <div className="container">
       {product ? (
-        <div>
-          <h1>{product.name}</h1>
+        <div className={styles.product}>
           <SliderProductDetails images={product.images} />
-          <p>{product.description}</p>
-          <p>Price: ${product.price}</p>
-          <p>categories: {product.categories}</p>
-          <p>SKU: {product.sku}</p>
+          <div className={styles.descriptionInner}>
+            <h1 className={styles.nameProduct}>{product.name}</h1>
+            <p className={styles.price}>Price: ${product.price}</p>
+            <p className={styles.desc}>
+              Short Description:{' '}
+              <span className={styles.descText}>{product.description}</span>
+            </p>
+            <p className={styles.size}>
+              Size:{' '}
+              <span className={styles.descText}>
+                {product.isDiameterBased ? `⌀ ${product.size}` : product.size}
+              </span>
+            </p>
+            <p className={styles.sku}>
+              SKU: <span className={styles.descText}> {product.sku}</span>
+            </p>
+            <p className={styles.categories}>
+              Categories:{' '}
+              <span className={styles.descText}>{product.categories}</span>
+            </p>
+          </div>
         </div>
       ) : null}
     </div>

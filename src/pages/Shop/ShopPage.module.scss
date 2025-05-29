@@ -43,3 +43,44 @@
     }
   }
 }
+
+.product {
+  display: flex;
+  padding-top: 40px;
+}
+.descriptionInner {
+  width: 50%;
+  padding-left: 25px;
+}
+.nameProduct {
+  font-size: 28px;
+  font-weight: 600;
+}
+.price {
+  font-size: 16px;
+  font-weight: 700;
+  color: $main-light-color;
+}
+.desc {
+  font-size: 15px;
+  font-weight: 500;
+  .descText {
+    display: block;
+  }
+}
+.size {
+  font-size: 15px;
+  font-weight: 500;
+}
+.sku,
+.categories {
+  color: $text-description-light;
+  font-size: 14px;
+}
+.descText {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 10px;
+  font-weight: 400;
+  color: $text-description;
+}
