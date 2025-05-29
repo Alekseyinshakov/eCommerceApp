@@ -1,5 +1,7 @@
 import styles from './ProfilePage.module.scss'
 import { Address, Customer } from '@commercetools/platform-sdk'
+import FormInput from '@components/FormInput/FormInput'
+import { CountryList } from '@pages/AuthForms/helpersCountry'
 import { useState } from 'react'
 
 export const ProfileAddressComponent = ({
@@ -29,7 +31,7 @@ export const ProfileAddressComponent = ({
     }
   }
 
-  const [editMode] = useState(false)
+  const [editMode, seteditMode] = useState(false)
 
   const [inputValues] = useState({
     country: address.country,
@@ -55,7 +57,20 @@ export const ProfileAddressComponent = ({
           <div className={styles.fieldName}>Country:</div>
           <div className={styles.fieldValue}>
             {editMode ? (
-              <input value={inputValues.country} type="text" />
+              <>
+                <FormInput
+                  name="country"
+                  type="text"
+                  className={styles.resetInput}
+                  placeholder="Country"
+                  list="country-list"
+                  value={inputValues.country}
+                  onChange={() => {
+                    console.log(1)
+                  }}
+                />
+                <CountryList />
+              </>
             ) : (
               address.country
             )}
@@ -66,7 +81,16 @@ export const ProfileAddressComponent = ({
           <div className={styles.fieldName}>City:</div>
           <div className={styles.fieldValue}>
             {editMode ? (
-              <input value={inputValues.city} type="text" />
+              <FormInput
+                name="city"
+                type="text"
+                className={styles.resetInput}
+                placeholder="City"
+                value={inputValues.city || ''}
+                onChange={() => {
+                  console.log(1)
+                }}
+              />
             ) : (
               address.city
             )}
@@ -77,7 +101,16 @@ export const ProfileAddressComponent = ({
           <div className={styles.fieldName}>Street:</div>
           <div className={styles.fieldValue}>
             {editMode ? (
-              <input value={inputValues.street} type="text" />
+              <FormInput
+                name="street"
+                type="text"
+                className={styles.resetInput}
+                placeholder="Street Address"
+                value={inputValues.street || ''}
+                onChange={() => {
+                  console.log(1)
+                }}
+              />
             ) : (
               address.streetName
             )}
@@ -88,12 +121,54 @@ export const ProfileAddressComponent = ({
           <div className={styles.fieldName}>Postal code:</div>
           <div className={styles.fieldValue}>
             {editMode ? (
-              <input value={inputValues.postalCode} type="text" />
+              <FormInput
+                name="postalCode"
+                type="text"
+                className={styles.resetInput}
+                placeholder="Postal Code"
+                value={inputValues.postalCode || ''}
+                onChange={() => {
+                  console.log(1)
+                }}
+              />
             ) : (
               address.postalCode
             )}
           </div>
         </div>
+      </div>
+      <div className={styles.addressButtons}>
+        {editMode && (
+          <button
+            onClick={() => {
+              console.log('save address')
+            }}
+            className="button"
+          >
+            Save
+          </button>
+        )}
+        {!editMode && (
+          <button
+            onClick={() => {
+              seteditMode(true)
+            }}
+            className="button"
+          >
+            Edit
+          </button>
+        )}
+        {editMode && (
+          <button
+            onClick={() => {
+              seteditMode(false)
+            }}
+            className="button"
+          >
+            Cancel
+          </button>
+        )}
+        <button className="button">Delete</button>
       </div>
     </div>
   )

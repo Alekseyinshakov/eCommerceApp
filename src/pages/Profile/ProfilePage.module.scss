@@ -38,6 +38,9 @@
   column-gap: 7px;
   row-gap: 5px;
   margin-bottom: 4px;
+  button {
+    justify-self: flex-end;
+  }
 }
 
 .addressType,
@@ -55,6 +58,13 @@
 }
 
 .addressWrap {
+}
+
+.addressButtons {
+  margin-top: 5px;
+  display: flex;
+  column-gap: 10px;
+  justify-content: end;
 }
 
 .col1 {
