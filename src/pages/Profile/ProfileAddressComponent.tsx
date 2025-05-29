@@ -1,3 +1,4 @@
+import { updateAddress } from '@api/updateAddress'
 import styles from './ProfilePage.module.scss'
 import { Address, Customer } from '@commercetools/platform-sdk'
 import FormInput from '@components/FormInput/FormInput'
@@ -73,6 +74,11 @@ export const ProfileAddressComponent = ({
     }
 
     setInputValues(newValues)
+  }
+
+  const changeAddressHandler = () => {
+    console.log(inputValues)
+    updateAddress(inputValues)
   }
 
   return (
@@ -215,7 +221,7 @@ export const ProfileAddressComponent = ({
         {editMode && (
           <button
             onClick={() => {
-              console.log(inputValues)
+              changeAddressHandler()
             }}
             className="button"
           >
