@@ -34,6 +34,7 @@ export const ProfileAddressComponent = ({
   const [editMode, seteditMode] = useState(false)
 
   const [inputValues, setInputValues] = useState({
+    id: address.id,
     country: address.country,
     city: address.city,
     street: address.streetName,
@@ -43,6 +44,17 @@ export const ProfileAddressComponent = ({
     defaultShipping: isDefaultShipping,
     defaultBilling: isDefaultBilling,
   })
+
+  // const countryCodeMap: Record<string, string> = {
+  //   Canada: 'CA',
+  //   'United States': 'US',
+  //   Ukraine: 'UA',
+  //   Germany: 'DE',
+  //   France: 'FR',
+  //   Russia: 'RU',
+  //   Belarus: 'BY',
+  //   Poland: 'PL',
+  // }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target
@@ -203,7 +215,7 @@ export const ProfileAddressComponent = ({
         {editMode && (
           <button
             onClick={() => {
-              console.log('save address')
+              console.log(inputValues)
             }}
             className="button"
           >
@@ -225,6 +237,7 @@ export const ProfileAddressComponent = ({
             onClick={() => {
               seteditMode(false)
               setInputValues({
+                id: address.id,
                 country: address.country,
                 city: address.city,
                 street: address.streetName,
