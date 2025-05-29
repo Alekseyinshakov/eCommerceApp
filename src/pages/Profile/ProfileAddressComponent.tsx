@@ -33,12 +33,35 @@ export const ProfileAddressComponent = ({
 
   const [editMode, seteditMode] = useState(false)
 
-  const [inputValues] = useState({
+  const [inputValues, setInputValues] = useState({
     country: address.country,
     city: address.city,
     street: address.streetName,
     postalCode: address.postalCode,
+    shipping: isTypeShipping,
+    billing: isTypeBilling,
+    defaultShipping: isDefaultShipping,
+    defaultBilling: isDefaultBilling,
   })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, type, checked, value } = e.target
+    const finalValue = type === 'checkbox' ? checked : value
+
+    const newValues = {
+      ...inputValues,
+      [name]: finalValue,
+    }
+
+    if (name === 'billing' && finalValue === false) {
+      newValues.defaultBilling = false
+    }
+    if (name === 'shipping' && finalValue === false) {
+      newValues.defaultShipping = false
+    }
+
+    setInputValues(newValues)
+  }
 
   return (
     <div className={styles.addressContainer}>
@@ -65,9 +88,7 @@ export const ProfileAddressComponent = ({
                   placeholder="Country"
                   list="country-list"
                   value={inputValues.country}
-                  onChange={() => {
-                    console.log(1)
-                  }}
+                  onChange={handleChange}
                 />
                 <CountryList />
               </>
@@ -87,9 +108,7 @@ export const ProfileAddressComponent = ({
                 className={styles.resetInput}
                 placeholder="City"
                 value={inputValues.city || ''}
-                onChange={() => {
-                  console.log(1)
-                }}
+                onChange={handleChange}
               />
             ) : (
               address.city
@@ -107,9 +126,7 @@ export const ProfileAddressComponent = ({
                 className={styles.resetInput}
                 placeholder="Street Address"
                 value={inputValues.street || ''}
-                onChange={() => {
-                  console.log(1)
-                }}
+                onChange={handleChange}
               />
             ) : (
               address.streetName
@@ -127,15 +144,60 @@ export const ProfileAddressComponent = ({
                 className={styles.resetInput}
                 placeholder="Postal Code"
                 value={inputValues.postalCode || ''}
-                onChange={() => {
-                  console.log(1)
-                }}
+                onChange={handleChange}
               />
             ) : (
               address.postalCode
             )}
           </div>
         </div>
+        {editMode && (
+          <div className={styles.row}>
+            <div className={styles.fieldName}>Shipping:</div>
+            <div className={styles.fieldValue}>
+              <input
+                type="checkbox"
+                name="shipping"
+                id=""
+                checked={inputValues.shipping}
+                onChange={handleChange}
+              />
+              <span className={styles.defaultSpan}>Default:</span>
+              <input
+                type="checkbox"
+                name="defaultShipping"
+                id=""
+                checked={inputValues.defaultShipping}
+                disabled={!inputValues.shipping}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        )}
+
+        {editMode && (
+          <div className={styles.row}>
+            <div className={styles.fieldName}>Billing:</div>
+            <div className={styles.fieldValue}>
+              <input
+                type="checkbox"
+                name="billing"
+                id=""
+                checked={inputValues.billing}
+                onChange={handleChange}
+              />
+              <span className={styles.defaultSpan}>Default:</span>
+              <input
+                type="checkbox"
+                name="defaultBilling"
+                id=""
+                checked={inputValues.defaultBilling}
+                disabled={!inputValues.billing}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        )}
       </div>
       <div className={styles.addressButtons}>
         {editMode && (
@@ -162,6 +224,16 @@ export const ProfileAddressComponent = ({
           <button
             onClick={() => {
               seteditMode(false)
+              setInputValues({
+                country: address.country,
+                city: address.city,
+                street: address.streetName,
+                postalCode: address.postalCode,
+                shipping: isTypeShipping,
+                billing: isTypeBilling,
+                defaultShipping: isDefaultShipping,
+                defaultBilling: isDefaultBilling,
+              })
             }}
             className="button"
           >
