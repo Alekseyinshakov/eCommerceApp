@@ -6,9 +6,35 @@ import FormInput from '@components/FormInput/FormInput'
 export const AddAddress = () => {
   const [isAddingAddress, setIsAddingAddress] = useState(false)
 
+  const [inputValues, setInputValues] = useState({
+    country: '',
+    city: '',
+    street: '',
+    postalCode: '',
+    shipping: false,
+    billing: false,
+    defaultShipping: false,
+    defaultBilling: false,
+  })
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    console.log(`Field changed: ${name}, New value: ${value}`)
+    const { name, type, checked, value } = e.target
+    const finalValue = type === 'checkbox' ? checked : value
+
+    const newValues = {
+      ...inputValues,
+      [name]: finalValue,
+    }
+
+    if (name === 'billing' && finalValue === false) {
+      newValues.defaultBilling = false
+    }
+    if (name === 'shipping' && finalValue === false) {
+      newValues.defaultShipping = false
+    }
+
+    setInputValues(newValues)
+    console.log(`Field changed: ${name}, New value: ${finalValue}`)
   }
   return (
     <div>
@@ -56,7 +82,7 @@ export const AddAddress = () => {
                 className={styles.resetInput}
                 placeholder="Country"
                 list="country-list"
-                value={''}
+                value={inputValues.country}
                 onChange={handleChange}
               />
               <CountryList />
@@ -71,7 +97,7 @@ export const AddAddress = () => {
                 type="text"
                 className={styles.resetInput}
                 placeholder="City"
-                value={''}
+                value={inputValues.city}
                 onChange={handleChange}
               />
             </div>
@@ -85,7 +111,7 @@ export const AddAddress = () => {
                 type="text"
                 className={styles.resetInput}
                 placeholder="Street Address"
-                value={''}
+                value={inputValues.street}
                 onChange={handleChange}
               />
             </div>
@@ -99,7 +125,7 @@ export const AddAddress = () => {
                 type="text"
                 className={styles.resetInput}
                 placeholder="Postal Code"
-                value={''}
+                value={inputValues.postalCode}
                 onChange={handleChange}
               />
             </div>
@@ -112,7 +138,7 @@ export const AddAddress = () => {
                 type="checkbox"
                 name="shipping"
                 id=""
-                checked={false}
+                checked={inputValues.shipping}
                 onChange={handleChange}
               />
               <span className={styles.defaultSpan}>Default:</span>
@@ -120,8 +146,8 @@ export const AddAddress = () => {
                 type="checkbox"
                 name="defaultShipping"
                 id=""
-                checked={false}
-                disabled={false}
+                checked={inputValues.defaultShipping}
+                disabled={!inputValues.shipping}
                 onChange={handleChange}
               />
             </div>
@@ -134,7 +160,7 @@ export const AddAddress = () => {
                 type="checkbox"
                 name="billing"
                 id=""
-                checked={false}
+                checked={inputValues.billing}
                 onChange={handleChange}
               />
               <span className={styles.defaultSpan}>Default:</span>
@@ -142,8 +168,8 @@ export const AddAddress = () => {
                 type="checkbox"
                 name="defaultBilling"
                 id=""
-                checked={false}
-                disabled={false}
+                checked={inputValues.defaultBilling}
+                disabled={!inputValues.billing}
                 onChange={handleChange}
               />
             </div>
