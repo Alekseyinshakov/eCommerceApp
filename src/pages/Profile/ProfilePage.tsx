@@ -253,6 +253,8 @@ export const ProfilePage = () => {
             ? 'Addresses:'
             : 'No addresses here yet. Let’s add your first one!'}
         </h3>
+
+        <AddAddress />
         <div className={styles.addressesContainer}>
           {customerInfo?.addresses?.map((item) => {
             return (
@@ -264,8 +266,6 @@ export const ProfilePage = () => {
             )
           })}
         </div>
-
-        <AddAddress />
       </div>
     </div>
   )

@@ -101,14 +101,14 @@ export const addNewAddress = async ({
       const updateActions = []
 
       if (shipping) {
-        actions.push({
+        updateActions.push({
           action: 'addShippingAddressId',
           addressId: newAddressId,
         } as MyCustomerAddShippingAddressIdAction)
       }
 
       if (billing) {
-        actions.push({
+        updateActions.push({
           action: 'addBillingAddressId',
           addressId: newAddressId,
         } as MyCustomerAddBillingAddressIdAction)

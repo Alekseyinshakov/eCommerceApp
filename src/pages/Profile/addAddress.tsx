@@ -74,27 +74,7 @@ export const AddAddress = () => {
               setIsAddingAddress(true)
             }}
           >
-            Add address
-          </button>
-        )}
-        {isAddingAddress && (
-          <button
-            className="button"
-            onClick={() => {
-              setIsAddingAddress(false)
-            }}
-          >
-            Cancel
-          </button>
-        )}
-        {isAddingAddress && (
-          <button
-            className="button"
-            onClick={() => {
-              saveNewAddressHandler()
-            }}
-          >
-            Save
+            Add new address
           </button>
         )}
       </div>
@@ -201,6 +181,28 @@ export const AddAddress = () => {
                 onChange={handleChange}
               />
             </div>
+          </div>
+          <div className={styles.row + ' ' + styles.buttonsWrapper}>
+            {isAddingAddress && (
+              <button
+                className="button"
+                onClick={() => {
+                  setIsAddingAddress(false)
+                }}
+              >
+                Cancel
+              </button>
+            )}
+            {isAddingAddress && (
+              <button
+                className="button"
+                onClick={() => {
+                  saveNewAddressHandler()
+                }}
+              >
+                Save
+              </button>
+            )}
           </div>
         </div>
       )}
