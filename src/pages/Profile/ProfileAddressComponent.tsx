@@ -4,6 +4,8 @@ import { Address, Customer } from '@commercetools/platform-sdk'
 import FormInput from '@components/FormInput/FormInput'
 import { CountryList } from '@pages/AuthForms/helpersCountry'
 import { useState } from 'react'
+import { useNotification } from '@components/Notification/NotifficationContext'
+import { useAuthStore } from '@store/authStore.ts'
 
 export const ProfileAddressComponent = ({
   address,
@@ -12,6 +14,8 @@ export const ProfileAddressComponent = ({
   address: Address
   customerInfo: Customer | null
 }) => {
+  const setUser = useAuthStore((state) => state.setUser)
+
   let isTypeBilling: boolean = false
   let isTypeShipping: boolean = false
   let isDefaultBilling: boolean = false
@@ -31,6 +35,8 @@ export const ProfileAddressComponent = ({
       isDefaultShipping = true
     }
   }
+
+  const { setNotification } = useNotification()
 
   const [editMode, seteditMode] = useState(false)
 
@@ -76,9 +82,17 @@ export const ProfileAddressComponent = ({
     setInputValues(newValues)
   }
 
-  const changeAddressHandler = () => {
-    console.log(inputValues)
-    updateAddress(inputValues)
+  const changeAddressHandler = async () => {
+    try {
+      const updatedCustomer = await updateAddress(inputValues)
+      console.log(975, updatedCustomer)
+      setUser(updatedCustomer)
+      seteditMode(false)
+      setNotification('Information successfully updated')
+    } catch (error) {
+      console.error('Error updating customer info:', error)
+      setNotification('Something went wrong :-(')
+    }
   }
 
   return (

@@ -112,8 +112,6 @@ export const ProfilePage = () => {
         })
 
         if (updatedCustomer) {
-          console.log(updatedCustomer)
-
           setUser(updatedCustomer)
           setNotification('Information successfully updated')
           setEditMode(false)
