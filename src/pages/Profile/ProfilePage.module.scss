@@ -19,12 +19,17 @@
   }
 }
 
-.colWrap {
+.colWrap,
+.addAddressWrapper {
   background-color: #d4ffb5;
   border-radius: 20px;
   max-width: 800px;
   margin: 0 auto;
   padding: 10px 0;
+}
+
+.addAddressWrapper {
+  background-color: #ffffff;
 }
 
 .addressContainer {

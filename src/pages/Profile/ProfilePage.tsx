@@ -16,6 +16,7 @@ import {
   validatePostalCode,
   validateStreet,
 } from '@hooks/useFormValidators.ts'
+import { CountryList } from '@pages/AuthForms/helpersCountry.tsx'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -23,6 +24,7 @@ export const ProfilePage = () => {
   const { setNotification } = useNotification()
 
   const [editMode, setEditMode] = useState(false)
+  const [isAddingAddress, setIsAddingAddress] = useState(false)
 
   const [inputValues, setInputValues] = useState({
     firstName: '',
@@ -262,6 +264,89 @@ export const ProfilePage = () => {
               />
             )
           })}
+          <div className={styles.addAddressWrapper}>
+            {!isAddingAddress && (
+              <button
+                className="button"
+                onClick={() => {
+                  setIsAddingAddress(true)
+                }}
+              >
+                Add address
+              </button>
+            )}
+            {isAddingAddress && (
+              <button
+                className="button"
+                onClick={() => {
+                  setIsAddingAddress(false)
+                }}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+          {isAddingAddress && (
+            <div className={styles.colWrap}>
+              <div className={styles.row}>
+                <div className={styles.fieldName}>Country:</div>
+                <div className={styles.fieldValue}>
+                  <FormInput
+                    name="country"
+                    type="text"
+                    className={styles.resetInput}
+                    placeholder="Country"
+                    list="country-list"
+                    value={''}
+                    onChange={handleChange}
+                  />
+                  <CountryList />
+                </div>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.fieldName}>City:</div>
+                <div className={styles.fieldValue}>
+                  <FormInput
+                    name="city"
+                    type="text"
+                    className={styles.resetInput}
+                    placeholder="City"
+                    value={''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.fieldName}>Street:</div>
+                <div className={styles.fieldValue}>
+                  <FormInput
+                    name="street"
+                    type="text"
+                    className={styles.resetInput}
+                    placeholder="Street Address"
+                    value={''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.fieldName}>Postal code:</div>
+                <div className={styles.fieldValue}>
+                  <FormInput
+                    name="postalCode"
+                    type="text"
+                    className={styles.resetInput}
+                    placeholder="Postal Code"
+                    value={''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
