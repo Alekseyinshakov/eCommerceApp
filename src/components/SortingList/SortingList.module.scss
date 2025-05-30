@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 310px;
   height: 620px;
-  margin-top: -34px;
+  margin-top: 33px;
   padding: 1.5rem;
   background: $gradient;
   border: 1px solid $main-border-color;
@@ -77,5 +77,16 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .aside {
+    display: flex;
+    width: 100%;
+    max-width: 310px;
+    height: 620px;
+    margin-top: 33px;
+    padding: 1rem;
   }
 }

@@ -1,8 +1,13 @@
 .shopContainer {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 50px 0 auto;
+}
+
+@media screen and (max-width: 875px) {
+  .shopContainer {
+    margin: 30px 0 auto;
+  }
 }
 
 .title {
@@ -16,6 +21,30 @@
   padding: 0 40px;
   gap: 20px;
   align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 20px;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .productsGrid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .productsGrid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 10px;
+    gap: 20px;
+  }
 }
 
 .placeholder {

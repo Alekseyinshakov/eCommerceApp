@@ -83,3 +83,17 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@media screen and (max-width: 575px) {
+  .mainBlock {
+    width: 220px;
+  }
+
+  .img {
+    width: 210px;
+  }
+
+  .description {
+    width: 200px;
+  }
+}
