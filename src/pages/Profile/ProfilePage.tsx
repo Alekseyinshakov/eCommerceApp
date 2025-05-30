@@ -285,6 +285,16 @@ export const ProfilePage = () => {
                 Cancel
               </button>
             )}
+            {isAddingAddress && (
+              <button
+                className="button"
+                onClick={() => {
+                  console.log(234)
+                }}
+              >
+                Save
+              </button>
+            )}
           </div>
           {isAddingAddress && (
             <div className={styles.colWrap}>
@@ -341,6 +351,50 @@ export const ProfilePage = () => {
                     className={styles.resetInput}
                     placeholder="Postal Code"
                     value={''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.fieldName}>Shipping:</div>
+                <div className={styles.fieldValue}>
+                  <input
+                    type="checkbox"
+                    name="shipping"
+                    id=""
+                    checked={false}
+                    onChange={handleChange}
+                  />
+                  <span className={styles.defaultSpan}>Default:</span>
+                  <input
+                    type="checkbox"
+                    name="defaultShipping"
+                    id=""
+                    checked={false}
+                    disabled={false}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className={styles.row}>
+                <div className={styles.fieldName}>Billing:</div>
+                <div className={styles.fieldValue}>
+                  <input
+                    type="checkbox"
+                    name="billing"
+                    id=""
+                    checked={false}
+                    onChange={handleChange}
+                  />
+                  <span className={styles.defaultSpan}>Default:</span>
+                  <input
+                    type="checkbox"
+                    name="defaultBilling"
+                    id=""
+                    checked={false}
+                    disabled={false}
                     onChange={handleChange}
                   />
                 </div>

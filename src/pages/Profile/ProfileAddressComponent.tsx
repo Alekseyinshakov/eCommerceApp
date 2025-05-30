@@ -39,7 +39,7 @@ export const ProfileAddressComponent = ({
 
   const { setNotification } = useNotification()
 
-  const [editMode, seteditMode] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   const [inputValues, setInputValues] = useState({
     id: address.id,
@@ -92,7 +92,7 @@ export const ProfileAddressComponent = ({
       })
       console.log(975, updatedCustomer)
       setUser(updatedCustomer)
-      seteditMode(false)
+      setEditMode(false)
       setNotification('Information successfully updated')
     } catch (error) {
       console.error('Error updating customer info:', error)
@@ -262,7 +262,7 @@ export const ProfileAddressComponent = ({
         {!editMode && (
           <button
             onClick={() => {
-              seteditMode(true)
+              setEditMode(true)
             }}
             className="button"
           >
@@ -272,7 +272,7 @@ export const ProfileAddressComponent = ({
         {editMode && (
           <button
             onClick={() => {
-              seteditMode(false)
+              setEditMode(false)
               setInputValues({
                 id: address.id,
                 country: address.country,
