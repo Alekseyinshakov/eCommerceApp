@@ -1,4 +1,8 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk'
+import {
+  createApiBuilderFromCtpClient,
+  MyCustomerRemoveBillingAddressIdAction,
+  MyCustomerRemoveShippingAddressIdAction,
+} from '@commercetools/platform-sdk'
 import { buildCustomerClientWithToken } from './apiClient'
 import {
   MyCustomerUpdateAction,
@@ -19,6 +23,8 @@ type NewAddressData = {
   billing: boolean
   defaultShipping: boolean
   defaultBilling: boolean
+  inBillingArray: boolean
+  inSippingArray: boolean
 }
 
 const countryCodeMap: Record<string, string> = {
@@ -42,6 +48,8 @@ export const updateAddress = async ({
   billing,
   defaultShipping,
   defaultBilling,
+  inBillingArray,
+  inSippingArray,
 }: NewAddressData) => {
   const tokenJSON = localStorage.getItem('customer_token')
   if (!tokenJSON) {
@@ -89,12 +97,22 @@ export const updateAddress = async ({
         action: 'addShippingAddressId',
         addressId: id,
       } as MyCustomerAddShippingAddressIdAction)
+    } else if (inSippingArray) {
+      actions.push({
+        action: 'removeShippingAddressId',
+        addressId: id,
+      } as MyCustomerRemoveShippingAddressIdAction)
     }
 
     if (defaultShipping) {
       actions.push({
         action: 'setDefaultShippingAddress',
         addressId: id,
+      } as MyCustomerSetDefaultShippingAddressAction)
+    } else {
+      actions.push({
+        action: 'setDefaultShippingAddress',
+        addressId: null as unknown as string,
       } as MyCustomerSetDefaultShippingAddressAction)
     }
 
@@ -103,12 +121,22 @@ export const updateAddress = async ({
         action: 'addBillingAddressId',
         addressId: id,
       } as MyCustomerAddBillingAddressIdAction)
+    } else if (inBillingArray) {
+      actions.push({
+        action: 'removeBillingAddressId',
+        addressId: id,
+      } as MyCustomerRemoveBillingAddressIdAction)
     }
 
     if (defaultBilling) {
       actions.push({
         action: 'setDefaultBillingAddress',
         addressId: id,
+      } as MyCustomerSetDefaultBillingAddressAction)
+    } else {
+      actions.push({
+        action: 'setDefaultBillingAddress',
+        addressId: null as unknown as string,
       } as MyCustomerSetDefaultBillingAddressAction)
     }
 

@@ -247,7 +247,7 @@ export const ProfilePage = () => {
           )}
         </div>
 
-        <h3>Adresses:</h3>
+        <h3>Addresses:</h3>
         <div className={styles.addressesContainer}>
           {customerInfo?.addresses?.map((item) => {
             return (

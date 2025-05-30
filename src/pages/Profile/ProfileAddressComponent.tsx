@@ -84,7 +84,11 @@ export const ProfileAddressComponent = ({
 
   const changeAddressHandler = async () => {
     try {
-      const updatedCustomer = await updateAddress(inputValues)
+      const updatedCustomer = await updateAddress({
+        ...inputValues,
+        inSippingArray: isTypeShipping,
+        inBillingArray: isTypeBilling,
+      })
       console.log(975, updatedCustomer)
       setUser(updatedCustomer)
       seteditMode(false)
