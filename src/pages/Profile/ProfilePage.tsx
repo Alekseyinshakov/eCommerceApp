@@ -247,7 +247,11 @@ export const ProfilePage = () => {
           )}
         </div>
 
-        <h3>Addresses:</h3>
+        <h3>
+          {customerInfo?.addresses.length
+            ? 'Addresses:'
+            : 'No addresses here yet. Let’s add your first one!'}
+        </h3>
         <div className={styles.addressesContainer}>
           {customerInfo?.addresses?.map((item) => {
             return (

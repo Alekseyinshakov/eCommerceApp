@@ -6,6 +6,7 @@ import { CountryList } from '@pages/AuthForms/helpersCountry'
 import { useState } from 'react'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { useAuthStore } from '@store/authStore.ts'
+import { deleteAddress } from '@api/deleteAddress.ts'
 
 export const ProfileAddressComponent = ({
   address,
@@ -95,6 +96,18 @@ export const ProfileAddressComponent = ({
       setNotification('Information successfully updated')
     } catch (error) {
       console.error('Error updating customer info:', error)
+      setNotification('Something went wrong :-(')
+    }
+  }
+
+  const deleteAddressHandler = async () => {
+    try {
+      console.log('Удаляем адрес111')
+      const customer = await deleteAddress(address.id!)
+      setUser(customer)
+      setNotification('The address was successfully deleted.')
+    } catch (error) {
+      console.error('Error deliting customer info:', error)
       setNotification('Something went wrong :-(')
     }
   }
@@ -277,7 +290,14 @@ export const ProfileAddressComponent = ({
             Cancel
           </button>
         )}
-        <button className="button">Delete</button>
+        <button
+          className="button"
+          onClick={() => {
+            deleteAddressHandler()
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   )

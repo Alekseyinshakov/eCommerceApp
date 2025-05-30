@@ -7,9 +7,9 @@ import { buildCustomerClientWithToken } from './apiClient'
 import {
   MyCustomerUpdateAction,
   MyCustomerChangeAddressAction,
-  MyCustomerAddShippingAddressIdAction, // Используется вместо MyCustomerSetShippingAddressAction
+  MyCustomerAddShippingAddressIdAction,
   MyCustomerSetDefaultShippingAddressAction,
-  MyCustomerAddBillingAddressIdAction, // Используется вместо MyCustomerSetBillingAddressAction
+  MyCustomerAddBillingAddressIdAction,
   MyCustomerSetDefaultBillingAddressAction,
 } from '@commercetools/platform-sdk'
 
