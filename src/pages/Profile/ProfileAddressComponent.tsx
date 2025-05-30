@@ -246,57 +246,57 @@ export const ProfileAddressComponent = ({
             </div>
           </div>
         )}
-      </div>
-      <div className={styles.addressButtons}>
-        {editMode && (
+        <div className={styles.addressButtons}>
+          {editMode && (
+            <button
+              onClick={() => {
+                changeAddressHandler()
+              }}
+              className="button"
+            >
+              Save
+            </button>
+          )}
+          {!editMode && (
+            <button
+              onClick={() => {
+                setEditMode(true)
+              }}
+              className="button"
+            >
+              Edit
+            </button>
+          )}
+          {editMode && (
+            <button
+              onClick={() => {
+                setEditMode(false)
+                setInputValues({
+                  id: address.id,
+                  country: address.country,
+                  city: address.city,
+                  street: address.streetName,
+                  postalCode: address.postalCode,
+                  shipping: isTypeShipping,
+                  billing: isTypeBilling,
+                  defaultShipping: isDefaultShipping,
+                  defaultBilling: isDefaultBilling,
+                })
+              }}
+              className="button"
+            >
+              Cancel
+            </button>
+          )}
           <button
-            onClick={() => {
-              changeAddressHandler()
-            }}
             className="button"
-          >
-            Save
-          </button>
-        )}
-        {!editMode && (
-          <button
             onClick={() => {
-              setEditMode(true)
+              deleteAddressHandler()
             }}
-            className="button"
           >
-            Edit
+            Delete
           </button>
-        )}
-        {editMode && (
-          <button
-            onClick={() => {
-              setEditMode(false)
-              setInputValues({
-                id: address.id,
-                country: address.country,
-                city: address.city,
-                street: address.streetName,
-                postalCode: address.postalCode,
-                shipping: isTypeShipping,
-                billing: isTypeBilling,
-                defaultShipping: isDefaultShipping,
-                defaultBilling: isDefaultBilling,
-              })
-            }}
-            className="button"
-          >
-            Cancel
-          </button>
-        )}
-        <button
-          className="button"
-          onClick={() => {
-            deleteAddressHandler()
-          }}
-        >
-          Delete
-        </button>
+        </div>
       </div>
     </div>
   )

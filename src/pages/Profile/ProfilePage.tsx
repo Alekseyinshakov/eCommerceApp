@@ -200,52 +200,51 @@ export const ProfilePage = () => {
               )}
             </div>
           </div>
-        </div>
-
-        <div className={styles.buttonsWrap}>
-          {editMode && (
-            <button className="button" onClick={updateMainInfo}>
-              Save
-            </button>
-          )}
-          {editMode && (
-            <button
-              className="button"
-              onClick={() => {
-                setEditMode(false)
-                if (customerInfo) {
-                  setInputValues({
-                    firstName: customerInfo.firstName!,
-                    lastName: customerInfo.lastName!,
-                    dateOfBirth: customerInfo.dateOfBirth!,
-                    email: customerInfo.email,
+          <div className={styles.row + ' ' + styles.buttonsWrapper}>
+            {editMode && (
+              <button className="button" onClick={updateMainInfo}>
+                Save
+              </button>
+            )}
+            {editMode && (
+              <button
+                className="button"
+                onClick={() => {
+                  setEditMode(false)
+                  if (customerInfo) {
+                    setInputValues({
+                      firstName: customerInfo.firstName!,
+                      lastName: customerInfo.lastName!,
+                      dateOfBirth: customerInfo.dateOfBirth!,
+                      email: customerInfo.email,
+                    })
+                  }
+                  setErrors({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    dateOfBirth: '',
+                    street: '',
+                    city: '',
+                    postalCode: '',
+                    country: '',
                   })
-                }
-                setErrors({
-                  firstName: '',
-                  lastName: '',
-                  email: '',
-                  dateOfBirth: '',
-                  street: '',
-                  city: '',
-                  postalCode: '',
-                  country: '',
-                })
-              }}
-            >
-              Cancel
-            </button>
-          )}
-          {!editMode && (
-            <button
-              className="button"
-              onClick={() => {
-                setEditMode(true)
-              }}
-            >
-              Edit
-            </button>
-          )}
+                }}
+              >
+                Cancel
+              </button>
+            )}
+            {!editMode && (
+              <button
+                className="button"
+                onClick={() => {
+                  setEditMode(true)
+                }}
+              >
+                Edit
+              </button>
+            )}
+          </div>
         </div>
 
         <h3>

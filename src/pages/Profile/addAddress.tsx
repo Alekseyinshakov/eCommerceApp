@@ -187,20 +187,20 @@ export const AddAddress = () => {
               <button
                 className="button"
                 onClick={() => {
-                  setIsAddingAddress(false)
+                  saveNewAddressHandler()
                 }}
               >
-                Cancel
+                Save
               </button>
             )}
             {isAddingAddress && (
               <button
                 className="button"
                 onClick={() => {
-                  saveNewAddressHandler()
+                  setIsAddingAddress(false)
                 }}
               >
-                Save
+                Cancel
               </button>
             )}
           </div>
