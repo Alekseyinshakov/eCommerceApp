@@ -25,9 +25,16 @@ export const ShopPage = () => {
   ).fill(null)
 
   const { categories, fetched, fetchCategories } = useCategoriesStore()
+  const setCategory = useProductStore((state) => state.setActiveCategoryId)
 
   const setMaxPage = () => setPage(Math.max(page - 1, 1))
   const setMinPage = () => setPage(Math.min(page + 1, totalPages))
+
+  const handleCategoryClick = (categoryId: string) => {
+    setPage(1)
+    setCategory(categoryId)
+    fetchProducts(1, limit)
+  }
 
   useEffect(() => {
     fetchProducts(page, limit)
@@ -42,7 +49,10 @@ export const ShopPage = () => {
   return (
     <div className="container">
       <div className={styles.shopContainer}>
-        <SortingList categories={categories} />
+        <SortingList
+          categories={categories}
+          onCategoryClick={handleCategoryClick}
+        />
         <div>
           <SortingTab />
           <div className={styles.productsGrid}>

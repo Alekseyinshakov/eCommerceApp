@@ -4,9 +4,10 @@ import type { Category } from '@store/types'
 
 type SortingListProps = {
   categories: Category[]
+  onCategoryClick: (categoryId: string) => void
 }
 
-export function SortingList({ categories }: SortingListProps) {
+export function SortingList({ categories, onCategoryClick }: SortingListProps) {
   return (
     <aside className={styles.aside}>
       <form>
@@ -15,7 +16,13 @@ export function SortingList({ categories }: SortingListProps) {
           <ul>
             {categories.map((category) => (
               <li key={category.id}>
-                <a href="#">
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onCategoryClick(category.id)
+                  }}
+                >
                   {category.label} <span>({category.count})</span>
                 </a>
               </li>
