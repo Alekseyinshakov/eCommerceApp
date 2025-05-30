@@ -4,11 +4,15 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import SliderProductDetails from '@components/SliderProductDetails/SliderProductDetails'
 import styles from './ShopPage.module.scss'
+import ProductPrice from '@components/ProductPrice/ProductPrice'
+import DiscountElement from '@components/DiscountElement/DiscountElement'
 
 type ProductDetail = {
   id: string
   name: string
   price: number
+  discountPrice?: number
+  discountId?: string
   images: Array<string>
   description: string
   size: string
@@ -45,7 +49,7 @@ const ProductDetailPage = () => {
   }
 
   const getCategoryName = async (categories: Array<{ id: string }>) => {
-    const categoryNameProm = categories.map(async (c) => {
+    const categoryName = categories.map(async (c) => {
       const res = await apiRoot
         .categories()
         .withId({ ID: c.id })
@@ -55,7 +59,7 @@ const ProductDetailPage = () => {
       return res.body.name['en-US'] ?? ''
     })
 
-    const names = await Promise.all(categoryNameProm)
+    const names = await Promise.all(categoryName)
     return names.join(', ')
   }
 
@@ -88,6 +92,14 @@ const ProductDetailPage = () => {
             price: productData.masterVariant?.prices?.[0]?.value?.centAmount
               ? productData.masterVariant.prices[0].value.centAmount / 100
               : 0,
+            discountPrice: productData.masterVariant?.prices?.[0]?.discounted
+              ?.value?.centAmount
+              ? productData.masterVariant.prices[0].discounted.value
+                  .centAmount / 100
+              : 0,
+            discountId:
+              productData.masterVariant?.prices?.[0]?.discounted?.discount
+                ?.id || undefined,
             images:
               productData.masterVariant?.images?.map((img: Image) => img.url) ||
               [],
@@ -129,10 +141,20 @@ const ProductDetailPage = () => {
     <div className="container">
       {product ? (
         <div className={styles.product}>
-          <SliderProductDetails images={product.images} />
+          <div className={styles.productSliderWrapper}>
+            {product.discountId ? (
+              <div className={styles.discount}>
+                <DiscountElement discountId={product.discountId ?? ''} />
+              </div>
+            ) : null}
+            <SliderProductDetails images={product.images} />
+          </div>
           <div className={styles.descriptionInner}>
             <h1 className={styles.nameProduct}>{product.name}</h1>
-            <p className={styles.price}>Price: ${product.price}</p>
+            <ProductPrice
+              price={product.price}
+              discountedPrice={product.discountPrice}
+            />
             <p className={styles.desc}>
               Short Description:{' '}
               <span className={styles.descText}>{product.description}</span>

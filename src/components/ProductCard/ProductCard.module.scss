@@ -6,7 +6,7 @@
   justify-content: space-around;
 
   width: 260px;
-  height: 300px;
+  height: 315px;
   border: 1px solid $main-border-color;
   border-radius: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -43,15 +43,9 @@
   white-space: nowrap;
 }
 
-.nameItem,
-.priceItem {
+.nameItem {
   margin: 0%;
   font-size: 14px;
-}
-
-.priceItem {
-  font-weight: bold;
-  color: $main-light-color;
 }
 
 .description {
@@ -77,9 +71,14 @@
 .descriptionText {
   font-size: 16px;
   margin: 5px;
-
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.discount {
+  position: absolute;
+  top: -10px;
+  right: -15px;
 }

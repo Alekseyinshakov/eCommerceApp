@@ -39,6 +39,8 @@ export const ShopPage = () => {
                   key={product.id}
                   name={product.name}
                   price={product.price}
+                  discountPrice={product.discountPrice ?? 0}
+                  discountId={product.discountId ?? ''}
                   image={product.image}
                   description={product.description}
                 />

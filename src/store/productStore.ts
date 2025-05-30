@@ -6,6 +6,8 @@ type Product = {
   slug: string
   name: string
   price: number
+  discountPrice?: number
+  discountId?: string
   image: string
   description: string
 }
@@ -93,6 +95,12 @@ export const useProductStore = create<ProductStore>((set, get) => ({
           p.masterVariant.prices?.[0]?.value?.centAmount !== undefined
             ? p.masterVariant.prices[0].value.centAmount / 100
             : 0,
+        discountPrice: p.masterVariant?.prices?.[0]?.discounted?.value
+          ?.centAmount
+          ? p.masterVariant.prices[0].discounted.value.centAmount / 100
+          : 0,
+        discountId:
+          p.masterVariant?.prices?.[0]?.discounted?.discount?.id || undefined,
         image: p.masterVariant.images?.[0]?.url ?? '',
         description: p.description?.['en-US'] ?? '',
       }))

@@ -1,0 +1,18 @@
+.discountWrapper {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: $main-light-color;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  p {
+    margin: 0;
+    width: 100%;
+  }
+}

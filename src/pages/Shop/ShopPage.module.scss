@@ -47,19 +47,37 @@
 .product {
   display: flex;
   padding-top: 40px;
+  justify-content: center;
+  @media (max-width: 700px) {
+    padding-top: 20px;
+    flex-wrap: wrap;
+  }
+}
+.productSliderWrapper {
+  position: relative;
+  max-width: 500px;
+  width: 50%;
+  @media (max-width: 930px) {
+    min-width: 370px;
+  }
+  @media (max-width: 700px) {
+    width: 100%;
+  }
 }
 .descriptionInner {
-  width: 50%;
+  width: 70%;
   padding-left: 25px;
+  @media (max-width: 930px) {
+    padding-left: 10px;
+  }
+  @media (max-width: 700px) {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 .nameProduct {
   font-size: 28px;
   font-weight: 600;
-}
-.price {
-  font-size: 16px;
-  font-weight: 700;
-  color: $main-light-color;
 }
 .desc {
   font-size: 15px;
@@ -83,4 +101,13 @@
   margin-top: 10px;
   font-weight: 400;
   color: $text-description;
+}
+.discount {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  z-index: 5;
+  @media (max-width: 930px) {
+    right: 0;
+  }
 }

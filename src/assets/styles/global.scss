@@ -151,3 +151,13 @@ button {
 .swiper .swiper-button-prev {
   left: calc(50% - 60px);
 }
+
+.yarl__root .yarl__container {
+  background-color: $modal-background-color;
+}
+
+@media (max-width: 460px) {
+  .swiper.sliderThumbs {
+    display: none;
+  }
+}
