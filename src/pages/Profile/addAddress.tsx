@@ -2,8 +2,13 @@ import React, { useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import { CountryList } from '@pages/AuthForms/helpersCountry.tsx'
 import FormInput from '@components/FormInput/FormInput'
+import { addNewAddress } from '@api/addNewAddress'
+import { useNotification } from '@components/Notification/NotifficationContext'
+import { useAuthStore } from '@store/authStore.ts'
 
 export const AddAddress = () => {
+  const { setNotification } = useNotification()
+  const setUser = useAuthStore((state) => state.setUser)
   const [isAddingAddress, setIsAddingAddress] = useState(false)
 
   const [inputValues, setInputValues] = useState({
@@ -36,6 +41,29 @@ export const AddAddress = () => {
     setInputValues(newValues)
     console.log(`Field changed: ${name}, New value: ${finalValue}`)
   }
+
+  const saveNewAddressHandler = async () => {
+    try {
+      const customer = await addNewAddress(inputValues)
+      setUser(customer)
+      setNotification('The address was successfully added.')
+      setIsAddingAddress(false)
+      setInputValues({
+        country: '',
+        city: '',
+        street: '',
+        postalCode: '',
+        shipping: false,
+        billing: false,
+        defaultShipping: false,
+        defaultBilling: false,
+      })
+    } catch (error) {
+      console.error('Error adding new address:', error)
+      setNotification('Something went wrong :-(')
+    }
+  }
+
   return (
     <div>
       <div className={styles.addAddressWrapper}>
@@ -63,7 +91,7 @@ export const AddAddress = () => {
           <button
             className="button"
             onClick={() => {
-              console.log(234)
+              saveNewAddressHandler()
             }}
           >
             Save

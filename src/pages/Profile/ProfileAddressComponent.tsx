@@ -102,12 +102,11 @@ export const ProfileAddressComponent = ({
 
   const deleteAddressHandler = async () => {
     try {
-      console.log('Удаляем адрес111')
       const customer = await deleteAddress(address.id!)
       setUser(customer)
       setNotification('The address was successfully deleted.')
     } catch (error) {
-      console.error('Error deliting customer info:', error)
+      console.error('Error deleting customer info:', error)
       setNotification('Something went wrong :-(')
     }
   }
