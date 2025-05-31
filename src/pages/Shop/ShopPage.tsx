@@ -62,8 +62,11 @@ export const ShopPage = () => {
             {products.map((product) => (
               <ProductCard
                 key={product.id}
+                slug={product.slug}
                 name={product.name}
                 price={product.price}
+                discountPrice={product.discountPrice ?? 0}
+                discountId={product.discountId ?? ''}
                 image={product.image}
                 description={product.description}
               />
