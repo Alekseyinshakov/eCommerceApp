@@ -63,7 +63,7 @@ export function SortingList({ categories, onCategoryClick }: SortingListProps) {
         <PriceRange />
 
         <fieldset className={sortingFieldset}>
-          <legend className={sortingLegend}>Reset filters</legend>
+          <legend className={sortingLegend}>Reset sorting</legend>
           <div className={resetBlock}>
             <button
               type="button"
@@ -71,7 +71,7 @@ export function SortingList({ categories, onCategoryClick }: SortingListProps) {
               disabled={!isFiltersActive}
               className={isFiltersActive ? resetButton : resetButtonDisabled}
             >
-              Reset sorting and filters
+              Reset filters
             </button>
           </div>
         </fieldset>

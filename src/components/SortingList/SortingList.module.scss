@@ -76,7 +76,7 @@
 
 .resetBlock {
   display: flex;
-  justify-content: center;
+  // justify-content: center;
 }
 
 .resetButton {
@@ -102,7 +102,6 @@
   font-weight: 500;
   font-size: 16px;
   color: #fff;
-  padding: 8px 17px;
   cursor: not-allowed;
 }
 
@@ -117,5 +116,10 @@
   .sortingAside {
     margin-top: 55px;
     padding: 0.5rem;
+  }
+
+  .resetButton,
+  .resetButtonDisabled {
+    padding: 8px 5px;
   }
 }
