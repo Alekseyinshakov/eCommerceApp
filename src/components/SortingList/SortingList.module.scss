@@ -3,7 +3,7 @@
   width: 100%;
   max-width: 310px;
   height: 620px;
-  margin-top: 33px;
+  margin-top: 44px;
   padding: 1.5rem;
   background: $gradient;
   border: 1px solid $main-border-color;
@@ -76,13 +76,14 @@
 
 @media screen and (max-width: 1200px) {
   .sortingAside {
+    margin-top: 42px;
     padding: 1rem;
   }
 }
 
 @media screen and (max-width: 450px) {
   .sortingAside {
-    margin-top: 44px;
+    margin-top: 55px;
     padding: 0.5rem;
   }
 }

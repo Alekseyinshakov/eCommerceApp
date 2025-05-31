@@ -23,6 +23,7 @@
   display: flex;
   text-align: center;
   font-size: 17px;
+  align-items: center;
 }
 
 @media screen and (max-width: 845px) {
@@ -38,5 +39,11 @@
 
   .label {
     font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .sortingTab {
+    gap: 2px;
   }
 }
