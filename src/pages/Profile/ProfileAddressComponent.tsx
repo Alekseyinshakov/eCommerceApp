@@ -7,6 +7,12 @@ import { useState } from 'react'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { useAuthStore } from '@store/authStore.ts'
 import { deleteAddress } from '@api/deleteAddress.ts'
+import {
+  validateCity,
+  validateCountry,
+  validatePostalCode,
+  validateStreet,
+} from '@hooks/useFormValidators'
 
 export const ProfileAddressComponent = ({
   address,
@@ -40,6 +46,13 @@ export const ProfileAddressComponent = ({
   const { setNotification } = useNotification()
 
   const [editMode, setEditMode] = useState(false)
+
+  const [errors, setErrors] = useState({
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
+  })
 
   const [inputValues, setInputValues] = useState({
     id: address.id,
@@ -80,23 +93,42 @@ export const ProfileAddressComponent = ({
       newValues.defaultShipping = false
     }
 
+    const updatedErrors = {
+      ...errors,
+
+      street: name === 'street' ? validateStreet(value) : errors.street,
+      city: name === 'city' ? validateCity(value) : errors.city,
+      postalCode:
+        name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
+      country: name === 'country' ? validateCountry(value) : errors.country,
+    }
+
+    setErrors(updatedErrors)
+
     setInputValues(newValues)
   }
 
   const changeAddressHandler = async () => {
-    try {
-      const updatedCustomer = await updateAddress({
-        ...inputValues,
-        inSippingArray: isTypeShipping,
-        inBillingArray: isTypeBilling,
-      })
-      console.log(975, updatedCustomer)
-      setUser(updatedCustomer)
-      setEditMode(false)
-      setNotification('Information successfully updated')
-    } catch (error) {
-      console.error('Error updating customer info:', error)
-      setNotification('Something went wrong :-(')
+    const hasErrors =
+      errors.country || errors.city || errors.street || errors.postalCode
+
+    if (hasErrors) {
+      setNotification('Fill in the fields with correct data')
+    } else {
+      try {
+        const updatedCustomer = await updateAddress({
+          ...inputValues,
+          inSippingArray: isTypeShipping,
+          inBillingArray: isTypeBilling,
+        })
+        console.log(975, updatedCustomer)
+        setUser(updatedCustomer)
+        setEditMode(false)
+        setNotification('Information successfully updated')
+      } catch (error) {
+        console.error('Error updating customer info:', error)
+        setNotification('Something went wrong :-(')
+      }
     }
   }
 
@@ -137,6 +169,7 @@ export const ProfileAddressComponent = ({
                   list="country-list"
                   value={inputValues.country}
                   onChange={handleChange}
+                  error={errors.country}
                 />
                 <CountryList />
               </>
@@ -157,6 +190,7 @@ export const ProfileAddressComponent = ({
                 placeholder="City"
                 value={inputValues.city || ''}
                 onChange={handleChange}
+                error={errors.city}
               />
             ) : (
               address.city
@@ -175,6 +209,7 @@ export const ProfileAddressComponent = ({
                 placeholder="Street Address"
                 value={inputValues.street || ''}
                 onChange={handleChange}
+                error={errors.street}
               />
             ) : (
               address.streetName
@@ -193,6 +228,7 @@ export const ProfileAddressComponent = ({
                 placeholder="Postal Code"
                 value={inputValues.postalCode || ''}
                 onChange={handleChange}
+                error={errors.postalCode}
               />
             ) : (
               address.postalCode
@@ -281,6 +317,12 @@ export const ProfileAddressComponent = ({
                   billing: isTypeBilling,
                   defaultShipping: isDefaultShipping,
                   defaultBilling: isDefaultBilling,
+                })
+                setErrors({
+                  street: '',
+                  city: '',
+                  postalCode: '',
+                  country: '',
                 })
               }}
               className="button"
