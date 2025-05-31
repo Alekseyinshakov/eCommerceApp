@@ -246,7 +246,7 @@ export const ProfileAddressComponent = ({
             </div>
           </div>
         )}
-        <div className={styles.addressButtons}>
+        <div className={styles.buttonsContainer}>
           {editMode && (
             <button
               onClick={() => {

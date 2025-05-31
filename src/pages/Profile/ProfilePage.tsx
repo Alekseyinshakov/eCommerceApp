@@ -17,6 +17,7 @@ import {
   validateStreet,
 } from '@hooks/useFormValidators.ts'
 import { AddAddress } from './addAddress'
+import { PasswordChange } from './passwordChange'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -255,16 +256,20 @@ export const ProfilePage = () => {
 
         <AddAddress />
         <div className={styles.addressesContainer}>
-          {customerInfo?.addresses?.map((item) => {
-            return (
-              <ProfileAddressComponent
-                key={item.id}
-                address={item}
-                customerInfo={customerInfo}
-              />
-            )
-          })}
+          {customerInfo?.addresses
+            ?.map((item) => {
+              return (
+                <ProfileAddressComponent
+                  key={item.id}
+                  address={item}
+                  customerInfo={customerInfo}
+                />
+              )
+            })
+            .reverse()}
         </div>
+
+        <PasswordChange />
       </div>
     </div>
   )
