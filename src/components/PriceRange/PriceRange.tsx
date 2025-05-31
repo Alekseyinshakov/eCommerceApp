@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Range, getTrackBackground } from 'react-range'
 import styles from './PriceRange.module.scss'
 import { useProductStore } from '@store/productStore'
@@ -10,7 +10,13 @@ const MAX = 100
 
 export const PriceRange: React.FC = () => {
   const [tempValues, setTempValues] = useState<number[]>([0, 100])
+  const priceRange = useProductStore((state) => state.priceRange)
+
   const setPriceRange = useProductStore((state) => state.setPriceRange)
+
+  useEffect(() => {
+    setTempValues(priceRange)
+  }, [priceRange])
 
   const handleFinalChange = (values: number[]) => {
     if (values.length === 2) {
@@ -20,7 +26,7 @@ export const PriceRange: React.FC = () => {
 
   return (
     <fieldset className={styles.priceRange}>
-      <legend>Price Range</legend>
+      <legend className={styles.legend}>Price Range</legend>
       <div className={styles.rangeWrapper}>
         <Range
           values={tempValues}

@@ -9,6 +9,7 @@ import { useProductStore } from '@store/productStore'
 type SortingListProps = {
   categories: Category[]
   onCategoryClick: (categoryId: string) => void
+  onResetFilters: () => void
 }
 
 const {
@@ -19,11 +20,21 @@ const {
   sortingList,
   sortingItemLink,
   sortingActive,
+  resetBlock,
+  resetButton,
+  resetButtonDisabled,
 } = styles
 
 export function SortingList({ categories, onCategoryClick }: SortingListProps) {
   const activeCategoryId = useProductStore((state) => state.activeCategoryId)
 
+  const priceRange = useProductStore((state) => state.priceRange)
+  const isFiltersActive =
+    activeCategoryId !== null || priceRange[0] !== 0 || priceRange[1] !== 100
+
+  const resetHandle = () => {
+    useProductStore.getState().resetFilters()
+  }
   return (
     <aside className={sortingAside}>
       <form className={sortingForm}>
@@ -52,8 +63,17 @@ export function SortingList({ categories, onCategoryClick }: SortingListProps) {
         <PriceRange />
 
         <fieldset className={sortingFieldset}>
-          <legend className={sortingLegend}>Size</legend>
-          <ul></ul>
+          <legend className={sortingLegend}>Reset filters</legend>
+          <div className={resetBlock}>
+            <button
+              type="button"
+              onClick={resetHandle}
+              disabled={!isFiltersActive}
+              className={isFiltersActive ? resetButton : resetButtonDisabled}
+            >
+              Reset sorting and filters
+            </button>
+          </div>
         </fieldset>
       </form>
     </aside>

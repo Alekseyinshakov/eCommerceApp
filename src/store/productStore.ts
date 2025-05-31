@@ -36,6 +36,7 @@ type ProductStore = {
   activeCategoryId: string | null
   priceRange: [number, number]
 
+  resetFilters: () => void
   setPriceRange: (range: [number, number]) => void
   setActiveCategoryId: (id: string | null) => void
   setSortOption: (sort: SortOption) => void
@@ -66,6 +67,15 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
   setCurrentPage: (page: number) => {
     set({ currentPage: page })
+  },
+
+  resetFilters: () => {
+    set({
+      activeCategoryId: null,
+      sortOption: 'default',
+      priceRange: [0, 100],
+      currentPage: 1,
+    })
   },
 
   fetchProducts: async (page = 1, limit = 6) => {

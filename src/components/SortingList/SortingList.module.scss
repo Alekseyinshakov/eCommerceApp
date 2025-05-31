@@ -74,6 +74,38 @@
   font-weight: 600;
 }
 
+.resetBlock {
+  display: flex;
+  justify-content: center;
+}
+
+.resetButton {
+  border-radius: 6px;
+  height: 35px;
+  background-color: $main-light-color;
+  font-weight: 500;
+  font-size: 16px;
+  color: $light-background-color;
+  padding: 8px 17px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $main-light-color-hover;
+  }
+}
+
+.resetButtonDisabled {
+  border-radius: 6px;
+  height: 35px;
+  background-color: $main-light-color-transparent;
+  font-weight: 500;
+  font-size: 16px;
+  color: #fff;
+  padding: 8px 17px;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 1200px) {
   .sortingAside {
     margin-top: 42px;
