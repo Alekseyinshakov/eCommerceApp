@@ -2,11 +2,7 @@ import { apiRoot } from '@api/apiClient'
 import { useEffect, useState } from 'react'
 import styles from './DiscountElement.module.scss'
 
-type DiscountProps = {
-  discountId: string
-}
-
-const DiscountElement = ({ discountId }: DiscountProps) => {
+const DiscountElement = ({ discountId }: { discountId: string }) => {
   const [discountName, setDiscountName] = useState('')
   const [discountValue, setDiscountValue] = useState<number | null>(null)
 
