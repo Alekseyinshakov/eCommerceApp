@@ -66,17 +66,6 @@ export const ProfileAddressComponent = ({
     defaultBilling: isDefaultBilling,
   })
 
-  // const countryCodeMap: Record<string, string> = {
-  //   Canada: 'CA',
-  //   'United States': 'US',
-  //   Ukraine: 'UA',
-  //   Germany: 'DE',
-  //   France: 'FR',
-  //   Russia: 'RU',
-  //   Belarus: 'BY',
-  //   Poland: 'PL',
-  // }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target
     const finalValue = type === 'checkbox' ? checked : value
@@ -121,7 +110,6 @@ export const ProfileAddressComponent = ({
           inSippingArray: isTypeShipping,
           inBillingArray: isTypeBilling,
         })
-        console.log(975, updatedCustomer)
         setUser(updatedCustomer)
         setEditMode(false)
         setNotification('Information successfully updated')

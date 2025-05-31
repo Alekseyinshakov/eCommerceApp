@@ -127,7 +127,6 @@ export const buildCustomerClient = (email: string, password: string) => {
 }
 
 export const buildCustomerClientWithToken = (accessToken: string) => {
-  console.log('создаю клиент')
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_CTP_API_URL,
     fetch,

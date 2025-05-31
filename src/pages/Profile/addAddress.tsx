@@ -39,7 +39,6 @@ export const AddAddress = () => {
     }
 
     setInputValues(newValues)
-    console.log(`Field changed: ${name}, New value: ${finalValue}`)
   }
 
   const saveNewAddressHandler = async () => {

@@ -66,7 +66,6 @@ export const PasswordChange = () => {
 
     setInputValues((prev) => {
       const updated = { ...prev, [name]: value }
-      console.log(name, value)
 
       const updatedErrors = {
         ...errors,

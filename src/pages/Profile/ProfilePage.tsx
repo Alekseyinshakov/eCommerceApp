@@ -12,7 +12,6 @@ import {
   validateDate,
   validateEmail,
   validateName,
-  // validatePassword,
   validatePostalCode,
   validateStreet,
 } from '@hooks/useFormValidators.ts'
@@ -52,7 +51,6 @@ export const ProfilePage = () => {
           const tokenObject = JSON.parse(tokenJSON)
           const token = tokenObject.token
           const data = await getCustomerData(token)
-          console.log(data)
           setUser(data)
           setInputValues({
             firstName: data.firstName!,
@@ -93,7 +91,6 @@ export const ProfilePage = () => {
       }
 
       setErrors(updatedErrors)
-      console.log(errors)
       return updated
     })
   }
@@ -165,7 +162,6 @@ export const ProfilePage = () => {
               )}
             </div>
           </div>
-
           <div className={styles.row}>
             <div className={styles.fieldName}>Date of birth:</div>
             <div className={styles.fieldValue}>
