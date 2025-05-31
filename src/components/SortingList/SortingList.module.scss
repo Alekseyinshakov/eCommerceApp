@@ -1,4 +1,4 @@
-.aside {
+.sortingAside {
   display: flex;
   width: 100%;
   max-width: 310px;
@@ -11,88 +11,77 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   font-size: 14px;
   line-height: 1.5;
+}
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 100%;
-  }
+.sortingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
 
-  fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
+.sortingFieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
-    legend {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 0.75rem;
-      color: #222;
-    }
+.sortingLegend {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #222;
+}
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+.sortingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-    li {
-      a {
-        text-decoration: none;
-        color: #333;
-        display: flex;
-        justify-content: space-between;
-        transition: color 0.2s ease;
+.sortingItemLink {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  transition: color 0.2s ease;
+}
 
-        &[aria-current='true'] {
-          color: $second-light-color-hover;
-          font-weight: 600;
-        }
+.sortingItemLink:hover {
+  color: $main-light-color;
+}
 
-        &:hover {
-          color: $second-light-color-hover;
-        }
+.sortingLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
 
-        span {
-          color: #666;
-        }
-      }
+.sortingLabel input[type='checkbox'] {
+  accent-color: $main-light-color;
+}
 
-      label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
+.sortingLabel span {
+  color: #666;
+}
 
-        input[type='checkbox'] {
-          accent-color: $second-light-color-hover;
-        }
-
-        span {
-          color: #666;
-        }
-      }
-    }
-  }
+.sortingActive {
+  color: $main-light-color;
+  font-weight: 600;
 }
 
 @media screen and (max-width: 1200px) {
-  .aside {
-    display: flex;
-    width: 100%;
-    max-width: 310px;
-    height: 620px;
-    margin-top: 33px;
+  .sortingAside {
     padding: 1rem;
   }
 }
 
 @media screen and (max-width: 450px) {
-  .aside {
+  .sortingAside {
     margin-top: 44px;
     padding: 0.5rem;
   }

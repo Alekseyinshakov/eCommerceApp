@@ -11,39 +11,42 @@ import { SortingTab } from '@components/SortingTab/SortingTab'
 export const ShopPage = () => {
   const limit = 6
 
-  const page = useProductStore((state) => state.currentPage)
-  const setPage = useProductStore((state) => state.setCurrentPage)
-  const totalCount = useProductStore((state) => state.totalProductsCount)
-  const totalPages = Math.ceil(totalCount / limit)
+  const {
+    currentPage,
+    setCurrentPage,
+    totalProductsCount,
+    products,
+    fetchProducts,
+    setActiveCategoryId,
+    activeCategoryId,
+    sortOption,
+    priceRange,
+  } = useProductStore()
 
-  const products = useProductStore((state) => state.products)
-  const fetchProducts = useProductStore((state) => state.fetchProducts)
+  const { categories, fetched, fetchCategories } = useCategoriesStore()
+
+  const totalPages = Math.ceil(totalProductsCount / limit)
 
   const placeholdersCount = limit - products.length
   const placeholders = Array(
     placeholdersCount > 0 ? placeholdersCount : 0
   ).fill(null)
 
-  const { categories, fetched, fetchCategories } = useCategoriesStore()
-  const setCategory = useProductStore((state) => state.setActiveCategoryId)
-
-  const setMaxPage = () => setPage(Math.max(page - 1, 1))
-  const setMinPage = () => setPage(Math.min(page + 1, totalPages))
+  const setPrevPage = () => setCurrentPage(Math.max(currentPage - 1, 1))
+  const setNextPage = () =>
+    setCurrentPage(Math.min(currentPage + 1, totalPages))
 
   const handleCategoryClick = (categoryId: string) => {
-    setPage(1)
-    setCategory(categoryId)
-    fetchProducts(1, limit)
+    setCurrentPage(1)
+    setActiveCategoryId(categoryId)
   }
 
   useEffect(() => {
-    fetchProducts(page, limit)
-  }, [fetchProducts, page])
+    fetchProducts(currentPage, limit)
+  }, [fetchProducts, currentPage, activeCategoryId, sortOption, priceRange])
 
   useEffect(() => {
-    if (!fetched) {
-      fetchCategories()
-    }
+    if (!fetched) fetchCategories()
   }, [fetched, fetchCategories])
 
   return (
@@ -67,21 +70,20 @@ export const ShopPage = () => {
             ))}
 
             {placeholders.map((_, index) => (
-              <div
-                key={`placeholder-${index}`}
-                className={styles.placeholder}
-              ></div>
+              <div key={index} className={styles.placeholder}></div>
             ))}
           </div>
 
           <div className={styles.pagination}>
-            <button onClick={setMaxPage} disabled={page === 1}>
+            <button onClick={setPrevPage} disabled={currentPage === 1}>
               Prev
             </button>
 
-            <span className={styles.span}>Page {page}</span>
+            <span className={styles.span}>
+              Page {currentPage} of {totalPages}
+            </span>
 
-            <button onClick={setMinPage} disabled={page >= totalPages}>
+            <button onClick={setNextPage} disabled={currentPage >= totalPages}>
               Next
             </button>
           </div>
