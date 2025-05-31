@@ -5,6 +5,12 @@ import FormInput from '@components/FormInput/FormInput'
 import { addNewAddress } from '@api/addNewAddress'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { useAuthStore } from '@store/authStore.ts'
+import {
+  validateCity,
+  validateCountry,
+  validatePostalCode,
+  validateStreet,
+} from '@hooks/useFormValidators'
 
 export const AddAddress = () => {
   const { setNotification } = useNotification()
@@ -20,6 +26,13 @@ export const AddAddress = () => {
     billing: false,
     defaultShipping: false,
     defaultBilling: false,
+  })
+
+  const [errors, setErrors] = useState({
+    street: '',
+    city: '',
+    postalCode: '',
+    country: '',
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,10 +51,39 @@ export const AddAddress = () => {
       newValues.defaultShipping = false
     }
 
+    const updatedErrors = {
+      ...errors,
+
+      street: name === 'street' ? validateStreet(value) : errors.street,
+      city: name === 'city' ? validateCity(value) : errors.city,
+      postalCode:
+        name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
+      country: name === 'country' ? validateCountry(value) : errors.country,
+    }
+
+    setErrors(updatedErrors)
+
     setInputValues(newValues)
   }
 
   const saveNewAddressHandler = async () => {
+    const newErrors = {
+      street: validateStreet(inputValues.street),
+      city: validateCity(inputValues.city),
+      postalCode: validatePostalCode(inputValues.postalCode),
+      country: validateCountry(inputValues.country),
+    }
+    setErrors(newErrors)
+    if (
+      newErrors.street ||
+      newErrors.city ||
+      newErrors.postalCode ||
+      newErrors.country
+    ) {
+      setNotification('Please fix the errors before saving.')
+      return
+    }
+
     try {
       const customer = await addNewAddress(inputValues)
       setUser(customer)
@@ -91,6 +133,7 @@ export const AddAddress = () => {
                 list="country-list"
                 value={inputValues.country}
                 onChange={handleChange}
+                error={errors.country}
               />
               <CountryList />
             </div>
@@ -106,6 +149,7 @@ export const AddAddress = () => {
                 placeholder="City"
                 value={inputValues.city}
                 onChange={handleChange}
+                error={errors.city}
               />
             </div>
           </div>
@@ -120,6 +164,7 @@ export const AddAddress = () => {
                 placeholder="Street Address"
                 value={inputValues.street}
                 onChange={handleChange}
+                error={errors.street}
               />
             </div>
           </div>
@@ -134,6 +179,7 @@ export const AddAddress = () => {
                 placeholder="Postal Code"
                 value={inputValues.postalCode}
                 onChange={handleChange}
+                error={errors.postalCode}
               />
             </div>
           </div>
@@ -197,6 +243,22 @@ export const AddAddress = () => {
                 className="button"
                 onClick={() => {
                   setIsAddingAddress(false)
+                  setInputValues({
+                    country: '',
+                    city: '',
+                    street: '',
+                    postalCode: '',
+                    shipping: false,
+                    billing: false,
+                    defaultShipping: false,
+                    defaultBilling: false,
+                  })
+                  setErrors({
+                    street: '',
+                    city: '',
+                    postalCode: '',
+                    country: '',
+                  })
                 }}
               >
                 Cancel
