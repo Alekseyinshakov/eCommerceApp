@@ -1,16 +1,77 @@
 import { useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import FormInput from '@components/FormInput/FormInput'
+import { validatePassword } from '@hooks/useFormValidators'
+import { useNotification } from '@components/Notification/NotifficationContext.tsx'
+import { changePassword } from '@api/changePassword'
+import { useAuthStore } from '@store/authStore'
 
 export const PasswordChange = () => {
+  const { setNotification } = useNotification()
+  const setUser = useAuthStore((state) => state.setUser)
   const [editMode, setEditMode] = useState(false)
-  const [inputValues] = useState({
+  const [inputValues, setInputValues] = useState({
     prevPassword: '',
-    newPassword: '',
-    newPasswordRepeat: '',
+    password: '',
+    confirmPassword: '',
   })
 
-  const handleChange = () => {}
+  const [errors, setErrors] = useState({
+    password: '',
+    confirmPassword: '',
+  })
+
+  const handleSubmit = async () => {
+    const hasErrors = errors.password || errors.confirmPassword
+
+    if (hasErrors) {
+      setNotification('Fill in the fields with correct data')
+    } else {
+      try {
+        const customer = await changePassword(
+          inputValues.prevPassword,
+          inputValues.password
+        )
+        if (customer) {
+          setUser(customer)
+          setNotification('Password successfully updated')
+          setEditMode(false)
+        }
+      } catch (error) {
+        if (error && typeof error === 'object' && 'message' in error) {
+          setNotification((error as { message: string }).message)
+        } else {
+          setNotification('Error updating password')
+        }
+      }
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setInputValues((prev) => {
+      const updated = { ...prev, [name]: value }
+      console.log(name, value)
+
+      const updatedErrors = {
+        ...errors,
+
+        password:
+          name === 'password' ? validatePassword(value) : errors.password,
+        confirmPassword:
+          name === 'confirmPassword' || name === 'password'
+            ? updated.password !== updated.confirmPassword
+              ? 'Passwords do not match'
+              : ''
+            : errors.confirmPassword,
+      }
+
+      setErrors(updatedErrors)
+
+      return updated
+    })
+  }
 
   return (
     <div className={styles.passChangeWrap}>
@@ -47,10 +108,11 @@ export const PasswordChange = () => {
             <div className={styles.fieldValue}>
               <FormInput
                 onChange={handleChange}
-                value={inputValues.newPassword}
-                name="newPassword"
+                value={inputValues.password}
+                name="password"
                 type="text"
                 className={styles.resetInput}
+                error={errors.password}
               />
             </div>
           </div>
@@ -60,19 +122,31 @@ export const PasswordChange = () => {
             <div className={styles.fieldValue}>
               <FormInput
                 onChange={handleChange}
-                value={inputValues.newPasswordRepeat}
-                name="newPasswordRepeat"
+                value={inputValues.confirmPassword}
+                name="confirmPassword"
                 type="text"
                 className={styles.resetInput}
+                error={errors.confirmPassword}
               />
             </div>
           </div>
           <div className={styles.buttonsContainer}>
-            <button className="button">Save</button>
+            <button
+              className="button"
+              onClick={() => {
+                handleSubmit()
+              }}
+            >
+              Save
+            </button>
             <button
               className="button"
               onClick={() => {
                 setEditMode(false)
+                setErrors({
+                  password: '',
+                  confirmPassword: '',
+                })
               }}
             >
               Cancel
