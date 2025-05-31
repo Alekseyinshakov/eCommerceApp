@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import styles from './ProfilePage.module.scss'
 import FormInput from '@components/FormInput/FormInput'
@@ -5,8 +6,10 @@ import { validatePassword } from '@hooks/useFormValidators'
 import { useNotification } from '@components/Notification/NotifficationContext.tsx'
 import { changePassword } from '@api/changePassword'
 import { useAuthStore } from '@store/authStore'
+import { loginCustomer } from '@api/auth'
 
 export const PasswordChange = () => {
+  const navigate = useNavigate()
   const { setNotification } = useNotification()
   const setUser = useAuthStore((state) => state.setUser)
   const [editMode, setEditMode] = useState(false)
@@ -33,9 +36,20 @@ export const PasswordChange = () => {
           inputValues.password
         )
         if (customer) {
-          setUser(customer)
           setNotification('Password successfully updated')
           setEditMode(false)
+
+          localStorage.removeItem('customer_token')
+
+          const updatedCustomer = await loginCustomer(
+            customer.email,
+            inputValues.password
+          )
+
+          if (updatedCustomer) {
+            setUser(updatedCustomer)
+            navigate('/profile')
+          }
         }
       } catch (error) {
         if (error && typeof error === 'object' && 'message' in error) {
