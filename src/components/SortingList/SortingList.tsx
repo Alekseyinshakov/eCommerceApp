@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { useNavigate } from 'react-router-dom'
 
 import { PriceRange } from '@components/PriceRange/PriceRange'
 import styles from './SortingList.module.scss'
@@ -8,7 +9,7 @@ import { useProductStore } from '@store/productStore'
 
 type SortingListProps = {
   categories: Category[]
-  onCategoryClick: (categoryId: string) => void
+  onCategoryClick: (category: Category) => void
   onResetFilters: () => void
 }
 
@@ -25,16 +26,34 @@ const {
   resetButtonDisabled,
 } = styles
 
-export function SortingList({ categories, onCategoryClick }: SortingListProps) {
+export function SortingList({
+  categories,
+  onCategoryClick,
+  onResetFilters,
+}: SortingListProps) {
+  const navigate = useNavigate()
   const activeCategoryId = useProductStore((state) => state.activeCategoryId)
-
   const priceRange = useProductStore((state) => state.priceRange)
+
   const isFiltersActive =
     activeCategoryId !== null || priceRange[0] !== 0 || priceRange[1] !== 100
 
-  const resetHandle = () => {
-    useProductStore.getState().resetFilters()
+  const handleClickCategory = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    category: Category
+  ) => {
+    e.preventDefault()
+    onCategoryClick(category)
+
+    const slug = category.label.toLowerCase().replace(/\s+/g, '-')
+    navigate(`/shop/category/${slug}`)
   }
+
+  const resetHandle = () => {
+    onResetFilters()
+    navigate('/shop')
+  }
+
   return (
     <aside className={sortingAside}>
       <form className={sortingForm}>
@@ -45,10 +64,7 @@ export function SortingList({ categories, onCategoryClick }: SortingListProps) {
               <li key={category.id}>
                 <a
                   href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onCategoryClick(category.id)
-                  }}
+                  onClick={(e) => handleClickCategory(e, category)}
                   className={cn(sortingItemLink, {
                     [sortingActive]: category.id === activeCategoryId,
                   })}

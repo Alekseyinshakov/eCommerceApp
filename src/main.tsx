@@ -50,6 +50,10 @@ const router = createHashRouter([
         element: <ShopPage />,
       },
       {
+        path: '/shop/category/:slugCategory',
+        element: <ShopPage />,
+      },
+      {
         path: '/shop/:slug',
         element: <ProductDetail />,
       },

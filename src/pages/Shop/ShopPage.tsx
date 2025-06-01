@@ -1,4 +1,8 @@
 import { useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+
+import type { Category } from '@store/types'
+
 import { useProductStore } from '@store/productStore'
 import { useCategoriesStore } from '@store/categoriesStore'
 
@@ -27,6 +31,9 @@ export const ShopPage = () => {
 
   const totalPages = Math.ceil(totalProductsCount / limit)
 
+  const { slugCategory } = useParams<{ slugCategory: string }>()
+  const navigate = useNavigate()
+
   const placeholdersCount = limit - products.length
   const placeholders = Array(
     placeholdersCount > 0 ? placeholdersCount : 0
@@ -36,9 +43,9 @@ export const ShopPage = () => {
   const setNextPage = () =>
     setCurrentPage(Math.min(currentPage + 1, totalPages))
 
-  const handleCategoryClick = (categoryId: string) => {
+  const handleCategoryClick = (category: Category) => {
     setCurrentPage(1)
-    setActiveCategoryId(categoryId)
+    setActiveCategoryId(category.id)
   }
 
   useEffect(() => {
@@ -49,12 +56,32 @@ export const ShopPage = () => {
     if (!fetched) fetchCategories()
   }, [fetched, fetchCategories])
 
+  useEffect(() => {
+    if (!fetched) return
+
+    if (slugCategory) {
+      const matching = categories.find(
+        (cat) => cat.label.toLowerCase().replace(/\s+/g, '-') === slugCategory
+      )
+      if (matching) {
+        setActiveCategoryId(matching.id)
+      } else {
+        setActiveCategoryId(null)
+        navigate('/shop', { replace: true })
+      }
+    } else {
+      setActiveCategoryId(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slugCategory, fetched])
+
   return (
     <div className="container">
       <div className={styles.shopContainer}>
         <SortingList
           categories={categories}
           onCategoryClick={handleCategoryClick}
+          onResetFilters={() => useProductStore.getState().resetFilters()}
         />
         <div>
           <SortingTab />
