@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className={`container ${styles.footer}`}>
       <p className={styles.footerText}>
-        © 2021 GreenShop. By RS-school students.
+        © 2025 GreenShop. By RS-school students.
       </p>
     </footer>
   )
