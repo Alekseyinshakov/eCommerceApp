@@ -27,6 +27,16 @@ body {
   background-color: $light-background-color;
 }
 
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout main {
+  flex: 1;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -75,5 +85,79 @@ button {
     width: 35px;
     padding: 8px 10px;
     font-size: 0;
+  }
+}
+
+.slider {
+  width: 90%;
+  height: 100%;
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    overflow: hidden;
+    padding-bottom: 10px;
+    cursor: pointer;
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.sliderThumbs {
+  width: 20%;
+  height: 500px;
+  padding: 10px 0;
+  .swiper-wrapper {
+    flex-direction: column;
+    margin-top: -10px;
+  }
+  .swiper-slide {
+    height: 25%;
+    opacity: 0.4;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+}
+
+.swiper .swiper-button-next,
+.swiper .swiper-button-prev {
+  top: var(--swiper-navigation-top-offset, 95%);
+  color: $main-light-color;
+  transition: all 0.3s ease;
+  &:hover {
+    color: $main-light-color-hover;
+  }
+
+  &:after {
+    font-size: 25px;
+    font-weight: 700;
+  }
+}
+.swiper .swiper-button-next {
+  right: calc(50% - 60px);
+}
+.swiper .swiper-button-prev {
+  left: calc(50% - 60px);
+}
+
+.yarl__root .yarl__container {
+  background-color: $modal-background-color;
+}
+
+@media (max-width: 460px) {
+  .swiper.sliderThumbs {
+    display: none;
   }
 }

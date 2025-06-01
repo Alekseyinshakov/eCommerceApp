@@ -45,17 +45,10 @@ export const LoginPage = () => {
 
     if (!hasErrors) {
       try {
-        const { firstName, lastName, email } = await loginCustomer(
-          formData.email,
-          formData.password
-        )
+        const customer = await loginCustomer(formData.email, formData.password)
 
-        if (firstName && lastName && email) {
-          setUser({
-            firstName,
-            lastName,
-            email,
-          })
+        if (customer) {
+          setUser(customer)
         }
 
         navigate('/home')
