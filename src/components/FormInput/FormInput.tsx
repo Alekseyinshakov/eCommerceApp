@@ -31,14 +31,10 @@ const FormInput = ({
   const isPassword = type === 'password'
   const inputType = isPassword && showPassword ? 'text' : type
 
-  const inputClassName = classNames(
-    styles.input,
-    className && styles[className],
-    {
-      [styles.borderRed]: !!error,
-      [styles.passwordText]: isPassword,
-    }
-  )
+  const inputClassName = classNames(styles.input, className, {
+    [styles.borderRed]: !!error,
+    [styles.passwordText]: isPassword,
+  })
 
   return (
     <div className={styles.inputBox}>
