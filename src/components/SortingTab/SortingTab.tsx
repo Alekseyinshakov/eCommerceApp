@@ -26,6 +26,7 @@ export const SortingTab = () => {
       >
         <option value="default">All products</option>
         <option value="newest">New</option>
+        <option value="sale">Discounted</option>
         <option value="name-asc">Name: A → Z</option>
         <option value="name-desc">Name: Z → A</option>
         <option value="price-asc">Price: Low to High</option>

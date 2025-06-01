@@ -19,6 +19,7 @@ type SortOption =
   | 'name-desc'
   | 'price-asc'
   | 'price-desc'
+  | 'sale'
 
 type QueryArgs = {
   limit: number
@@ -96,6 +97,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
     if (sortOption === 'newest') {
       filters.push('variants.attributes.new:true')
+    }
+
+    if (sortOption === 'sale') {
+      filters.push('variants.prices.discounted:exists')
     }
 
     const queryArgs: QueryArgs = {
