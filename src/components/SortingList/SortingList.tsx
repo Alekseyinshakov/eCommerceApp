@@ -6,6 +6,7 @@ import styles from './SortingList.module.scss'
 
 import type { Category } from '@store/types'
 import { useProductStore } from '@store/productStore'
+import { fetchCategorySlug } from '@store/fetchCategorySlug'
 
 type SortingListProps = {
   categories: Category[]
@@ -38,15 +39,20 @@ export function SortingList({
   const isFiltersActive =
     activeCategoryId !== null || priceRange[0] !== 0 || priceRange[1] !== 100
 
-  const handleClickCategory = (
+  const handleClickCategory = async (
     e: React.MouseEvent<HTMLAnchorElement>,
     category: Category
   ) => {
     e.preventDefault()
     onCategoryClick(category)
 
-    const slug = category.label.toLowerCase().replace(/\s+/g, '-')
-    navigate(`/shop/category/${slug}`)
+    const slug = await fetchCategorySlug(category.id)
+
+    if (slug) {
+      navigate(`/shop/category/${slug}`)
+    } else {
+      navigate('/shop')
+    }
   }
 
   const resetHandle = () => {
