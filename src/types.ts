@@ -17,3 +17,17 @@ export interface NotificationContextType {
   setNotification: (message: string) => void
   deleteNotification: () => void
 }
+
+export type ProductDetailType = {
+  id: string
+  name: string
+  price: number
+  discountPrice?: number
+  discountId?: string
+  images: Array<string>
+  description: string
+  size: string
+  categories: string
+  sku: string
+  isDiameterBased: boolean
+}

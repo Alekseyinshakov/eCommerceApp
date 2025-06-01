@@ -13,7 +13,7 @@ import { AboutPage } from '@pages/About/AboutPage'
 import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
 import { CartPage } from '@pages/Cart/CartPage'
 import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
-import ProductDetailPage from '@pages/Shop/ProductDetailPage'
+import ProductDetail from '@store/ProductDetail'
 
 const router = createHashRouter([
   {
@@ -51,7 +51,7 @@ const router = createHashRouter([
       },
       {
         path: '/shop/:slug',
-        element: <ProductDetailPage />,
+        element: <ProductDetail />,
       },
       {
         path: '/about',
