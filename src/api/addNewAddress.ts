@@ -1,4 +1,4 @@
-import { countryCodeMap } from '@pages/AuthForms/SignUpPage'
+import { countryCodeMap } from '@constants'
 import { buildCustomerClientWithToken } from './apiClient'
 import {
   createApiBuilderFromCtpClient,

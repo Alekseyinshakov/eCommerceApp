@@ -12,7 +12,7 @@ import {
   MyCustomerAddBillingAddressIdAction,
   MyCustomerSetDefaultBillingAddressAction,
 } from '@commercetools/platform-sdk'
-import { countryCodeMap } from '@pages/AuthForms/SignUpPage'
+import { countryCodeMap } from '@constants'
 
 type NewAddressData = {
   id: string | undefined

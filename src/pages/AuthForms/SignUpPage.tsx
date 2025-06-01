@@ -22,17 +22,7 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
-
-export const countryCodeMap: Record<string, string> = {
-  Canada: 'CA',
-  'United States': 'US',
-  Ukraine: 'UA',
-  Germany: 'DE',
-  France: 'FR',
-  Russia: 'RU',
-  Belarus: 'BY',
-  Poland: 'PL',
-}
+import { countryCodeMap } from '@constants'
 
 const {
   main,
