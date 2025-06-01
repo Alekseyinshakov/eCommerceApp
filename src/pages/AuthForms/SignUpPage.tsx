@@ -23,6 +23,17 @@ import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
 
+export const countryCodeMap: Record<string, string> = {
+  Canada: 'CA',
+  'United States': 'US',
+  Ukraine: 'UA',
+  Germany: 'DE',
+  France: 'FR',
+  Russia: 'RU',
+  Belarus: 'BY',
+  Poland: 'PL',
+}
+
 const {
   main,
   authPage,
@@ -81,17 +92,6 @@ export const SignUpPage = () => {
   const [useSameAddress, setUseSameAddress] = useState(true)
   const [defaultShippingAddress, setDefaultShippingAddress] = useState(true)
   const [defaultBillingAddress, setDefaultBillingAddress] = useState(true)
-
-  const countryCodeMap: Record<string, string> = {
-    Canada: 'CA',
-    'United States': 'US',
-    Ukraine: 'UA',
-    Germany: 'DE',
-    France: 'FR',
-    Russia: 'RU',
-    Belarus: 'BY',
-    Poland: 'PL',
-  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

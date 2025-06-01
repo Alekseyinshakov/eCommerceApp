@@ -40,7 +40,7 @@ export const updateCustomerData = async (
               },
               {
                 action: 'setDateOfBirth',
-                dateOfBirth: customer.dateOfBirth, // формат: YYYY-MM-DD
+                dateOfBirth: customer.dateOfBirth,
               },
               {
                 action: 'changeEmail',

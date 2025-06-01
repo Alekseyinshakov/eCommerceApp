@@ -16,7 +16,7 @@ import {
   validateStreet,
 } from '@hooks/useFormValidators.ts'
 import { AddAddress } from './addAddress'
-import { PasswordChange } from './passwordChange'
+import { PasswordChange } from './PasswordChange'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)

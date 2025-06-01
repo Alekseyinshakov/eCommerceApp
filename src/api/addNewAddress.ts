@@ -1,3 +1,4 @@
+import { countryCodeMap } from '@pages/AuthForms/SignUpPage'
 import { buildCustomerClientWithToken } from './apiClient'
 import {
   createApiBuilderFromCtpClient,
@@ -18,17 +19,6 @@ type NewAddressData = {
   billing: boolean
   defaultShipping: boolean
   defaultBilling: boolean
-}
-
-const countryCodeMap: Record<string, string> = {
-  Canada: 'CA',
-  'United States': 'US',
-  Ukraine: 'UA',
-  Germany: 'DE',
-  France: 'FR',
-  Russia: 'RU',
-  Belarus: 'BY',
-  Poland: 'PL',
 }
 
 export const addNewAddress = async ({

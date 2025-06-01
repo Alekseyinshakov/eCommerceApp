@@ -12,6 +12,7 @@ import {
   MyCustomerAddBillingAddressIdAction,
   MyCustomerSetDefaultBillingAddressAction,
 } from '@commercetools/platform-sdk'
+import { countryCodeMap } from '@pages/AuthForms/SignUpPage'
 
 type NewAddressData = {
   id: string | undefined
@@ -25,17 +26,6 @@ type NewAddressData = {
   defaultBilling: boolean
   inBillingArray: boolean
   inSippingArray: boolean
-}
-
-const countryCodeMap: Record<string, string> = {
-  Canada: 'CA',
-  'United States': 'US',
-  Ukraine: 'UA',
-  Germany: 'DE',
-  France: 'FR',
-  Russia: 'RU',
-  Belarus: 'BY',
-  Poland: 'PL',
 }
 
 export const updateAddress = async ({
