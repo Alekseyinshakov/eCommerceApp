@@ -1,4 +1,3 @@
-import { useProductStore } from '@store/productStore'
 import { apiRoot } from '@api/apiClient'
 import { useNavigate, useParams } from 'react-router-dom'
 import ProductDetailPage from '@pages/Shop/ProductDetailPage'
@@ -16,9 +15,6 @@ const ProductDetail = () => {
   const navigate = useNavigate()
   const [product, setProduct] = useState<ProductDetailType | null>(null)
   const [loading, setLoading] = useState(false)
-
-  const products = useProductStore((state) => state.products)
-  const productId = products.find((p) => p.slug === slug)?.id
 
   const getAttributeValue = (
     attrs: Array<{ name: string; value: string | boolean }>,
@@ -51,15 +47,19 @@ const ProductDetail = () => {
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true)
-      if (productId) {
+      if (slug) {
         try {
           const res = await apiRoot
             .products()
-            .withId({ ID: productId })
-            .get()
+            .get({
+              queryArgs: {
+                where: `masterData(current(slug(en-US="${slug}")))`,
+              },
+            })
             .execute()
 
-          const productData = res.body.masterData.current
+          const productData = res.body.results[0].masterData.current
+          const productId = res.body.results[0].id
 
           const categories = productData.categories || []
           const categoriesNames = await getCategoryName(categories)
@@ -115,7 +115,7 @@ const ProductDetail = () => {
       }
     }
     getProduct()
-  }, [productId, navigate])
+  }, [slug, navigate])
 
   if (loading) {
     return <Loader />
