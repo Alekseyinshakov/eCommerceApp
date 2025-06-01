@@ -1,0 +1,103 @@
+.mainBlock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+
+  width: 260px;
+  height: 315px;
+  border: 1px solid $main-border-color;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.img {
+  width: 250px;
+  height: 250px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 90%;
+  padding-bottom: 5px;
+}
+
+.nameItem {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0%;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.description {
+  position: absolute;
+  top: 140px;
+  right: 10px;
+  width: 240px;
+  max-height: 108px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+  z-index: 2;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  .mainBlock:hover & {
+    opacity: 1;
+  }
+}
+
+.descriptionText {
+  font-size: 16px;
+  margin: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.discount {
+  position: absolute;
+  top: -10px;
+  right: -15px;
+}
+
+@media screen and (max-width: 405px) {
+  .discount {
+    top: -10px;
+    right: -5px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .mainBlock {
+    width: 220px;
+  }
+
+  .img {
+    width: 210px;
+  }
+
+  .description {
+    width: 200px;
+  }
+}

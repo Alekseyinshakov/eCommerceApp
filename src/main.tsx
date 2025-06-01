@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
+import { RouterProvider, Navigate, createHashRouter } from 'react-router-dom'
 
 import { ErrorPage } from '@pages/ErrorPage/ErrorPage'
 import { SignUpPage } from '@pages/AuthForms/SignUpPage'
@@ -13,8 +13,9 @@ import { AboutPage } from '@pages/About/AboutPage'
 import { PlantCarePage } from '@pages/PlantCare/PlantCarePage'
 import { CartPage } from '@pages/Cart/CartPage'
 import RedirectIfAuth from '@components/RedirectIfAuth/RedirectIfAuth'
+import ProductDetail from '@store/ProductDetail'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -47,6 +48,14 @@ const router = createBrowserRouter([
       {
         path: '/shop',
         element: <ShopPage />,
+      },
+      {
+        path: '/shop/category/:slugCategory',
+        element: <ShopPage />,
+      },
+      {
+        path: '/shop/:slug',
+        element: <ProductDetail />,
       },
       {
         path: '/about',
