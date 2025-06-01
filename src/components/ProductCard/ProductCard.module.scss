@@ -17,7 +17,7 @@
   cursor: pointer;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 }
@@ -81,4 +81,25 @@
   position: absolute;
   top: -10px;
   right: -15px;
+}
+
+@media screen and (max-width: 405px) {
+  .discount {
+    top: -10px;
+    right: -5px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .mainBlock {
+    width: 220px;
+  }
+
+  .img {
+    width: 210px;
+  }
+
+  .description {
+    width: 200px;
+  }
 }

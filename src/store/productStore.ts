@@ -33,7 +33,12 @@ type ProductStore = {
   currentPage: number
   totalProductsCount: number
   sortOption: SortOption
+  activeCategoryId: string | null
+  priceRange: [number, number]
 
+  resetFilters: () => void
+  setPriceRange: (range: [number, number]) => void
+  setActiveCategoryId: (id: string | null) => void
   setSortOption: (sort: SortOption) => void
   setCurrentPage: (page: number) => void
   fetchProducts: (page?: number, limit?: number) => Promise<void>
@@ -45,20 +50,58 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   currentPage: 1,
   totalProductsCount: 0,
   sortOption: 'default',
+  activeCategoryId: null,
+  priceRange: [0, 100],
 
-  setSortOption: (sort) => set({ sortOption: sort, currentPage: 1 }),
-  setCurrentPage: (page: number) => set({ currentPage: page }),
+  setPriceRange: (range) => {
+    set({ priceRange: range, currentPage: 1 })
+  },
+
+  setActiveCategoryId: (id) => {
+    set({ activeCategoryId: id, currentPage: 1 })
+  },
+
+  setSortOption: (sort) => {
+    set({ sortOption: sort, currentPage: 1 })
+  },
+
+  setCurrentPage: (page: number) => {
+    set({ currentPage: page })
+  },
+
+  resetFilters: () => {
+    set({
+      activeCategoryId: null,
+      sortOption: 'default',
+      priceRange: [0, 100],
+      currentPage: 1,
+    })
+  },
 
   fetchProducts: async (page = 1, limit = 6) => {
-    const { sortOption, loading } = get()
-    if (loading) return
+    const { sortOption, loading, activeCategoryId, priceRange } = get()
 
+    if (loading) return
     set({ loading: true })
+
+    const [minPrice, maxPrice] = priceRange
+    const filters: string[] = [
+      'variants.price.currencyCode:"USD"',
+      `variants.price.centAmount:range(${minPrice * 100} to ${maxPrice * 100})`,
+    ]
+
+    if (activeCategoryId) {
+      filters.push(`categories.id:"${activeCategoryId}"`)
+    }
+
+    if (sortOption === 'newest') {
+      filters.push('variants.attributes.new:true')
+    }
 
     const queryArgs: QueryArgs = {
       limit,
       offset: (page - 1) * limit,
-      filter: ['variants.price.currencyCode:"USD"'],
+      filter: filters,
     }
 
     switch (sortOption) {
@@ -67,9 +110,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         break
       case 'name-desc':
         queryArgs.sort = ['name.en-US desc']
-        break
-      case 'newest':
-        queryArgs.sort = ['createdAt desc'] // variants/attributes/name: new === true
         break
       case 'price-asc':
         queryArgs.sort = ['price asc']
@@ -105,7 +145,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         description: p.description?.['en-US'] ?? '',
       }))
 
-      set({ products: items, totalProductsCount: total })
+      const currentPage = page > 1 && items.length === 0 ? 1 : page
+      set({ products: items, totalProductsCount: total, currentPage })
     } catch (error) {
       console.error('Failed to fetch products:', error)
     } finally {

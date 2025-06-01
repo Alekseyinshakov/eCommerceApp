@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useProductStore } from '@store/productStore'
+import { useCategoriesStore } from '@store/categoriesStore'
 
 import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
@@ -10,52 +11,82 @@ import { SortingTab } from '@components/SortingTab/SortingTab'
 export const ShopPage = () => {
   const limit = 6
 
-  const page = useProductStore((state) => state.currentPage)
-  const setPage = useProductStore((state) => state.setCurrentPage)
-  const totalCount = useProductStore((state) => state.totalProductsCount)
-  const totalPages = Math.ceil(totalCount / limit)
+  const {
+    currentPage,
+    setCurrentPage,
+    totalProductsCount,
+    products,
+    fetchProducts,
+    setActiveCategoryId,
+    activeCategoryId,
+    sortOption,
+    priceRange,
+  } = useProductStore()
 
-  const products = useProductStore((state) => state.products)
-  const fetchProducts = useProductStore((state) => state.fetchProducts)
+  const { categories, fetched, fetchCategories } = useCategoriesStore()
 
-  const setMaxPage = () => setPage(Math.max(page - 1, 1))
-  const setMinPage = () => setPage(Math.min(page + 1, totalPages))
+  const totalPages = Math.ceil(totalProductsCount / limit)
+
+  const placeholdersCount = limit - products.length
+  const placeholders = Array(
+    placeholdersCount > 0 ? placeholdersCount : 0
+  ).fill(null)
+
+  const setPrevPage = () => setCurrentPage(Math.max(currentPage - 1, 1))
+  const setNextPage = () =>
+    setCurrentPage(Math.min(currentPage + 1, totalPages))
+
+  const handleCategoryClick = (categoryId: string) => {
+    setCurrentPage(1)
+    setActiveCategoryId(categoryId)
+  }
 
   useEffect(() => {
-    fetchProducts(page, limit)
-  }, [fetchProducts, page])
+    fetchProducts(currentPage, limit)
+  }, [fetchProducts, currentPage, activeCategoryId, sortOption, priceRange])
+
+  useEffect(() => {
+    if (!fetched) fetchCategories()
+  }, [fetched, fetchCategories])
 
   return (
     <div className="container">
       <div className={styles.shopContainer}>
-        <SortingList />
+        <SortingList
+          categories={categories}
+          onCategoryClick={handleCategoryClick}
+        />
         <div>
           <SortingTab />
           <div className={styles.productsGrid}>
-            {products.map((product) => {
-              return (
-                <ProductCard
-                  slug={product.slug}
-                  key={product.id}
-                  name={product.name}
-                  price={product.price}
-                  discountPrice={product.discountPrice ?? 0}
-                  discountId={product.discountId ?? ''}
-                  image={product.image}
-                  description={product.description}
-                />
-              )
-            })}
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                slug={product.slug}
+                name={product.name}
+                price={product.price}
+                discountPrice={product.discountPrice ?? 0}
+                discountId={product.discountId ?? ''}
+                image={product.image}
+                description={product.description}
+              />
+            ))}
+
+            {placeholders.map((_, index) => (
+              <div key={index} className={styles.placeholder}></div>
+            ))}
           </div>
 
           <div className={styles.pagination}>
-            <button onClick={setMaxPage} disabled={page === 1}>
+            <button onClick={setPrevPage} disabled={currentPage === 1}>
               Prev
             </button>
 
-            <span className={styles.span}>Page {page}</span>
+            <span className={styles.span}>
+              Page {currentPage} of {totalPages}
+            </span>
 
-            <button onClick={setMinPage} disabled={page >= totalPages}>
+            <button onClick={setNextPage} disabled={currentPage >= totalPages}>
               Next
             </button>
           </div>

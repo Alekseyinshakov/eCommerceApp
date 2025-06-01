@@ -12,6 +12,7 @@
   border: none;
   color: black;
   font-size: 17px;
+  cursor: pointer;
 
   &:focus-visible {
     outline: none;
@@ -22,4 +23,27 @@
   display: flex;
   text-align: center;
   font-size: 17px;
+  align-items: center;
+}
+
+@media screen and (max-width: 845px) {
+  .sortingTab {
+    padding: 0 10px;
+    justify-content: center;
+  }
+
+  .select {
+    width: 120px;
+    font-size: 15px;
+  }
+
+  .label {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .sortingTab {
+    gap: 2px;
+  }
 }
