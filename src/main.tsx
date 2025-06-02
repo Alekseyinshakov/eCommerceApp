@@ -16,6 +16,7 @@ import RedirectIfAuth from '@components/Redirects/RedirectIfAuth'
 import { ProfilePage } from '@pages/Profile/ProfilePage'
 import RedirectNonAuthToLogin from '@components/Redirects/RedirectNonAuthToLogin.tsx'
 import ProductDetail from '@store/ProductDetail'
+import ShopLayout from '@pages/Shop/ShopLayout'
 
 const router = createHashRouter([
   {
@@ -45,20 +46,55 @@ const router = createHashRouter([
       },
       {
         path: '/home',
+        handle: { breadcrumb: 'Home' },
         element: <HomePage />,
       },
       {
         path: '/shop',
-        element: <ShopPage />,
+        element: <ShopLayout />,
+        handle: { breadcrumb: 'Shop' },
+        children: [
+          {
+            index: true,
+            element: <ShopPage />,
+          },
+          {
+            path: 'category/:slugCategory',
+            element: <ShopPage />,
+            handle: {
+              breadcrumb: ({ slugCategory }: { slugCategory: string }) =>
+                slugCategory.replace(/-/g, ' '),
+            },
+          },
+          {
+            path: 'category/:slugCategory/:slug',
+            element: <ProductDetail />,
+            handle: {
+              breadcrumb: ({
+                slugCategory,
+                slug,
+              }: {
+                slugCategory: string
+                slug: string
+              }) => [
+                {
+                  name: slugCategory.replace(/-/g, ' '),
+                  path: `category/${slugCategory}`,
+                },
+                { name: slug.replace(/-/g, ' '), path: '' },
+              ],
+            },
+          },
+          {
+            path: ':slug',
+            element: <ProductDetail />,
+            handle: {
+              breadcrumb: ({ slug }: { slug: string }) => slug,
+            },
+          },
+        ],
       },
-      {
-        path: '/shop/category/:slugCategory',
-        element: <ShopPage />,
-      },
-      {
-        path: '/shop/:slug',
-        element: <ProductDetail />,
-      },
+
       {
         path: '/about',
         element: <AboutPage />,
