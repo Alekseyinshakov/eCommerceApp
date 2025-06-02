@@ -49,12 +49,10 @@ export const ShopPage = () => {
   }
 
   useEffect(() => {
-    fetchProducts(currentPage, limit)
-  }, [fetchProducts, currentPage, activeCategoryId, sortOption, priceRange])
-
-  useEffect(() => {
-    if (!fetched) fetchCategories()
-  }, [fetched, fetchCategories])
+    if (!slugCategory) {
+      setActiveCategoryId(null)
+    }
+  }, [slugCategory, setActiveCategoryId])
 
   useEffect(() => {
     if (!fetched) return
@@ -69,11 +67,16 @@ export const ShopPage = () => {
         setActiveCategoryId(null)
         navigate('/shop', { replace: true })
       }
-    } else {
-      setActiveCategoryId(null)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slugCategory, fetched])
+
+  useEffect(() => {
+    fetchProducts(currentPage, limit)
+  }, [fetchProducts, currentPage, activeCategoryId, sortOption, priceRange])
+
+  useEffect(() => {
+    if (!fetched) fetchCategories()
+  }, [fetched, fetchCategories])
 
   return (
     <div className="container">
@@ -96,7 +99,7 @@ export const ShopPage = () => {
                 discountId={product.discountId ?? ''}
                 image={product.image}
                 description={product.description}
-                categorySlug={slugCategory}
+                categoryId={product.categoryId}
               />
             ))}
 

@@ -10,6 +10,7 @@ type Product = {
   discountId?: string
   image: string
   description: string
+  categoryId: string
 }
 
 type SortOption =
@@ -148,6 +149,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
           p.masterVariant?.prices?.[0]?.discounted?.discount?.id || undefined,
         image: p.masterVariant.images?.[0]?.url ?? '',
         description: p.description?.['en-US'] ?? '',
+        categoryId: p.categories?.[0]?.id,
       }))
 
       const currentPage = page > 1 && items.length === 0 ? 1 : page
