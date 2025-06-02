@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Loader from '../src/components/Loader/Loader'
+import Loader from '../components/Loader/Loader'
 import { describe, expect, it } from 'vitest'
 
 describe('Loader', () => {

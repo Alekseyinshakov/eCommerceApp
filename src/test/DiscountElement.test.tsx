@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { describe, expect, it, vi } from 'vitest'
-import DiscountElement from '../src/components/DiscountElement/DiscountElement'
-import { apiRoot } from '../src/api/apiClient'
+import DiscountElement from '../components/DiscountElement/DiscountElement'
+import { apiRoot } from '../api/apiClient'
 
 interface DiscountResponse {
   body: {
@@ -26,7 +26,7 @@ let executeMock: ExecuteFn = async () => ({
   },
 })
 
-vi.mock('../src/api/apiClient', () => {
+vi.mock('../api/apiClient', () => {
   return {
     apiRoot: {
       productDiscounts: () => ({
