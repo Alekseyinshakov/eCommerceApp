@@ -63,7 +63,7 @@ const router = createHashRouter([
             element: <ShopPage />,
             handle: {
               breadcrumb: ({ slugCategory }: { slugCategory: string }) =>
-                slugCategory,
+                slugCategory.replace(/-/g, ' '),
             },
           },
           {
