@@ -32,6 +32,10 @@ export const SortingTab = () => {
         <option value="price-asc">Price: Low to High</option>
         <option value="price-desc">Price: High to Low</option>
       </select>
+      <div className={styles.searchBlock}>
+        <input type="text" />
+        <img src="images/icons/find-icon.svg" alt="" />
+      </div>
     </div>
   )
 }
