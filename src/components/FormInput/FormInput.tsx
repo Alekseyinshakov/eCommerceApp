@@ -13,6 +13,7 @@ interface FormInputProps {
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   error?: string
+  'data-testid'?: string
 }
 
 const FormInput = ({
@@ -25,6 +26,7 @@ const FormInput = ({
   value,
   onChange,
   error,
+  'data-testid': testId,
 }: FormInputProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -48,6 +50,7 @@ const FormInput = ({
           className={inputClassName}
           value={value}
           onChange={onChange}
+          data-testid={testId}
         />
         {isPassword && (
           <button

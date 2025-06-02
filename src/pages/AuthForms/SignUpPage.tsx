@@ -347,6 +347,7 @@ export const SignUpPage = () => {
                     value={formData.street}
                     onChange={handleChange}
                     error={errors.street}
+                    data-testid="input-street"
                   />
 
                   <FormInput
@@ -356,6 +357,7 @@ export const SignUpPage = () => {
                     value={formData.city}
                     onChange={handleChange}
                     error={errors.city}
+                    data-testid="input-city"
                   />
                 </div>
 
@@ -367,6 +369,7 @@ export const SignUpPage = () => {
                     value={formData.postalCode}
                     onChange={handleChange}
                     error={errors.postalCode}
+                    data-testid="input-postal-code"
                   />
 
                   <FormInput
@@ -377,6 +380,7 @@ export const SignUpPage = () => {
                     value={formData.country}
                     onChange={handleChange}
                     error={errors.country}
+                    data-testid="input-country"
                   />
                   <CountryList />
                 </div>
@@ -417,6 +421,7 @@ export const SignUpPage = () => {
                     value={formData.billingStreet}
                     onChange={handleChange}
                     error={errors.billingStreet}
+                    data-testid="input-billing-street"
                   />
 
                   <FormInput
