@@ -4,6 +4,8 @@
   margin-bottom: 20px;
   justify-content: end;
   gap: 10px;
+  flex-wrap: wrap;
+  row-gap: 15px;
 }
 
 .select {
@@ -45,5 +47,23 @@
 @media screen and (max-width: 845px) {
   .sortingTab {
     gap: 2px;
+    row-gap: 15px;
+  }
+}
+
+.searchBlock {
+  position: relative;
+  input {
+    padding: 3px 5px 3px 27px;
+    width: 220px;
+    &:focus + img {
+      opacity: 1;
+    }
+  }
+  img {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    opacity: 0.5;
   }
 }

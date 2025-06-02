@@ -1,6 +1,16 @@
 import { create } from 'zustand'
 import { apiRoot } from '@api/apiClient'
 
+type CommercetoolsQueryArgs = {
+  limit?: number
+  offset?: number
+  sort?: string[]
+  filter?: string[]
+  'text.en-US'?: string
+  fuzzy?: boolean
+  [key: string]: string | string[] | number | boolean | undefined
+}
+
 type Product = {
   id: string
   slug: string
@@ -21,13 +31,6 @@ type SortOption =
   | 'price-desc'
   | 'sale'
 
-type QueryArgs = {
-  limit: number
-  offset: number
-  sort?: string[]
-  filter?: string[]
-}
-
 type ProductStore = {
   products: Product[]
   loading: boolean
@@ -36,12 +39,13 @@ type ProductStore = {
   sortOption: SortOption
   activeCategoryId: string | null
   priceRange: [number, number]
-
+  searchValue: string
   resetFilters: () => void
   setPriceRange: (range: [number, number]) => void
   setActiveCategoryId: (id: string | null) => void
   setSortOption: (sort: SortOption) => void
   setCurrentPage: (page: number) => void
+  setSearchValue: (value: string) => void
   fetchProducts: (page?: number, limit?: number) => Promise<void>
 }
 
@@ -53,6 +57,11 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   sortOption: 'default',
   activeCategoryId: null,
   priceRange: [0, 100],
+  searchValue: '',
+
+  setSearchValue: (value: string) => {
+    set({ searchValue: value })
+  },
 
   setPriceRange: (range) => {
     set({ priceRange: range, currentPage: 1 })
@@ -76,11 +85,13 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       sortOption: 'default',
       priceRange: [0, 100],
       currentPage: 1,
+      searchValue: '',
     })
   },
 
   fetchProducts: async (page = 1, limit = 6) => {
-    const { sortOption, loading, activeCategoryId, priceRange } = get()
+    const { sortOption, loading, activeCategoryId, priceRange, searchValue } =
+      get()
 
     if (loading) return
     set({ loading: true })
@@ -103,10 +114,15 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       filters.push('variants.prices.discounted:exists')
     }
 
-    const queryArgs: QueryArgs = {
+    const queryArgs: CommercetoolsQueryArgs = {
       limit,
       offset: (page - 1) * limit,
       filter: filters,
+    }
+
+    if (searchValue.trim()) {
+      queryArgs['text.en-US'] = searchValue
+      queryArgs.fuzzy = true
     }
 
     switch (sortOption) {
