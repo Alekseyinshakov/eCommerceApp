@@ -22,6 +22,7 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
+import { countryCodeMap } from '@constants'
 
 const {
   main,
@@ -82,17 +83,6 @@ export const SignUpPage = () => {
   const [defaultShippingAddress, setDefaultShippingAddress] = useState(true)
   const [defaultBillingAddress, setDefaultBillingAddress] = useState(true)
 
-  const countryCodeMap: Record<string, string> = {
-    Canada: 'CA',
-    'United States': 'US',
-    Ukraine: 'UA',
-    Germany: 'DE',
-    France: 'FR',
-    Russia: 'RU',
-    Belarus: 'BY',
-    Poland: 'PL',
-  }
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -146,15 +136,11 @@ export const SignUpPage = () => {
 
         setNotification('Registration successful!')
 
-        await loginCustomer(formData.email, formData.password)
+        const customer = await loginCustomer(formData.email, formData.password)
 
-        const userData = {
-          email: formData.email,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
+        if (customer) {
+          setUser(customer)
         }
-
-        setUser(userData)
 
         navigate('/home')
       } catch (error) {

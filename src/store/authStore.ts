@@ -1,20 +1,17 @@
 import { create } from 'zustand'
-
-type User = {
-  firstName: string
-  lastName: string
-  email: string
-}
+import { Customer } from '@commercetools/platform-sdk'
 
 type AuthStore = {
-  user: User | null
-  setUser: (user: User | null) => void
+  user: Customer | null
+  setUser: (user: Customer | null) => void
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  user: JSON.parse(localStorage.getItem('user_data') || 'null') as User | null,
+  user: JSON.parse(
+    localStorage.getItem('user_data') || 'null'
+  ) as Customer | null,
 
-  setUser: (user: User | null) => {
+  setUser: (user: Customer | null) => {
     if (user) {
       localStorage.setItem('user_data', JSON.stringify(user))
       set({ user })

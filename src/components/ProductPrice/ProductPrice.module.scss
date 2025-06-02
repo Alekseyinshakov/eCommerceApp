@@ -1,0 +1,18 @@
+.price {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0px;
+  color: $main-light-color;
+}
+
+.priceRegular {
+  font-size: 14px;
+  color: $second-text-light-color;
+  text-decoration: line-through;
+  margin-right: 5px;
+}
+
+.priceDiscount {
+  font-size: 18px;
+  color: $error-color;
+}

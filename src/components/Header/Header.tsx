@@ -99,7 +99,9 @@ const Header = () => {
               </Link>
               {email ? (
                 <>
-                  <div className={styles.userEmail}>{email}</div>
+                  <Link to="/profile" className={styles.userEmail}>
+                    {email}
+                  </Link>
                   <button onClick={handleLogout} className="button btn-logout">
                     Logout
                   </button>

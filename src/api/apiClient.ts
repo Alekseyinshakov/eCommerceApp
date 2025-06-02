@@ -125,3 +125,16 @@ export const buildCustomerClient = (email: string, password: string) => {
     .withLoggerMiddleware()
     .build()
 }
+
+export const buildCustomerClientWithToken = (accessToken: string) => {
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: import.meta.env.VITE_CTP_API_URL,
+    fetch,
+  }
+
+  return new ClientBuilder()
+    .withExistingTokenFlow(accessToken, { force: true })
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
+    .build()
+}
