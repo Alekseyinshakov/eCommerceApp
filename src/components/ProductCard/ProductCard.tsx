@@ -12,6 +12,7 @@ type ProductCardProps = {
   discountId: string
   image: string
   description: string
+  categorySlug?: string
 }
 
 export const ProductCard = ({
@@ -22,9 +23,14 @@ export const ProductCard = ({
   discountId,
   image,
   description,
+  categorySlug,
 }: ProductCardProps) => {
+  const productLink = categorySlug
+    ? `/shop/category/${categorySlug}/${slug}`
+    : `/shop/${slug}`
+
   return (
-    <Link to={`/shop/${slug}`}>
+    <Link to={productLink}>
       <div className={mainBlock}>
         {discountId ? (
           <div className={styles.discount}>

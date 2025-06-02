@@ -96,6 +96,7 @@ export const ShopPage = () => {
                 discountId={product.discountId ?? ''}
                 image={product.image}
                 description={product.description}
+                categorySlug={slugCategory}
               />
             ))}
 
