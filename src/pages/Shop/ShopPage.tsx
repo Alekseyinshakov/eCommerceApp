@@ -68,7 +68,7 @@ export const ShopPage = () => {
         navigate('/shop', { replace: true })
       }
     }
-  }, [slugCategory, fetched])
+  }, [slugCategory, fetched, categories, navigate, setActiveCategoryId])
 
   useEffect(() => {
     fetchProducts(currentPage, limit)
