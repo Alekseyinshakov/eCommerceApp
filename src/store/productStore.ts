@@ -123,7 +123,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
     if (searchValue.trim()) {
       queryArgs['text.en-US'] = searchValue
-      queryArgs.fuzzy = true
+      queryArgs.fuzzy = false
     }
 
     switch (sortOption) {
