@@ -46,7 +46,7 @@ export const ProductCard = ({
   return (
     <div className={mainBlock} onClick={onClick}>
       {discountId ? (
-        <div className={styles.discount}>
+        <div className={styles.discount} data-testid="discount-element">
           <DiscountElement discountId={discountId ?? ''} />
         </div>
       ) : null}
