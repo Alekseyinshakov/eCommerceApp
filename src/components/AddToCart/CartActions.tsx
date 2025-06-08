@@ -16,7 +16,7 @@ const CartActions = ({ productId, variantId }: CartProps) => {
   }
 
   const handleAddToCart = async () => {
-    const isLogged = localStorage.getItem('customer_token') ?? false
+    const isLogged = !!localStorage.getItem('customer_token')
 
     if (isLogged) {
       return
