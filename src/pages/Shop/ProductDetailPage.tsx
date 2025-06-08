@@ -3,6 +3,7 @@ import styles from './ShopPage.module.scss'
 import ProductPrice from '@components/ProductPrice/ProductPrice'
 import DiscountElement from '@components/DiscountElement/DiscountElement'
 import { ProductDetailType } from 'types'
+import CartActions from '@components/AddToCart/CartActions'
 
 const ProductDetailPage = ({
   product,
@@ -44,6 +45,7 @@ const ProductDetailPage = ({
               Categories:{' '}
               <span className={styles.descText}>{product.categories}</span>
             </p>
+            <CartActions productId={product.id} variantId={product.variantId} />
           </div>
         </div>
       ) : null}
