@@ -72,6 +72,7 @@ const ProductDetail = () => {
 
           const productDetail: ProductDetailType = {
             id: productId,
+            variantId: productData.masterVariant.id,
             name: productData.name?.['en-US'] || '',
             price: productData.masterVariant?.prices?.[0]?.value?.centAmount
               ? productData.masterVariant.prices[0].value.centAmount / 100

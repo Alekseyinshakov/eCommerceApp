@@ -152,6 +152,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const total = res.body.total
       const items = res.body.results.map((p) => ({
         id: p.id,
+        variantId: p.masterVariant.id,
         slug: p.slug?.['en-US'] ?? p.key,
         name: p.name['en-US'] ?? 'No name',
         price:

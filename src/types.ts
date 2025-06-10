@@ -20,6 +20,7 @@ export interface NotificationContextType {
 
 export type ProductDetailType = {
   id: string
+  variantId: number
   name: string
   price: number
   discountPrice?: number
