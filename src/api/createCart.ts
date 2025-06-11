@@ -1,12 +1,9 @@
 import { buildAnonymousClient } from './BuildAnonymousClient'
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk'
-type cartProp = {
-  productId: string
-  variantId: number
-  quantity: number
-}
+import { updateCart } from './updateCart'
+import { CartProp } from 'types'
 
-export const createAnonymousCart = async (item: cartProp) => {
+export const createAnonymousCart = async (item: CartProp) => {
   const anonymousClient = buildAnonymousClient()
   const apiRoot = createApiBuilderFromCtpClient(anonymousClient).withProjectKey(
     {
@@ -16,31 +13,7 @@ export const createAnonymousCart = async (item: cartProp) => {
   const cartData = localStorage.getItem('cart_data')
   try {
     if (cartData) {
-      const { cartId, versionCart } = JSON.parse(cartData)
-      const updateResponse = await apiRoot
-        .carts()
-        .withId({ ID: cartId })
-        .post({
-          body: {
-            version: versionCart,
-            actions: [
-              {
-                action: 'addLineItem',
-                productId: item.productId,
-                variantId: item.variantId,
-                quantity: item.quantity,
-              },
-            ],
-          },
-        })
-        .execute()
-      const updateVersion = updateResponse.body.version
-
-      localStorage.setItem(
-        'cart_data',
-        JSON.stringify({ cartId, versionCart: updateVersion })
-      )
-      return updateResponse.body
+      updateCart(item, apiRoot, cartData)
     } else {
       const response = await apiRoot
         .carts()
