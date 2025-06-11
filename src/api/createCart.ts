@@ -13,7 +13,8 @@ export const createCart = async (item: CartProp) => {
 
   try {
     if (cartData) {
-      updateCart(item, apiRoot, cartData)
+      const updatedCart = await updateCart(item, apiRoot, cartData)
+      return updatedCart
     } else {
       const response = await apiRoot
         .carts()

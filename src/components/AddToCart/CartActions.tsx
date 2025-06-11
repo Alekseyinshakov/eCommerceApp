@@ -1,5 +1,7 @@
 import styles from './CartItem.module.scss'
 import { createCart } from '@api/createCart'
+import { useCartStore } from '@store/cartStore'
+
 type CartProps = {
   productId: string
   variantId: number
@@ -8,6 +10,7 @@ type CartProps = {
 const QUANTITY_DEFAULT = 1
 
 const CartActions = ({ productId, variantId }: CartProps) => {
+  const { setCart } = useCartStore()
   // const [quantity, setQuantity] = useState(1)
   // const increaseQuantity = () => {
   //   setQuantity((prev) => prev + 1)
@@ -22,7 +25,17 @@ const CartActions = ({ productId, variantId }: CartProps) => {
   // const cartData = localStorage.getItem('cart_data')
 
   const handleAddToCart = async () => {
-    await createCart({ productId, variantId, quantity: QUANTITY_DEFAULT })
+    const cartResponseData = await createCart({
+      productId,
+      variantId,
+      quantity: QUANTITY_DEFAULT,
+    })
+    if (cartResponseData) {
+      await setCart(cartResponseData)
+      console.log('Product added to cart:')
+    } else {
+      console.error('Failed to add product to cart')
+    }
   }
 
   // const handleRemoveFromCart = async() => {
