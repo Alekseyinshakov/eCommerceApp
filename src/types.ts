@@ -32,3 +32,9 @@ export type ProductDetailType = {
   sku: string
   isDiameterBased: boolean
 }
+
+export type CartProp = {
+  productId: string
+  variantId: number
+  quantity: number
+}
