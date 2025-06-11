@@ -1,16 +1,16 @@
-import { buildAnonymousClient } from './BuildAnonymousClient'
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk'
 import { updateCart } from './updateCart'
 import { CartProp } from 'types'
+import { getCtpClient } from './getCtpClient'
 
-export const createAnonymousCart = async (item: CartProp) => {
-  const anonymousClient = buildAnonymousClient()
-  const apiRoot = createApiBuilderFromCtpClient(anonymousClient).withProjectKey(
-    {
-      projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
-    }
-  )
+export const createCart = async (item: CartProp) => {
   const cartData = localStorage.getItem('cart_data')
+  const client = getCtpClient()
+
+  const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
+    projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
+  })
+
   try {
     if (cartData) {
       updateCart(item, apiRoot, cartData)
