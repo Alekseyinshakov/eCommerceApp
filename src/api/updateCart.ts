@@ -6,6 +6,8 @@ export const updateCart = async (
   apiRoot: ByProjectKeyRequestBuilder,
   cartData: string
 ) => {
+  console.log('we are here')
+
   const { cartId, versionCart } = JSON.parse(cartData)
   const updateResponse = await apiRoot
     .carts()
