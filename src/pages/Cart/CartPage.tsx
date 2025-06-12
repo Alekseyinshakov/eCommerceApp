@@ -3,7 +3,6 @@ import { useCartStore } from '@store/cartStore'
 
 export const CartPage = () => {
   const { cart } = useCartStore()
-  console.log('CartPage cart:', cart)
 
   return (
     <div className="container">

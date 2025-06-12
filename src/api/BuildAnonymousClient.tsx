@@ -27,11 +27,13 @@ export const buildAnonymousClient = () => {
       host: import.meta.env.VITE_CTP_API_URL,
       fetch,
     }
-    return new ClientBuilder()
-      .withExistingTokenFlow(existingToken, { force: true })
-      .withHttpMiddleware(httpMiddlewareOptions)
-      .withLoggerMiddleware()
-      .build()
+    return (
+      new ClientBuilder()
+        .withExistingTokenFlow(existingToken, { force: true })
+        .withHttpMiddleware(httpMiddlewareOptions)
+        // .withLoggerMiddleware()
+        .build()
+    )
   }
 
   const authMiddlewareOptions: CustomAnonymousAuthMiddlewareOptions = {
@@ -53,7 +55,7 @@ export const buildAnonymousClient = () => {
   const client = new ClientBuilder()
     .withAnonymousSessionFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
+    // .withLoggerMiddleware()
     .build()
 
   client.execute({ uri: '', method: 'GET' }).then(() => {

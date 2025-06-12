@@ -119,11 +119,13 @@ export const buildCustomerClient = (email: string, password: string) => {
     fetch,
   }
 
-  return new ClientBuilder()
-    .withPasswordFlow(authMiddlewareOptions)
-    .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
-    .build()
+  return (
+    new ClientBuilder()
+      .withPasswordFlow(authMiddlewareOptions)
+      .withHttpMiddleware(httpMiddlewareOptions)
+      // .withLoggerMiddleware()
+      .build()
+  )
 }
 
 export const buildCustomerClientWithToken = (accessToken: string) => {
@@ -132,9 +134,11 @@ export const buildCustomerClientWithToken = (accessToken: string) => {
     fetch,
   }
 
-  return new ClientBuilder()
-    .withExistingTokenFlow(accessToken, { force: true })
-    .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
-    .build()
+  return (
+    new ClientBuilder()
+      .withExistingTokenFlow(accessToken, { force: true })
+      .withHttpMiddleware(httpMiddlewareOptions)
+      // .withLoggerMiddleware()
+      .build()
+  )
 }
