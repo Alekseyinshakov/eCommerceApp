@@ -58,6 +58,9 @@
   border-radius: 50%;
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .total {

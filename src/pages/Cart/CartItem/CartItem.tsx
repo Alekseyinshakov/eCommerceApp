@@ -3,6 +3,7 @@ import styles from './CartItem.module.scss'
 import { useCartStore } from '@store/cartStore'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { removeFromCart } from '@api/removeFromCart'
+import { createCart } from '@api/createCart'
 
 export const CartItem = ({ item }: { item: LineItem }) => {
   const { cart, setCart } = useCartStore()
@@ -41,6 +42,47 @@ export const CartItem = ({ item }: { item: LineItem }) => {
     }
   }
 
+  const decrementHandler = () => {
+    if (productInCart && cartData) {
+      removeFromCart(
+        {
+          productId: item.productId,
+          variantId: item.variant.id,
+          quantity: 1,
+        },
+        productInCart.id,
+        cartData
+      )
+        .then((updateResponse) => {
+          setCart(updateResponse)
+          setNotification('Item quantity decremented in cart')
+        })
+        .catch((error) => {
+          console.error('Error decrementing item in cart:', error)
+          setNotification("The product can't be decremented in the cart")
+        })
+    }
+  }
+
+  const incrementHandler = () => {
+    console.log('Increment item:', item.id)
+    if (productInCart && cartData) {
+      createCart({
+        productId: item.productId,
+        variantId: item.variant.id,
+        quantity: 1,
+      })
+        .then((updateResponse) => {
+          setCart(updateResponse)
+          setNotification('Item quantity incremented in cart')
+        })
+        .catch((error) => {
+          console.error('Error incrementing item in cart:', error)
+          setNotification("The product can't be incremented in the cart")
+        })
+    }
+  }
+
   return (
     <div key={item.id} className={styles.cartItem}>
       <div className={styles.cartRow}>
@@ -55,9 +97,21 @@ export const CartItem = ({ item }: { item: LineItem }) => {
           ${(item.price.value.centAmount / 100).toFixed(2)}{' '}
         </div>
         <div className={styles.quantity}>
-          <button>-</button>
+          <button
+            onClick={() => {
+              decrementHandler()
+            }}
+          >
+            -
+          </button>
           <span>{item.quantity}</span>
-          <button>+</button>
+          <button
+            onClick={() => {
+              incrementHandler()
+            }}
+          >
+            +
+          </button>
         </div>
         <div className={styles.total}>${item.totalPrice.centAmount / 100}</div>
         <div className={styles.delete}>

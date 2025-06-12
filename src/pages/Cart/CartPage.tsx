@@ -18,13 +18,15 @@ export const CartPage = () => {
           ) : (
             <p className={styles.text}>Your cart is empty.</p>
           )}
-          <div className={styles.cartHeader}>
-            <div className={styles.productInfo}>Product</div>
-            <div className={styles.price}>Price</div>
-            <div className={styles.quantity}>Quantity</div>
-            <div className={styles.total}>Total</div>
-            <div className={styles.delete}>Delete</div>
-          </div>
+          {cart && cart.lineItems.length > 0 && (
+            <div className={styles.cartHeader}>
+              <div className={styles.productInfo}>Product</div>
+              <div className={styles.price}>Price</div>
+              <div className={styles.quantity}>Quantity</div>
+              <div className={styles.total}>Total</div>
+              <div className={styles.delete}>Delete</div>
+            </div>
+          )}
           {cart &&
             cart.lineItems.map((item) => (
               <CartItem key={item.id} item={item} />
