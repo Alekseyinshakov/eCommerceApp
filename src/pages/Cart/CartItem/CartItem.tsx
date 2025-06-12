@@ -31,8 +31,16 @@ export const CartItem = ({ item }: { item: LineItem }) => {
           <span>{item.quantity}</span>
           <button>+</button>
         </div>
-        <div className={styles.total}>{item.totalPrice.centAmount / 100}</div>
-        <div className={styles.delete}>🗑</div>
+        <div className={styles.total}>${item.totalPrice.centAmount / 100}</div>
+        <div className={styles.delete}>
+          <img
+            onClick={() => {
+              console.log('ddddeeeeellll')
+            }}
+            src="images/icons/delete-icon.svg"
+            alt=""
+          />
+        </div>
       </div>
     </div>
   )
