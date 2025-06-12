@@ -21,11 +21,8 @@ const CartActions = ({ productId, variantId }: CartProps) => {
   // const decreaseQuantity = () => {
   //   setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
   // }
-  console.log(cart)
 
-  const productInCart = cart?.lineItems.filter(
-    (p) => p.productId === productId
-  )[0]
+  const productInCart = cart?.lineItems.find((p) => p.productId === productId)
 
   const cartData = localStorage.getItem('cart_data')
 
