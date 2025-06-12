@@ -1,3 +1,19 @@
 .title {
   margin-top: 20px;
 }
+
+.cartWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 86px;
+}
+
+.productsList {
+  flex-grow: 1;
+}
+
+.totalBlock {
+  padding: 20px;
+  background-color: aquamarine;
+  width: 332px;
+}
