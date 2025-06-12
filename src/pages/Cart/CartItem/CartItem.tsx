@@ -1,20 +1,48 @@
 import { LineItem } from '@commercetools/platform-sdk'
 import styles from './CartItem.module.scss'
+import { useCartStore } from '@store/cartStore'
+import { useNotification } from '@components/Notification/NotifficationContext'
+import { removeFromCart } from '@api/removeFromCart'
 
 export const CartItem = ({ item }: { item: LineItem }) => {
+  const { cart, setCart } = useCartStore()
+  const { setNotification } = useNotification()
+
   console.log(item)
+
+  const productInCart = cart?.lineItems.find(
+    (p) => p.productId === item.productId
+  )
+  const cartData = localStorage.getItem('cart_data')
 
   const imageUrl = item.variant.images?.[0]?.url || 'default-image.jpg'
 
+  const deleteHandler = () => {
+    console.log('Delete item:', item.id)
+
+    if (productInCart && cartData) {
+      removeFromCart(
+        {
+          productId: item.productId,
+          variantId: item.variant.id,
+          quantity: productInCart.quantity,
+        },
+        productInCart.id,
+        cartData
+      )
+        .then((updateResponse) => {
+          setCart(updateResponse)
+          setNotification('Item removed from cart')
+        })
+        .catch((error) => {
+          console.error('Error removing item from cart:', error)
+          setNotification("The product can't be removed from the cart")
+        })
+    }
+  }
+
   return (
     <div key={item.id} className={styles.cartItem}>
-      {/* <h3>{item.name['en-US']}</h3>
-      <p>
-        Price: ${(item.price.value.centAmount / 100).toFixed(2)}{' '}
-        {item.price.value.currencyCode}
-      </p>
-      <p>Quantity: {item.quantity}</p> */}
-
       <div className={styles.cartRow}>
         <div className={styles.productInfo}>
           <img src={imageUrl} alt="Barberton Daisy" />
@@ -35,10 +63,10 @@ export const CartItem = ({ item }: { item: LineItem }) => {
         <div className={styles.delete}>
           <img
             onClick={() => {
-              console.log('ddddeeeeellll')
+              deleteHandler()
             }}
             src="images/icons/delete-icon.svg"
-            alt=""
+            alt="delete icon"
           />
         </div>
       </div>

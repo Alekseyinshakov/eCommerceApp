@@ -17,3 +17,27 @@
   background-color: aquamarine;
   width: 332px;
 }
+
+.cartHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
+}
+
+.productInfo {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price,
+.quantity,
+.total {
+  flex: 1;
+  text-align: center;
+}
