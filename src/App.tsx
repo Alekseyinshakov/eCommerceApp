@@ -28,7 +28,7 @@ const App = () => {
         console.error('Error parsing cart data from localStorage:', error)
       }
     }
-  }, [])
+  }, [setCart])
 
   return (
     <NotificationProvider>
