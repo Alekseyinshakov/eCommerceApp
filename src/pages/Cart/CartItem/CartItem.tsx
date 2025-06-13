@@ -3,7 +3,7 @@ import styles from './CartItem.module.scss'
 import { useCartStore } from '@store/cartStore'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { removeFromCart } from '@api/removeFromCart'
-import { createCart } from '@api/createCart'
+import { addItemToCart } from '@api/addItemToCart'
 
 export const CartItem = ({ item }: { item: LineItem }) => {
   const { cart, setCart } = useCartStore()
@@ -67,7 +67,7 @@ export const CartItem = ({ item }: { item: LineItem }) => {
   const incrementHandler = () => {
     console.log('Increment item:', item.id)
     if (productInCart && cartData) {
-      createCart({
+      addItemToCart({
         productId: item.productId,
         variantId: item.variant.id,
         quantity: 1,
