@@ -1,6 +1,7 @@
 import { CartItem } from './CartItem/CartItem'
 import styles from './CartPage.module.scss'
 import { useCartStore } from '@store/cartStore'
+import { Link } from 'react-router-dom'
 
 export const CartPage = () => {
   const { cart } = useCartStore()
@@ -16,7 +17,12 @@ export const CartPage = () => {
               You have {cart.lineItems.length} items in your cart.
             </p>
           ) : (
-            <p className={styles.text}>Your cart is empty.</p>
+            <div>
+              <p className={styles.text}>Your cart is empty.</p>
+              <Link className="button" to="/shop">
+                SHOP NOW
+              </Link>
+            </div>
           )}
           {cart && cart.lineItems.length > 0 && (
             <div className={styles.cartHeader}>
