@@ -8,26 +8,26 @@ import { useEffect } from 'react'
 import { useCartStore } from '@store/cartStore'
 
 const App = () => {
-  const { setCart } = useCartStore()
+  const { setCart, setLoading } = useCartStore()
 
   useEffect(() => {
     const loadCart = async () => {
+      setLoading(true)
       const cartData = localStorage.getItem('cart_data')
       if (cartData) {
         try {
           const parsedCartData = JSON.parse(cartData)
           const cart = await fetchCartData(parsedCartData.cartId)
-          if (cart) {
-            setCart(cart)
-          }
-        } catch (error) {
-          console.error('Error loading cart data:', error)
+          if (cart) setCart(cart)
+        } catch (e) {
+          console.error(e)
         }
       }
+      setLoading(false)
     }
 
     loadCart()
-  }, [setCart])
+  }, [setCart, setLoading])
 
   return (
     <NotificationProvider>

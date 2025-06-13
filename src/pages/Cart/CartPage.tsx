@@ -5,12 +5,17 @@ import { useCartStore } from '@store/cartStore'
 import { Link } from 'react-router-dom'
 import { clearCart } from '@api/clearCart'
 import { useNotification } from '@components/Notification/NotifficationContext'
+import Loader from '@components/Loader/Loader'
 
 export const CartPage = () => {
-  const { cart, setCart } = useCartStore()
+  const { cart, setCart, loading } = useCartStore()
   const { setNotification } = useNotification()
 
   const [clearMode, setClearMode] = useState(false)
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="container">
