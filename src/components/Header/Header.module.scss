@@ -217,13 +217,23 @@
   }
 }
 
-.search {
-  width: 30px;
-  height: 30px;
-  background: url('/images/icons/find-icon.svg') no-repeat center center / 20px
-    25px;
+.cartStyle {
+  display: flex;
+  position: relative;
 }
 
-.cart {
+.cartCountStyle {
+  position: absolute;
+  top: -3px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background-color: $main-light-color;
+  color: #fff;
+  border-radius: 50%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 3px solid #fff;
 }
