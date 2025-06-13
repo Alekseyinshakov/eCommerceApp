@@ -1,5 +1,5 @@
 import styles from './CartItem.module.scss'
-import { createCart } from '@api/createCart'
+import { addItemToCart } from '@api/addItemToCart'
 import { removeFromCart } from '@api/removeFromCart'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { useCartStore } from '@store/cartStore'
@@ -28,7 +28,7 @@ const CartActions = ({ productId, variantId }: CartProps) => {
 
   const handleAddToCart = async () => {
     try {
-      const cartResponseData = await createCart({
+      const cartResponseData = await addItemToCart({
         productId,
         variantId,
         quantity: QUANTITY_DEFAULT,
