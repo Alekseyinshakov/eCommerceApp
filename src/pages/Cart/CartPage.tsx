@@ -64,9 +64,9 @@ export const CartPage = () => {
           <button className={'button' + ' ' + styles.checkoutButton}>
             Proceed to Checkout
           </button>
-          <button className={'button' + ' ' + styles.continueShopping}>
+          <Link to="/shop" className={'button' + ' ' + styles.continueShopping}>
             Continue shopping
-          </button>
+          </Link>
         </div>
       </div>
     </div>
