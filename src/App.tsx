@@ -11,23 +11,22 @@ const App = () => {
   const { setCart } = useCartStore()
 
   useEffect(() => {
-    const cartData = localStorage.getItem('cart_data')
-    if (cartData) {
-      try {
-        const parsedCartData = JSON.parse(cartData)
-        fetchCartData(parsedCartData.cartId)
-          .then((cart) => {
-            if (cart) {
-              setCart(cart)
-            }
-          })
-          .catch((error) => {
-            console.error('Error fetching cart data:', error)
-          })
-      } catch (error) {
-        console.error('Error parsing cart data from localStorage:', error)
+    const loadCart = async () => {
+      const cartData = localStorage.getItem('cart_data')
+      if (cartData) {
+        try {
+          const parsedCartData = JSON.parse(cartData)
+          const cart = await fetchCartData(parsedCartData.cartId)
+          if (cart) {
+            setCart(cart)
+          }
+        } catch (error) {
+          console.error('Error loading cart data:', error)
+        }
       }
     }
+
+    loadCart()
   }, [setCart])
 
   return (

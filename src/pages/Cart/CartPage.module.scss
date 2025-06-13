@@ -58,7 +58,7 @@
     }
     button {
       height: 35px;
-      border-radius: 0;
+      border-radius: 0 5px 5px 0;
     }
   }
 }
@@ -92,7 +92,6 @@
   margin-top: 20px;
   background-color: $main-light-color;
   color: #fff;
-  border-radius: 0;
   transition: all 0.2s ease-in-out;
   &:hover {
     background-color: $main-light-color-hover;
@@ -106,7 +105,6 @@
   margin-top: 10px;
   background-color: #fff;
   color: $main-light-color-hover;
-  border-radius: 0;
   transition: all 0.2s ease-in-out;
   &:hover {
     background-color: $main-light-color;

@@ -18,68 +18,65 @@ export const CartItem = ({ item }: { item: LineItem }) => {
 
   const imageUrl = item.variant.images?.[0]?.url || 'default-image.jpg'
 
-  const deleteHandler = () => {
+  const deleteHandler = async () => {
     console.log('Delete item:', item.id)
 
     if (productInCart && cartData) {
-      removeFromCart(
-        {
-          productId: item.productId,
-          variantId: item.variant.id,
-          quantity: productInCart.quantity,
-        },
-        productInCart.id,
-        cartData
-      )
-        .then((updateResponse) => {
-          setCart(updateResponse)
-          setNotification('Item removed from cart')
-        })
-        .catch((error) => {
-          console.error('Error removing item from cart:', error)
-          setNotification("The product can't be removed from the cart")
-        })
+      try {
+        const updateResponse = await removeFromCart(
+          {
+            productId: item.productId,
+            variantId: item.variant.id,
+            quantity: productInCart.quantity,
+          },
+          productInCart.id,
+          cartData
+        )
+        setCart(updateResponse)
+        setNotification('Item removed from cart')
+      } catch (error) {
+        console.error('Error removing item from cart:', error)
+        setNotification("The product can't be removed from the cart")
+      }
     }
   }
 
-  const decrementHandler = () => {
+  const decrementHandler = async () => {
     if (productInCart && cartData) {
-      removeFromCart(
-        {
+      try {
+        const updateResponse = await removeFromCart(
+          {
+            productId: item.productId,
+            variantId: item.variant.id,
+            quantity: 1,
+          },
+          productInCart.id,
+          cartData
+        )
+        setCart(updateResponse)
+        setNotification('Item quantity decremented in cart')
+      } catch (error) {
+        console.error('Error decrementing item in cart:', error)
+        setNotification("The product can't be decremented in the cart")
+      }
+    }
+  }
+
+  const incrementHandler = async () => {
+    console.log('Increment item:', item.id)
+    if (productInCart && cartData) {
+      try {
+        const updateResponse = await addItemToCart({
           productId: item.productId,
           variantId: item.variant.id,
           quantity: 1,
-        },
-        productInCart.id,
-        cartData
-      )
-        .then((updateResponse) => {
-          setCart(updateResponse)
-          setNotification('Item quantity decremented in cart')
         })
-        .catch((error) => {
-          console.error('Error decrementing item in cart:', error)
-          setNotification("The product can't be decremented in the cart")
-        })
-    }
-  }
-
-  const incrementHandler = () => {
-    console.log('Increment item:', item.id)
-    if (productInCart && cartData) {
-      addItemToCart({
-        productId: item.productId,
-        variantId: item.variant.id,
-        quantity: 1,
-      })
-        .then((updateResponse) => {
-          setCart(updateResponse)
-          setNotification('Item quantity incremented in cart')
-        })
-        .catch((error) => {
-          console.error('Error incrementing item in cart:', error)
-          setNotification("The product can't be incremented in the cart")
-        })
+        setCart(updateResponse)
+        setNotification('Item quantity incremented in cart')
+      } catch (error) {
+        console.error('Error incrementing item in cart:', error)
+        setNotification("The product can't be incremented in the cart")
+      }
     }
   }
 
