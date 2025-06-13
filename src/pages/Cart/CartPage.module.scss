@@ -12,17 +12,12 @@
   flex-grow: 1;
 }
 
-.totalBlock {
-  padding: 20px;
-  background-color: aquamarine;
-  width: 332px;
-}
-
 .cartHeader {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 18px;
   @media screen and (max-width: 630px) {
     display: none;
   }
@@ -40,4 +35,79 @@
 .total {
   flex: 1;
   text-align: center;
+}
+
+.totalBlock {
+  margin-top: 62px;
+  width: 332px;
+  font-size: 15px;
+  .discountBlock {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    input {
+      height: 35px;
+      flex-grow: 1;
+      border: 1px solid $main-light-color;
+      padding-left: 8px;
+      border-radius: 0;
+      &:focus {
+        outline: none;
+        border-color: $main-light-color-hover;
+      }
+    }
+    button {
+      height: 35px;
+      border-radius: 0;
+    }
+  }
+}
+
+.totalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-bottom: 1px solid $main-border-color;
+  padding-bottom: 5px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  span {
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .totalPrice {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 89%;
+    color: $main-light-color;
+  }
+}
+
+.checkoutButton {
+  width: 100%;
+  margin-top: 20px;
+  background-color: $main-light-color;
+  color: #fff;
+  border-radius: 0;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $main-light-color-hover;
+  }
+}
+
+.continueShopping {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #fff;
+  color: $main-light-color-hover;
+  border-radius: 0;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: $main-light-color;
+    color: #fff;
+  }
 }
