@@ -1,6 +1,9 @@
 import styles from './CartPage.module.scss'
 import { useCartStore } from '@store/cartStore'
 
+// const MESSAGE_ERROR = 'Invalid discount code'
+// const MESSAGE_SUCCESS =  (code: string) => `Code "${code}" applied successfully`
+
 export const CartPage = () => {
   const { cart } = useCartStore()
 

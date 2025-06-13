@@ -37,6 +37,7 @@ export const createCart = async (item: CartProp) => {
       const versionCart = response.body.version
 
       localStorage.setItem('cart_data', JSON.stringify({ cartId, versionCart }))
+      console.log(response.body)
       return response.body
     }
   } catch (error) {
