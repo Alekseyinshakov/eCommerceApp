@@ -1,10 +1,16 @@
+import { useState } from 'react'
 import { CartItem } from './CartItem/CartItem'
 import styles from './CartPage.module.scss'
 import { useCartStore } from '@store/cartStore'
 import { Link } from 'react-router-dom'
+import { clearCart } from '@api/clearCart'
+import { useNotification } from '@components/Notification/NotifficationContext'
 
 export const CartPage = () => {
-  const { cart } = useCartStore()
+  const { cart, setCart } = useCartStore()
+  const { setNotification } = useNotification()
+
+  const [clearMode, setClearMode] = useState(false)
 
   return (
     <div className="container">
@@ -38,6 +44,52 @@ export const CartPage = () => {
             cart.lineItems.map((item) => (
               <CartItem key={item.id} item={item} />
             ))}
+
+          {cart && cart.lineItems.length > 0 && !clearMode && (
+            <button
+              onClick={() => {
+                setClearMode(true)
+              }}
+              className={'button' + ' ' + styles.clearBtn}
+            >
+              Clear Shopping Cart
+            </button>
+          )}
+          {clearMode && (
+            <div className={styles.clearConfirmation}>
+              <p>Are you sure you want to clear the cart?</p>
+              <button
+                className={'button' + ' ' + styles.confirmClear}
+                onClick={() => {
+                  const cartData = localStorage.getItem('cart_data')
+                  if (!cartData) {
+                    console.error('No cart data found in localStorage')
+                    return
+                  }
+                  const { cartId, versionCart } = JSON.parse(cartData)
+
+                  clearCart(cartId, versionCart)
+                    .then((clearedCart) => {
+                      setCart(clearedCart)
+                      setNotification('Cart cleared successfully')
+                    })
+                    .catch((error) =>
+                      console.error('Error clearing cart:', error)
+                    )
+
+                  setClearMode(false)
+                }}
+              >
+                Yes
+              </button>
+              <button
+                className={'button' + ' ' + styles.cancelClear}
+                onClick={() => setClearMode(false)}
+              >
+                No
+              </button>
+            </div>
+          )}
         </div>
 
         <div className={styles.totalBlock}>
