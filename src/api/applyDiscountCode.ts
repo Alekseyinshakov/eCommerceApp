@@ -1,10 +1,16 @@
 import { getCtpClient } from './getCtpClient'
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk'
 
+type DiscountCodeRemove = {
+  typeId: 'discount-code'
+  id: string
+}
+
 export const applyDiscountCode = async (
   cartId: string,
   versionCart: number,
-  code: string
+  code: string | DiscountCodeRemove,
+  action: 'addDiscountCode' | 'removeDiscountCode'
 ) => {
   try {
     const client = getCtpClient()
@@ -12,17 +18,22 @@ export const applyDiscountCode = async (
       projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
     })
     const cartResponse = await apiRoot
-      .me()
+
       .carts()
       .withId({ ID: cartId })
       .post({
         body: {
           version: versionCart,
           actions: [
-            {
-              action: 'addDiscountCode',
-              code,
-            },
+            action === 'addDiscountCode'
+              ? { action: 'addDiscountCode', code: code as string }
+              : {
+                  action: 'removeDiscountCode',
+                  discountCode: {
+                    typeId: 'discount-code',
+                    id: typeof code === 'string' ? code : code.id,
+                  },
+                },
           ],
         },
       })

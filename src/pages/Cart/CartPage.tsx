@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CartItem } from './CartItem/CartItem'
 import styles from './CartPage.module.scss'
 import { useCartStore } from '@store/cartStore'
@@ -6,15 +6,99 @@ import { Link } from 'react-router-dom'
 import { clearCart } from '@api/clearCart'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import Loader from '@components/Loader/Loader'
+import { useDiscountCodeStore } from '@store/discountCodeStore'
+import { applyDiscountCode } from '@api/applyDiscountCode'
 
-// const MESSAGE_ERROR = 'Invalid discount code'
-// const MESSAGE_SUCCESS =  (code: string) => `Code "${code}" applied successfully`
+const MESSAGE_ERROR = 'Invalid discount code'
+const MESSAGE_SUCCESS = (code: string) => `Code "${code}" applied successfully`
 
 export const CartPage = () => {
   const { cart, setCart, loading } = useCartStore()
   const { setNotification } = useNotification()
 
   const [clearMode, setClearMode] = useState(false)
+  const [discountInput, setDiscountInput] = useState('')
+  const [message, setMessage] = useState('')
+
+  const { activeCode } = useDiscountCodeStore()
+
+  useEffect(() => {
+    const discountData = localStorage.getItem('discountData')
+    if (discountData) {
+      const { code, valid } = JSON.parse(discountData)
+      setDiscountInput(code)
+      if (valid) {
+        setMessage(MESSAGE_SUCCESS(code))
+      } else {
+        setMessage(MESSAGE_ERROR)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (discountInput.length === 0) {
+      localStorage.removeItem('discountData')
+      setMessage('')
+    }
+  }, [discountInput])
+
+  const handlerApplyDiscount = async () => {
+    if (!cart) {
+      setMessage('Add products in cart')
+      return
+    }
+
+    if (cart && discountInput && discountInput === activeCode) {
+      try {
+        const response = await applyDiscountCode(
+          cart.id,
+          cart.version,
+          activeCode,
+          'addDiscountCode'
+        )
+        setCart(response)
+        setMessage(MESSAGE_SUCCESS(activeCode))
+        localStorage.setItem(
+          'discountData',
+          JSON.stringify({ code: activeCode, valid: true })
+        )
+      } catch (error) {
+        console.error('Error applying discount code:', error)
+        setMessage('Error applying discount code')
+      }
+
+      return
+    }
+
+    if (cart && discountInput && discountInput !== activeCode) {
+      setMessage(MESSAGE_ERROR)
+      localStorage.setItem(
+        'discountData',
+        JSON.stringify({ code: discountInput, valid: false })
+      )
+
+      const discountCodeId = cart.discountCodes[0]?.discountCode?.id
+      if (discountCodeId) {
+        try {
+          const response = await applyDiscountCode(
+            cart.id,
+            cart.version,
+            { typeId: 'discount-code', id: discountCodeId },
+            'removeDiscountCode'
+          )
+          setCart(response)
+        } catch (error) {
+          console.error('Error removing discount code:', error)
+        }
+      }
+      return
+    }
+
+    if (cart && !discountInput) {
+      setMessage('Please enter a discount code')
+      return
+    }
+  }
 
   if (loading) {
     return <Loader />
@@ -109,8 +193,16 @@ export const CartPage = () => {
               type="text"
               name=""
               id=""
+              value={discountInput}
+              onChange={(e) => {
+                setDiscountInput(e.target.value)
+                setMessage('')
+              }}
             />
-            <button className="button">Apply</button>
+            <button className="button" onClick={handlerApplyDiscount}>
+              Apply
+            </button>
+            <p className={styles.message}>{message}</p>
           </div>
           <div className={styles.totalRow}>
             <span>Total:</span>

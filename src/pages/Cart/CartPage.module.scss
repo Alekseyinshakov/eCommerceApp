@@ -45,6 +45,7 @@
     margin-top: 10px;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     input {
       height: 35px;
       flex-grow: 1;
@@ -118,4 +119,11 @@
 
 .cancelClear {
   margin-left: 10px;
+}
+
+.message {
+  width: 100%;
+  font-size: 12px;
+  color: $main-light-color;
+  font-weight: 500;
 }
