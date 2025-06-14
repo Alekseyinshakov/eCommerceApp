@@ -8,6 +8,7 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 import Loader from '@components/Loader/Loader'
 import { useDiscountCodeStore } from '@store/discountCodeStore'
 import { applyDiscountCode } from '@api/applyDiscountCode'
+import classNames from 'classnames'
 
 const MESSAGE_ERROR = 'Invalid discount code'
 const MESSAGE_SUCCESS = (code: string) => `Code "${code}" applied successfully`
@@ -19,6 +20,7 @@ export const CartPage = () => {
   const [clearMode, setClearMode] = useState(false)
   const [discountInput, setDiscountInput] = useState('')
   const [message, setMessage] = useState('')
+  const [hasError, setHasError] = useState(false)
 
   const { activeCode } = useDiscountCodeStore()
 
@@ -31,6 +33,7 @@ export const CartPage = () => {
         setMessage(MESSAGE_SUCCESS(code))
       } else {
         setMessage(MESSAGE_ERROR)
+        setHasError(true)
       }
     }
   }, [])
@@ -45,10 +48,15 @@ export const CartPage = () => {
   const handlerApplyDiscount = async () => {
     if (!cart) {
       setMessage('Add products in cart')
+      setHasError(true)
       return
     }
 
     if (cart && discountInput && discountInput === activeCode) {
+      localStorage.setItem(
+        'old-total-price',
+        JSON.stringify(cart?.totalPrice?.centAmount)
+      )
       try {
         const response = await applyDiscountCode(
           cart.id,
@@ -57,21 +65,22 @@ export const CartPage = () => {
           'addDiscountCode'
         )
         setCart(response)
+        console.log(response)
         setMessage(MESSAGE_SUCCESS(activeCode))
+        setHasError(false)
         localStorage.setItem(
           'discountData',
           JSON.stringify({ code: activeCode, valid: true })
         )
       } catch (error) {
         console.error('Error applying discount code:', error)
-        setMessage('Error applying discount code')
       }
-
       return
     }
 
     if (cart && discountInput && discountInput !== activeCode) {
       setMessage(MESSAGE_ERROR)
+      setHasError(true)
       localStorage.setItem(
         'discountData',
         JSON.stringify({ code: discountInput, valid: false })
@@ -96,6 +105,7 @@ export const CartPage = () => {
 
     if (cart && !discountInput) {
       setMessage('Please enter a discount code')
+      setHasError(true)
       return
     }
   }
@@ -195,16 +205,37 @@ export const CartPage = () => {
               id=""
               value={discountInput}
               onChange={(e) => {
-                setDiscountInput(e.target.value)
+                setDiscountInput(e.target.value.trim())
                 setMessage('')
               }}
             />
             <button className="button" onClick={handlerApplyDiscount}>
               Apply
             </button>
-            <p className={styles.message}>{message}</p>
+            <p
+              className={classNames(styles.message, {
+                [styles.errorMessage]: hasError,
+              })}
+            >
+              {message}
+            </p>
           </div>
+
           <div className={styles.totalRow}>
+            {cart && cart.discountCodes.length > 0 && (
+              <div className={styles.discountSummary}>
+                <div className={styles.oldPrice}>
+                  ${Number(localStorage.getItem('old-total-price') ?? 0) / 100}
+                </div>
+                <div className={styles.discountedAmount}>
+                  -$
+                  {(
+                    (cart?.discountOnTotalPrice?.discountedAmount?.centAmount ??
+                      0) / 100
+                  ).toFixed(2)}
+                </div>
+              </div>
+            )}
             <span>Total:</span>
             <div className={styles.totalPrice}>
               $

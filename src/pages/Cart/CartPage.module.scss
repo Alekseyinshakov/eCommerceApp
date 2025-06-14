@@ -74,6 +74,7 @@
 
 .totalRow {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
   span {
@@ -126,4 +127,29 @@
   font-size: 12px;
   color: $main-light-color;
   font-weight: 500;
+}
+.errorMessage {
+  color: $error-color;
+}
+
+.discountSummary {
+  width: 100%;
+  text-align: right;
+  & div {
+    margin-bottom: 10px;
+  }
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: $text-description;
+  margin-right: 10px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.discountedAmount {
+  color: $main-light-color;
+  font-weight: 700;
+  font-size: 14px;
 }
