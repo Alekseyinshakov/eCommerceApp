@@ -35,8 +35,8 @@
   padding: 2rem;
   text-align: center;
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transform 0.3s,
+    box-shadow 0.3s;
 
   cursor: pointer;
   overflow: hidden;
@@ -53,6 +53,7 @@
     transform: scale(1.03);
     overflow-y: auto;
     border-radius: 16px;
+    box-shadow: 0 6px 24px $main-border-color;
 
     &::-webkit-scrollbar {
       width: 5px;
@@ -154,6 +155,31 @@
   font-size: 1rem;
   max-width: 400px;
   color: #555;
+}
+
+.school {
+  margin: 10px 0;
+}
+
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+  background: url('images/logo-rsschool3.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  transition: scale 0.3s;
+
+  &:hover {
+    scale: 1.1;
+  }
 }
 
 @media screen and (max-width: 1250px) {
