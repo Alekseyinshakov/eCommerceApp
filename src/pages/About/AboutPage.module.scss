@@ -1,3 +1,104 @@
+.about {
+  padding: 2rem 1rem;
+  display: flex;
+  gap: 2rem;
+}
+
+@media screen and (max-width: 1250px) {
+  .about {
+    flex-direction: column;
+  }
+}
+
+.margin {
+  margin-top: 40px;
+}
+
 .title {
-  margin-top: 20px;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.block {
+  border: 1px solid $main-light-color;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.role {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.bio {
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.link {
+  display: inline-block;
+  color: $main-light-color;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.contribution {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.arrow {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 0.3rem 0.7rem;
+  transition: color 0.2s;
+}
+
+.arrow:hover {
+  color: #000;
+}
+
+.review {
+  font-style: italic;
+  font-size: 1rem;
+  max-width: 400px;
+  color: #555;
 }
