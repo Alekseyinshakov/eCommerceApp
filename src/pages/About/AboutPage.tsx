@@ -1,6 +1,22 @@
 import { useState } from 'react'
 import styles from './AboutPage.module.scss'
 
+type TeamMember = {
+  name: string
+  role: string
+  bio: string
+  github: string
+  photo: string
+  contributions: string
+  reviews: string[]
+}
+
+type TeamMemberBlockProps = {
+  member: TeamMember
+  isActive: boolean
+  onClick: () => void
+}
+
 const teamMembers = [
   {
     name: 'Aleksei Inshakov',
@@ -19,7 +35,7 @@ const teamMembers = [
   {
     name: 'Inna Fedorova',
     role: 'Developer',
-    bio: 'Worked on building the API and contributed to the visual design of the project.',
+    bio: 'Handled layout implementation, design integration, and interface testing.',
     github: 'https://github.com/IFMA25',
     photo: '/photos/inna.jpg',
     contributions:
@@ -47,12 +63,19 @@ const teamMembers = [
 ]
 
 export const AboutPage = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
   return (
     <div className={`container ${styles.margin}`}>
       <h2 className={styles.title}>About Us</h2>
       <div className={styles.about}>
         {teamMembers.map((member, index) => (
-          <TeamMemberBlock key={index} member={member} />
+          <TeamMemberBlock
+            key={index}
+            member={member}
+            isActive={index === activeIndex}
+            onClick={() => setActiveIndex(index === activeIndex ? null : index)}
+          />
         ))}
       </div>
     </div>
@@ -61,9 +84,9 @@ export const AboutPage = () => {
 
 const TeamMemberBlock = ({
   member,
-}: {
-  member: (typeof teamMembers)[number]
-}) => {
+  isActive,
+  onClick,
+}: TeamMemberBlockProps) => {
   const [reviewIndex, setReviewIndex] = useState(0)
 
   const handlePrev = () => {
@@ -79,7 +102,15 @@ const TeamMemberBlock = ({
   }
 
   return (
-    <div className={styles.block}>
+    <div
+      className={`${styles.block} ${isActive ? styles.active + ' ' + styles.hovered : ''}`}
+      onClick={(e) => {
+        if (isActive) {
+          e.currentTarget.scrollTop = 0
+        }
+        onClick()
+      }}
+    >
       <div className={styles.card}>
         <img src={member.photo} alt={member.name} className={styles.photo} />
         <h3 className={styles.name}>{member.name}</h3>
@@ -96,19 +127,47 @@ const TeamMemberBlock = ({
         <p className={styles.contribution}>
           <strong>Contributions:</strong> {member.contributions}
         </p>
+
+        <p className={styles.tip}>↓ Click and Scroll ↓</p>
       </div>
 
-      <div className={styles.carousel}>
-        <button onClick={handlePrev} className={styles.arrow}>
-          &lt;
-        </button>
-        <div className={styles.review}>
-          <p>&quot;{member.reviews[reviewIndex]}&quot;</p>
+      {isActive && (
+        <div
+          className={`${styles.extraContent} ${isActive ? styles.visible : ''}`}
+        >
+          <div className={styles.carousel}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handlePrev()
+              }}
+              className={styles.arrow}
+            >
+              &lt;
+            </button>
+            <div className={styles.review}>
+              <p>&quot;{member.reviews[reviewIndex]}&quot;</p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleNext()
+              }}
+              className={styles.arrow}
+            >
+              &gt;
+            </button>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci
+            vero modi asperiores debitis similique expedita harum omnis est
+            accusantium iure molestiae facere sequi consectetur ipsa impedit
+            aut, vel eligendi officiis porro eaque maiores sed obcaecati? Nulla
+            aut qui quas at eaque, ipsum quod quisquam esse quo alias facere,
+            dolores cumque?
+          </p>
         </div>
-        <button onClick={handleNext} className={styles.arrow}>
-          &gt;
-        </button>
-      </div>
+      )}
     </div>
   )
 }
