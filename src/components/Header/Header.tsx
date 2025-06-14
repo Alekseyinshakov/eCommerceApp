@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
 import { useAuthStore } from '@store/authStore'
 import { useEffect, useRef, useState } from 'react'
+import { useCartStore } from '@store/cartStore'
 
 const {
   headerContainer,
@@ -10,12 +11,12 @@ const {
   navItem,
   activeLink,
   rightSide,
-  search,
-  cart,
+  cartStyle,
   burgerMenu,
   open,
   centerMob,
   hederElem,
+  cartCountStyle,
 } = styles
 
 const routes = [
@@ -28,6 +29,12 @@ const routes = [
 const Header = () => {
   const navigate = useNavigate()
   const setUser = useAuthStore((state) => state.setUser)
+  const { cart } = useCartStore()
+
+  const cartCount = cart?.lineItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
 
   const email = useAuthStore((state) => state.user?.email)
 
@@ -93,9 +100,11 @@ const Header = () => {
         <div className={centerMob}>
           <div className={hederElem}>
             <div className={rightSide}>
-              <button className={search}></button>
-              <Link to="/cart" className={cart}>
+              <Link to="/cart" className={cartStyle}>
                 <img src="images/icons/cart-icon.svg" alt="cart" />
+                {cartCount ? (
+                  <span className={cartCountStyle}>{cartCount}</span>
+                ) : null}
               </Link>
               {email ? (
                 <>
