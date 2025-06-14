@@ -2,12 +2,7 @@
   padding: 2rem 1rem;
   display: flex;
   gap: 2rem;
-}
-
-@media screen and (max-width: 1250px) {
-  .about {
-    flex-direction: column;
-  }
+  justify-content: center;
 }
 
 .margin {
@@ -22,6 +17,11 @@
 }
 
 .block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 420px;
+
   border: 1px solid $main-light-color;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -101,4 +101,14 @@
   font-size: 1rem;
   max-width: 400px;
   color: #555;
+}
+
+@media screen and (max-width: 1250px) {
+  .about {
+    flex-direction: column;
+  }
+
+  .block {
+    width: 100%;
+  }
 }
