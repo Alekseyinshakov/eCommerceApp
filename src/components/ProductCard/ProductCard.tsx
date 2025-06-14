@@ -4,6 +4,7 @@ import ProductPrice from '@components/ProductPrice/ProductPrice'
 import DiscountElement from '@components/DiscountElement/DiscountElement'
 import { useState } from 'react'
 import { fetchCategorySlug } from '@store/fetchCategorySlug'
+import CartActions from '@components/AddToCart/CartActions'
 const { mainBlock, img, text, nameItem } = styles
 
 type ProductCardProps = {
@@ -15,6 +16,8 @@ type ProductCardProps = {
   image: string
   description: string
   categoryId: string
+  id: string
+  variantId: number
 }
 
 export const ProductCard = ({
@@ -26,11 +29,15 @@ export const ProductCard = ({
   image,
   description,
   categoryId,
+  id,
+  variantId,
 }: ProductCardProps) => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
-  const onClick = async () => {
+  const onClick = async (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement
+    if (target.closest('button')) return
     if (loading) return
     setLoading(true)
     const categorySlug = await fetchCategorySlug(categoryId)
@@ -58,6 +65,7 @@ export const ProductCard = ({
         <p className={nameItem}>{name}</p>
         <ProductPrice price={price} discountedPrice={discountPrice} />
       </div>
+      <CartActions productId={id} variantId={variantId} />
     </div>
   )
 }

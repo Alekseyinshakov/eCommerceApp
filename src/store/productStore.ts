@@ -12,6 +12,7 @@ type CommercetoolsQueryArgs = {
 }
 
 type Product = {
+  variantId: number
   id: string
   slug: string
   name: string
