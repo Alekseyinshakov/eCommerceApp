@@ -20,7 +20,7 @@ export const teamMembers = [
     role: 'Developer',
     bio: 'Handled interface components and integrated API functionality for seamless data flow.',
     github: 'https://github.com/IFMA25',
-    photo: '/photos/inna.jpg',
+    photo: '/photos/inna.jpeg',
     contributions:
       'Set up the database API, and helped shape the aesthetic style of the project.',
     teamCollaboration:

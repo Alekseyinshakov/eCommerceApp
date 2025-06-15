@@ -16,7 +16,7 @@ export const AboutPage = () => {
       <div className={styles.logoBlock}>
         <p className={styles.school}>Work from course:</p>
         <a
-          href="https://app.rs.school/"
+          href="https://rs.school/"
           target="_blank"
           rel="noreferrer"
           className={styles.logo}
