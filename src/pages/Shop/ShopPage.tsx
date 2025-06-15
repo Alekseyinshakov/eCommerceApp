@@ -27,8 +27,6 @@ export const ShopPage = () => {
     priceRange,
   } = useProductStore()
 
-  console.log(products)
-
   const { categories, fetched, fetchCategories } = useCategoriesStore()
 
   const totalPages = Math.ceil(totalProductsCount / limit)
