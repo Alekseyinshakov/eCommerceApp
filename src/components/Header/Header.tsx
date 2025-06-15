@@ -29,7 +29,7 @@ const routes = [
 const Header = () => {
   const navigate = useNavigate()
   const setUser = useAuthStore((state) => state.setUser)
-  const { cart } = useCartStore()
+  const { cart, setCart } = useCartStore()
 
   const cartCount = cart?.lineItems.reduce(
     (total, item) => total + item.quantity,
@@ -40,6 +40,8 @@ const Header = () => {
 
   const handleLogout = () => {
     setUser(null)
+    setCart(null)
+    localStorage.removeItem('cart_data')
     navigate('/log-in')
   }
 

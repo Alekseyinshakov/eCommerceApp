@@ -8,7 +8,7 @@ export const removeFromCart = async (
   cartData: string
 ) => {
   try {
-    const client = getCtpClient()
+    const client = await getCtpClient()
     const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
       projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
     })

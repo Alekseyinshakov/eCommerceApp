@@ -9,8 +9,6 @@ export const CartItem = ({ item }: { item: LineItem }) => {
   const { cart, setCart } = useCartStore()
   const { setNotification } = useNotification()
 
-  console.log(item)
-
   const productInCart = cart?.lineItems.find(
     (p) => p.productId === item.productId
   )
@@ -19,8 +17,6 @@ export const CartItem = ({ item }: { item: LineItem }) => {
   const imageUrl = item.variant.images?.[0]?.url || 'default-image.jpg'
 
   const deleteHandler = async () => {
-    console.log('Delete item:', item.id)
-
     if (productInCart && cartData) {
       try {
         const updateResponse = await removeFromCart(
@@ -63,7 +59,6 @@ export const CartItem = ({ item }: { item: LineItem }) => {
   }
 
   const incrementHandler = async () => {
-    console.log('Increment item:', item.id)
     if (productInCart && cartData) {
       try {
         const updateResponse = await addItemToCart({

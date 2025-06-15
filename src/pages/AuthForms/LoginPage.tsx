@@ -11,6 +11,9 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 
 import styles from './AuthForm.module.scss'
 import { useAuthStore } from '@store/authStore'
+import { useCartStore } from '@store/cartStore'
+import { fetchCartData } from '@api/fetchCartData'
+import { mergeCarts } from '@api/mergeCarts'
 
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
@@ -20,6 +23,7 @@ export const LoginPage = () => {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const { setNotification } = useNotification()
+  const { cart, setCart } = useCartStore()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -51,6 +55,30 @@ export const LoginPage = () => {
           setUser(customer)
         }
 
+        const anonymousCart = cart
+        const cartData = JSON.parse(localStorage.getItem('cart_data') || '{}')
+        const userCart = await fetchCartData(cartData.cartId || null)
+        if (anonymousCart && userCart) {
+          const mergedCart = await mergeCarts(anonymousCart, userCart)
+          setCart(mergedCart)
+          localStorage.setItem(
+            'cart_data',
+            JSON.stringify({
+              cartId: mergedCart.id,
+              versionCart: mergedCart.version,
+            })
+          )
+        }
+        if (userCart && !anonymousCart) {
+          setCart(userCart)
+          localStorage.setItem(
+            'cart_data',
+            JSON.stringify({
+              cartId: userCart.id,
+              versionCart: userCart.version,
+            })
+          )
+        }
         navigate('/home')
       } catch (err) {
         console.error(err)

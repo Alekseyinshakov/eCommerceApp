@@ -4,7 +4,7 @@ import { CartUpdateAction } from '@commercetools/platform-sdk'
 
 export const clearCart = async (cartId: string, cartVersion: number) => {
   try {
-    const client = getCtpClient()
+    const client = await getCtpClient()
     const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
       projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
     })
