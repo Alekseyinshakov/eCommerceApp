@@ -53,10 +53,6 @@ export const CartPage = () => {
     }
 
     if (cart && discountInput && discountInput === activeCode) {
-      localStorage.setItem(
-        'old-total-price',
-        JSON.stringify(cart?.totalPrice?.centAmount)
-      )
       try {
         const response = await applyDiscountCode(
           cart.id,
@@ -65,7 +61,6 @@ export const CartPage = () => {
           'addDiscountCode'
         )
         setCart(response)
-        console.log(response)
         setMessage(MESSAGE_SUCCESS(activeCode))
         setHasError(false)
         localStorage.setItem(
@@ -225,7 +220,13 @@ export const CartPage = () => {
             {cart && cart.discountCodes.length > 0 && (
               <div className={styles.discountSummary}>
                 <div className={styles.oldPrice}>
-                  ${Number(localStorage.getItem('old-total-price') ?? 0) / 100}
+                  $
+                  {(
+                    ((cart?.discountOnTotalPrice?.discountedAmount
+                      ?.centAmount ?? 0) +
+                      (cart?.totalPrice?.centAmount ?? 0)) /
+                    100
+                  ).toFixed(2)}
                 </div>
                 <div className={styles.discountedAmount}>
                   -$

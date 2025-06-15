@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './HomePage.module.scss'
 import { useAuthStore } from '@store/authStore'
+import DiscountCode from '@components/DiscountCodeElement/DiscountCodeElement'
 
 const {
   homeContainer,
@@ -17,6 +18,7 @@ export const HomePage = () => {
   const firstName = useAuthStore((state) => state.user?.firstName)
   return (
     <section className={home}>
+      <DiscountCode />
       <div className={`container ${homeContainer}`}>
         <div className={content}>
           {firstName && (

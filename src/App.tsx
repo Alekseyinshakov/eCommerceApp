@@ -6,7 +6,6 @@ import { fetchCartData } from '@api/fetchCartData'
 import { NotificationProvider } from '@components/Notification/UseNotification'
 import { useEffect } from 'react'
 import { useCartStore } from '@store/cartStore'
-import DiscountCode from '@components/DiscountCodeElement/DiscountCodeElement'
 
 const App = () => {
   const { setCart, setLoading } = useCartStore()
@@ -34,7 +33,6 @@ const App = () => {
     <NotificationProvider>
       <div className="layout">
         <Header />
-        <DiscountCode />
         <main>
           <Outlet />
         </main>
