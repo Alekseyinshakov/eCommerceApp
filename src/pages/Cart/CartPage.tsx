@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CartItem } from './CartItem/CartItem'
 import styles from './CartPage.module.scss'
 import { useCartStore } from '@store/cartStore'
@@ -6,12 +6,104 @@ import { Link } from 'react-router-dom'
 import { clearCart } from '@api/clearCart'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import Loader from '@components/Loader/Loader'
+import { useDiscountCodeStore } from '@store/discountCodeStore'
+import { applyDiscountCode } from '@api/applyDiscountCode'
+import classNames from 'classnames'
+
+const MESSAGE_ERROR = 'Invalid discount code'
+const MESSAGE_SUCCESS = (code: string) => `Code "${code}" applied successfully`
 
 export const CartPage = () => {
   const { cart, setCart, loading } = useCartStore()
   const { setNotification } = useNotification()
 
   const [clearMode, setClearMode] = useState(false)
+  const [discountInput, setDiscountInput] = useState('')
+  const [message, setMessage] = useState('')
+  const [hasError, setHasError] = useState(false)
+
+  const { activeCode } = useDiscountCodeStore()
+
+  useEffect(() => {
+    const discountData = localStorage.getItem('discountData')
+    if (discountData) {
+      const { code, valid } = JSON.parse(discountData)
+      setDiscountInput(code)
+      if (valid) {
+        setMessage(MESSAGE_SUCCESS(code))
+      } else {
+        setMessage(MESSAGE_ERROR)
+        setHasError(true)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (discountInput.length === 0) {
+      localStorage.removeItem('discountData')
+      setMessage('')
+    }
+  }, [discountInput])
+
+  const handlerApplyDiscount = async () => {
+    if (!cart) {
+      setMessage('Add products in cart')
+      setHasError(true)
+      return
+    }
+
+    if (cart && discountInput && discountInput === activeCode) {
+      try {
+        const response = await applyDiscountCode(
+          cart.id,
+          cart.version,
+          activeCode,
+          'addDiscountCode'
+        )
+        setCart(response)
+        setMessage(MESSAGE_SUCCESS(activeCode))
+        setHasError(false)
+        localStorage.setItem(
+          'discountData',
+          JSON.stringify({ code: activeCode, valid: true })
+        )
+      } catch (error) {
+        console.error('Error applying discount code:', error)
+      }
+      return
+    }
+
+    if (cart && discountInput && discountInput !== activeCode) {
+      setMessage(MESSAGE_ERROR)
+      setHasError(true)
+      localStorage.setItem(
+        'discountData',
+        JSON.stringify({ code: discountInput, valid: false })
+      )
+
+      const discountCodeId = cart.discountCodes[0]?.discountCode?.id
+      if (discountCodeId) {
+        try {
+          const response = await applyDiscountCode(
+            cart.id,
+            cart.version,
+            { typeId: 'discount-code', id: discountCodeId },
+            'removeDiscountCode'
+          )
+          setCart(response)
+        } catch (error) {
+          console.error('Error removing discount code:', error)
+        }
+      }
+      return
+    }
+
+    if (cart && !discountInput) {
+      setMessage('Please enter a discount code')
+      setHasError(true)
+      return
+    }
+  }
 
   if (loading) {
     return <Loader />
@@ -106,10 +198,45 @@ export const CartPage = () => {
               type="text"
               name=""
               id=""
+              value={discountInput}
+              onChange={(e) => {
+                setDiscountInput(e.target.value.trim())
+                setMessage('')
+              }}
             />
-            <button className="button">Apply</button>
+            <button className="button" onClick={handlerApplyDiscount}>
+              Apply
+            </button>
+            <p
+              className={classNames(styles.message, {
+                [styles.errorMessage]: hasError,
+              })}
+            >
+              {message}
+            </p>
           </div>
+
           <div className={styles.totalRow}>
+            {cart && cart.discountCodes.length > 0 && (
+              <div className={styles.discountSummary}>
+                <div className={styles.oldPrice}>
+                  $
+                  {(
+                    ((cart?.discountOnTotalPrice?.discountedAmount
+                      ?.centAmount ?? 0) +
+                      (cart?.totalPrice?.centAmount ?? 0)) /
+                    100
+                  ).toFixed(2)}
+                </div>
+                <div className={styles.discountedAmount}>
+                  -$
+                  {(
+                    (cart?.discountOnTotalPrice?.discountedAmount?.centAmount ??
+                      0) / 100
+                  ).toFixed(2)}
+                </div>
+              </div>
+            )}
             <span>Total:</span>
             <div className={styles.totalPrice}>
               $

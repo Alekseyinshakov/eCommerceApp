@@ -14,13 +14,6 @@ const QUANTITY_DEFAULT = 1
 const CartActions = ({ productId, variantId }: CartProps) => {
   const { cart, setCart } = useCartStore()
   const { setNotification } = useNotification()
-  // const [quantity, setQuantity] = useState(1)
-  // const increaseQuantity = () => {
-  //   setQuantity((prev) => prev + 1)
-  // }
-  // const decreaseQuantity = () => {
-  //   setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
-  // }
 
   const productInCart = cart?.lineItems.find((p) => p.productId === productId)
 
@@ -66,12 +59,6 @@ const CartActions = ({ productId, variantId }: CartProps) => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <div className={styles.quantity}>
-        <button onClick={decreaseQuantity}>-</button>
-        <input type="number" value={quantity} readOnly />
-        <button onClick={increaseQuantity}>+</button>
-      </div> */}
-
       {productInCart ? (
         <button
           className="button btn-cartAction"
