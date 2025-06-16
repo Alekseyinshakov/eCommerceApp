@@ -65,7 +65,7 @@ button {
 }
 .button {
   border-radius: 6px;
-  height: 35px;
+  min-height: 35px;
   background-color: $main-light-color;
   font-weight: 500;
   font-size: 16px;
@@ -86,6 +86,10 @@ button {
     padding: 8px 10px;
     font-size: 0;
   }
+}
+
+.btn-cartAction {
+  min-width: 170px;
 }
 
 .slider {

@@ -100,6 +100,8 @@ export const ShopPage = () => {
                 image={product.image}
                 description={product.description}
                 categoryId={product.categoryId}
+                id={product.id}
+                variantId={product.variantId}
               />
             ))}
 

@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 25px;
+}
+.quantity {
+  max-width: 100px;
+  display: flex;
+  align-items: stretch;
+  background-color: $main-light-color-transparent;
+  input {
+    width: 40%;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+    &:focus {
+      outline: none;
+    }
+  }
+  button {
+    background-color: transparent;
+    width: 30%;
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: $main-light-color-hover;
+    }
+  }
+}

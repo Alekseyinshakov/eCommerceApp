@@ -39,8 +39,7 @@ export const SortingTab = () => {
         onChange={handleChange}
         className={styles.select}
       >
-        <option value="default">All products</option>
-        <option value="newest">New</option>
+        <option value="createdAt">New</option>
         <option value="sale">Discounted</option>
         <option value="name-asc">Name: A → Z</option>
         <option value="name-desc">Name: Z → A</option>

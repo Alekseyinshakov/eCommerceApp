@@ -12,6 +12,7 @@ type CommercetoolsQueryArgs = {
 }
 
 type Product = {
+  variantId: number
   id: string
   slug: string
   name: string
@@ -24,13 +25,13 @@ type Product = {
 }
 
 type SortOption =
-  | 'default'
   | 'newest'
   | 'name-asc'
   | 'name-desc'
   | 'price-asc'
   | 'price-desc'
   | 'sale'
+  | 'createdAt'
 
 type ProductStore = {
   products: Product[]
@@ -55,7 +56,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   loading: false,
   currentPage: 1,
   totalProductsCount: 0,
-  sortOption: 'default',
+  sortOption: 'createdAt',
   activeCategoryId: null,
   priceRange: [0, 100],
   searchValue: '',
@@ -83,7 +84,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   resetFilters: () => {
     set({
       activeCategoryId: null,
-      sortOption: 'default',
+      sortOption: 'createdAt',
       priceRange: [0, 100],
       currentPage: 1,
       searchValue: '',
@@ -105,10 +106,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
     if (activeCategoryId) {
       filters.push(`categories.id:"${activeCategoryId}"`)
-    }
-
-    if (sortOption === 'newest') {
-      filters.push('variants.attributes.new:true')
     }
 
     if (sortOption === 'sale') {
@@ -140,6 +137,9 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       case 'price-desc':
         queryArgs.sort = ['price desc']
         break
+      case 'createdAt':
+        queryArgs.sort = ['createdAt desc']
+        break
     }
 
     try {
@@ -152,6 +152,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       const total = res.body.total
       const items = res.body.results.map((p) => ({
         id: p.id,
+        variantId: p.masterVariant.id,
         slug: p.slug?.['en-US'] ?? p.key,
         name: p.name['en-US'] ?? 'No name',
         price:
