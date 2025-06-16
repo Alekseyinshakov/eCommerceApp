@@ -14,6 +14,7 @@ const productMock = {
   size: 'L',
   sku: 'SKU123',
   categories: 'Category1, Category2',
+  variantId: 1,
 }
 
 vi.mock('@components/DiscountElement/DiscountElement', () => ({
