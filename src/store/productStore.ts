@@ -25,7 +25,6 @@ type Product = {
 }
 
 type SortOption =
-  | 'default'
   | 'newest'
   | 'name-asc'
   | 'name-desc'
@@ -107,10 +106,6 @@ export const useProductStore = create<ProductStore>((set, get) => ({
 
     if (activeCategoryId) {
       filters.push(`categories.id:"${activeCategoryId}"`)
-    }
-
-    if (sortOption === 'newest') {
-      filters.push('variants.attributes.new:true')
     }
 
     if (sortOption === 'sale') {
