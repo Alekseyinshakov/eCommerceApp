@@ -17,7 +17,7 @@ const getOrCreateAnonymousId = (): string => {
   return id
 }
 
-export const buildAnonymousClient = () => {
+export const buildAnonymousClient = async () => {
   const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY
   const scopes = import.meta.env.VITE_CTP_SCOPES.split(' ')
 
@@ -58,7 +58,7 @@ export const buildAnonymousClient = () => {
     // .withLoggerMiddleware()
     .build()
 
-  client.execute({ uri: '', method: 'GET' }).then(() => {
+  await client.execute({ uri: '', method: 'GET' }).then(() => {
     const token = localStorage.getItem('commercetools_anonymous_token')
     if (token) {
       localStorage.setItem('anonymous_token', token)

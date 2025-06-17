@@ -9,6 +9,7 @@ import Loader from '@components/Loader/Loader'
 import { useDiscountCodeStore } from '@store/discountCodeStore'
 import { applyDiscountCode } from '@api/applyDiscountCode'
 import classNames from 'classnames'
+import { apiRoot } from '@api/apiClient'
 
 const MESSAGE_ERROR = 'Invalid discount code'
 const MESSAGE_SUCCESS = (code: string) => `Code "${code}" applied successfully`
@@ -22,28 +23,39 @@ export const CartPage = () => {
   const [message, setMessage] = useState('')
   const [hasError, setHasError] = useState(false)
 
-  const { activeCode } = useDiscountCodeStore()
+  const { activeCode, setActiveCode } = useDiscountCodeStore()
 
   useEffect(() => {
-    const discountData = localStorage.getItem('discountData')
-    if (discountData) {
-      const { code, valid } = JSON.parse(discountData)
-      setDiscountInput(code)
-      if (valid) {
-        setMessage(MESSAGE_SUCCESS(code))
-      } else {
-        setMessage(MESSAGE_ERROR)
-        setHasError(true)
+    const fetchAndSetDiscount = async () => {
+      if (cart && cart.discountCodes.length > 0) {
+        const discountID = cart.discountCodes[0]?.discountCode.id
+        if (discountID) {
+          try {
+            const response = await apiRoot
+              .discountCodes()
+              .withId({ ID: discountID })
+              .get()
+              .execute()
+            setDiscountInput(response.body.code)
+            setActiveCode(response.body.code)
+            setMessage(MESSAGE_SUCCESS(response.body.code))
+          } catch (error) {
+            console.error('Error fetching discount code by ID:', error)
+            return null
+          }
+        }
       }
     }
-  }, [])
+
+    fetchAndSetDiscount()
+  }, [cart, setDiscountInput, setActiveCode])
 
   useEffect(() => {
     if (discountInput.length === 0) {
-      localStorage.removeItem('discountData')
       setMessage('')
+      setActiveCode(null)
     }
-  }, [discountInput])
+  }, [discountInput, setActiveCode])
 
   const handlerApplyDiscount = async () => {
     if (!cart) {
@@ -52,56 +64,45 @@ export const CartPage = () => {
       return
     }
 
-    if (cart && discountInput && discountInput === activeCode) {
-      try {
-        const response = await applyDiscountCode(
-          cart.id,
-          cart.version,
-          activeCode,
-          'addDiscountCode'
-        )
-        setCart(response)
-        setMessage(MESSAGE_SUCCESS(activeCode))
-        setHasError(false)
-        localStorage.setItem(
-          'discountData',
-          JSON.stringify({ code: activeCode, valid: true })
-        )
-      } catch (error) {
-        console.error('Error applying discount code:', error)
-      }
-      return
-    }
-
-    if (cart && discountInput && discountInput !== activeCode) {
-      setMessage(MESSAGE_ERROR)
-      setHasError(true)
-      localStorage.setItem(
-        'discountData',
-        JSON.stringify({ code: discountInput, valid: false })
-      )
-
-      const discountCodeId = cart.discountCodes[0]?.discountCode?.id
-      if (discountCodeId) {
-        try {
-          const response = await applyDiscountCode(
-            cart.id,
-            cart.version,
-            { typeId: 'discount-code', id: discountCodeId },
-            'removeDiscountCode'
-          )
-          setCart(response)
-        } catch (error) {
-          console.error('Error removing discount code:', error)
-        }
-      }
-      return
-    }
-
     if (cart && !discountInput) {
       setMessage('Please enter a discount code')
       setHasError(true)
       return
+    }
+
+    try {
+      if (discountInput === activeCode) {
+        return
+      }
+
+      const response = await applyDiscountCode(
+        cart.id,
+        cart.version,
+        discountInput,
+        'addDiscountCode'
+      )
+      setCart(response)
+      setMessage(MESSAGE_SUCCESS(discountInput))
+      setHasError(false)
+    } catch {
+      setMessage(MESSAGE_ERROR)
+      setHasError(true)
+      setActiveCode(null)
+    }
+    const discountCodeId = cart.discountCodes[0]?.discountCode?.id
+    if (discountCodeId) {
+      try {
+        const response = await applyDiscountCode(
+          cart.id,
+          cart.version,
+          { typeId: 'discount-code', id: discountCodeId },
+          'removeDiscountCode'
+        )
+        setCart(response)
+      } catch (error) {
+        console.error('Error removing discount code:', error)
+        return
+      }
     }
   }
 
