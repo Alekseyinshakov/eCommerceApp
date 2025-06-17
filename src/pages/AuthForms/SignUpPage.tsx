@@ -17,19 +17,15 @@ import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
 import { registerCustomer } from '@api/apiClient'
-import {
-  ErrorResponse,
-  DuplicateFieldError,
-  createApiBuilderFromCtpClient,
-} from '@commercetools/platform-sdk'
+import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
 import { countryCodeMap } from '@constants'
 import { useCartStore } from '@store/cartStore'
-import { getCtpClient } from '@api/getCtpClient'
 import { mergeCarts } from '@api/mergeCarts'
+import { createCustomerCart } from '@api/createCustomerCart'
 
 const {
   main,
@@ -151,23 +147,9 @@ export const SignUpPage = () => {
           setUser(customer)
         }
 
-        const client = await getCtpClient()
-        const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
-          projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
-        })
         if (anonymousCart) {
-          const userCart = await apiRoot
-            .me()
-            .carts()
-            .post({
-              body: {
-                currency: 'USD',
-                country: 'US',
-              },
-            })
-            .execute()
-
-          const mergedCart = await mergeCarts(anonymousCart, userCart?.body)
+          const userCart = await createCustomerCart()
+          const mergedCart = await mergeCarts(anonymousCart, userCart)
           setCart(mergedCart)
           localStorage.setItem(
             'cart_data',

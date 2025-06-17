@@ -28,7 +28,7 @@ export const fetchCartData = async (cartId?: string) => {
     }
     return null
   } catch (error) {
-    console.error('Failed to fetch cart data:', error)
+    console.info('Failed to fetch cart data:', error)
     throw error
   }
 }

@@ -14,6 +14,7 @@ import { useAuthStore } from '@store/authStore'
 import { useCartStore } from '@store/cartStore'
 import { fetchCartData } from '@api/fetchCartData'
 import { mergeCarts } from '@api/mergeCarts'
+import { createCustomerCart } from '@api/createCustomerCart'
 
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
@@ -49,37 +50,10 @@ export const LoginPage = () => {
     if (hasErrors) return
 
     try {
-      const cartData = localStorage.getItem('cart_data')
-      const cartDataParsed = cartData ? JSON.parse(cartData) : null
-      const anonymousCart = cart
       const customer = await loginCustomer(formData.email, formData.password)
 
       if (customer) {
         setUser(customer)
-      }
-      const userCart = await fetchCartData(
-        cartDataParsed && cartDataParsed.cartId ? cartDataParsed.cartId : null
-      )
-      if (anonymousCart && userCart) {
-        const mergedCart = await mergeCarts(anonymousCart, userCart)
-        setCart(mergedCart)
-        localStorage.setItem(
-          'cart_data',
-          JSON.stringify({
-            cartId: mergedCart.id,
-            versionCart: mergedCart.version,
-          })
-        )
-      }
-      if (userCart && !anonymousCart) {
-        setCart(userCart)
-        localStorage.setItem(
-          'cart_data',
-          JSON.stringify({
-            cartId: userCart.id,
-            versionCart: userCart.version,
-          })
-        )
       }
 
       navigate('/home')
@@ -90,6 +64,38 @@ export const LoginPage = () => {
         email: 'Invalid email or password',
         password: 'Invalid email or password',
       })
+    }
+
+    const cartData = localStorage.getItem('cart_data')
+    let userCart = null
+    const anonymousCart = cart
+
+    if (cartData && anonymousCart) {
+      try {
+        userCart = await fetchCartData()
+      } catch {
+        console.info('Customer cart not found')
+        userCart = await createCustomerCart()
+      }
+
+      if (userCart) {
+        const mergedCart = await mergeCarts(anonymousCart, userCart)
+        setCart(mergedCart)
+        setNotification('User cart and anonymous cart merged')
+        return
+      }
+    }
+
+    userCart = await fetchCartData()
+    if (userCart) {
+      setCart(userCart)
+      localStorage.setItem(
+        'cart_data',
+        JSON.stringify({
+          cartId: userCart.id,
+          versionCart: userCart.version,
+        })
+      )
     }
   }
 
