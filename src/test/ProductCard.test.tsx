@@ -28,6 +28,8 @@ describe('ProductCard', () => {
     image: '/images/rose.jpg',
     description: 'A beautiful red rose',
     categoryId: 'cat456',
+    id: 'prod-id',
+    variantId: 1,
   }
 
   afterEach(() => {

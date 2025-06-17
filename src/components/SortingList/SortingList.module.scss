@@ -76,31 +76,29 @@
 
 .resetBlock {
   display: flex;
-  // justify-content: center;
+}
+
+.resetButton,
+.resetButtonDisabled {
+  border-radius: 6px;
+  min-height: 35px;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px 17px;
 }
 
 .resetButton {
-  border-radius: 6px;
-  height: 35px;
   background-color: $main-light-color;
-  font-weight: 500;
-  font-size: 16px;
   color: $light-background-color;
-  padding: 8px 17px;
   transition: background-color 0.3s;
   cursor: pointer;
-
   &:hover {
     background-color: $main-light-color-hover;
   }
 }
 
 .resetButtonDisabled {
-  border-radius: 6px;
-  height: 35px;
   background-color: $main-light-color-transparent;
-  font-weight: 500;
-  font-size: 16px;
   color: #fff;
   cursor: not-allowed;
 }
