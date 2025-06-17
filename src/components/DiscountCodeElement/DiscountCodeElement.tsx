@@ -39,9 +39,10 @@ const DiscountCode = () => {
   }, [setActiveCode])
   return (
     <div className={styles.wrapper}>
-      <p className={styles.code}>{activeCode ?? 'Promotion not available'}</p>
-      <p className={styles.conditions}>
-        {activeCodeDate.codeDescription} Valid on all purchases until{' '}
+      <p>{activeCode ?? 'Promotion not available'}</p>
+      <p>{activeCodeDate.codeDescription}</p>
+      <p>
+        Valid on all purchases until{' '}
         {new Date(activeCodeDate.validUntil ?? '00:00').toLocaleDateString(
           'en-GB'
         )}
