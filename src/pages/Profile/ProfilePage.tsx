@@ -6,17 +6,9 @@ import { updateCustomerData } from '@api/updateCustomerData.ts'
 import { useAuthStore } from '@store/authStore.ts'
 import { useNotification } from '@components/Notification/NotifficationContext.tsx'
 import FormInput from '@components/FormInput/FormInput.tsx'
-import {
-  validateCity,
-  validateCountry,
-  validateDate,
-  validateEmail,
-  validateName,
-  validatePostalCode,
-  validateStreet,
-} from '@hooks/useFormValidators.ts'
 import { AddAddress } from './addAddress'
 import { PasswordChange } from './PasswordChange'
+import { updateError } from './helpers/updateError'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -74,22 +66,7 @@ export const ProfilePage = () => {
 
     setInputValues((prev) => {
       const updated = { ...prev, [name]: value }
-
-      const updatedErrors = {
-        ...errors,
-        firstName:
-          name === 'firstName' ? validateName(value) : errors.firstName,
-        lastName: name === 'lastName' ? validateName(value) : errors.lastName,
-        email: name === 'email' ? validateEmail(value) : errors.email,
-        dateOfBirth:
-          name === 'dateOfBirth' ? validateDate(value) : errors.dateOfBirth,
-        street: name === 'street' ? validateStreet(value) : errors.street,
-        city: name === 'city' ? validateCity(value) : errors.city,
-        postalCode:
-          name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
-        country: name === 'country' ? validateCountry(value) : errors.country,
-      }
-
+      const updatedErrors = updateError(errors, value, name)
       setErrors(updatedErrors)
       return updated
     })
