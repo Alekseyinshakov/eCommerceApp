@@ -46,48 +46,50 @@ export const LoginPage = () => {
     setErrors(newErrors)
 
     const hasErrors = Object.values(newErrors).some(Boolean)
+    if (hasErrors) return
 
-    if (!hasErrors) {
-      try {
-        const customer = await loginCustomer(formData.email, formData.password)
+    try {
+      const cartData = localStorage.getItem('cart_data')
+      const cartDataParsed = cartData ? JSON.parse(cartData) : null
+      const anonymousCart = cart
+      const customer = await loginCustomer(formData.email, formData.password)
 
-        if (customer) {
-          setUser(customer)
-        }
-
-        const anonymousCart = cart
-        const cartData = JSON.parse(localStorage.getItem('cart_data') || '{}')
-        const userCart = await fetchCartData(cartData.cartId || null)
-        if (anonymousCart && userCart) {
-          const mergedCart = await mergeCarts(anonymousCart, userCart)
-          setCart(mergedCart)
-          localStorage.setItem(
-            'cart_data',
-            JSON.stringify({
-              cartId: mergedCart.id,
-              versionCart: mergedCart.version,
-            })
-          )
-        }
-        if (userCart && !anonymousCart) {
-          setCart(userCart)
-          localStorage.setItem(
-            'cart_data',
-            JSON.stringify({
-              cartId: userCart.id,
-              versionCart: userCart.version,
-            })
-          )
-        }
-        navigate('/home')
-      } catch (err) {
-        console.error(err)
-        setNotification('Invalid email or password')
-        setErrors({
-          email: 'Invalid email or password',
-          password: 'Invalid email or password',
-        })
+      if (customer) {
+        setUser(customer)
       }
+      const userCart = await fetchCartData(
+        cartDataParsed && cartDataParsed.cartId ? cartDataParsed.cartId : null
+      )
+      if (anonymousCart && userCart) {
+        const mergedCart = await mergeCarts(anonymousCart, userCart)
+        setCart(mergedCart)
+        localStorage.setItem(
+          'cart_data',
+          JSON.stringify({
+            cartId: mergedCart.id,
+            versionCart: mergedCart.version,
+          })
+        )
+      }
+      if (userCart && !anonymousCart) {
+        setCart(userCart)
+        localStorage.setItem(
+          'cart_data',
+          JSON.stringify({
+            cartId: userCart.id,
+            versionCart: userCart.version,
+          })
+        )
+      }
+
+      navigate('/home')
+    } catch (err) {
+      console.error(err)
+      setNotification('Invalid email or password')
+      setErrors({
+        email: 'Invalid email or password',
+        password: 'Invalid email or password',
+      })
     }
   }
 

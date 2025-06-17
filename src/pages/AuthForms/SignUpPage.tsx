@@ -17,12 +17,19 @@ import FormInput from '@components/FormInput/FormInput'
 
 import styles from './AuthForm.module.scss'
 import { registerCustomer } from '@api/apiClient'
-import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'
+import {
+  ErrorResponse,
+  DuplicateFieldError,
+  createApiBuilderFromCtpClient,
+} from '@commercetools/platform-sdk'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
 import { countryCodeMap } from '@constants'
+import { useCartStore } from '@store/cartStore'
+import { getCtpClient } from '@api/getCtpClient'
+import { mergeCarts } from '@api/mergeCarts'
 
 const {
   main,
@@ -43,6 +50,7 @@ export const SignUpPage = () => {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const setUser = useAuthStore((state) => state.setUser)
+  const { cart, setCart } = useCartStore()
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -136,10 +144,38 @@ export const SignUpPage = () => {
 
         setNotification('Registration successful!')
 
+        const anonymousCart = cart
         const customer = await loginCustomer(formData.email, formData.password)
 
         if (customer) {
           setUser(customer)
+        }
+
+        const client = await getCtpClient()
+        const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
+          projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
+        })
+        if (anonymousCart) {
+          const userCart = await apiRoot
+            .me()
+            .carts()
+            .post({
+              body: {
+                currency: 'USD',
+                country: 'US',
+              },
+            })
+            .execute()
+
+          const mergedCart = await mergeCarts(anonymousCart, userCart?.body)
+          setCart(mergedCart)
+          localStorage.setItem(
+            'cart_data',
+            JSON.stringify({
+              cartId: mergedCart.id,
+              versionCart: mergedCart.version,
+            })
+          )
         }
 
         navigate('/home')

@@ -46,7 +46,7 @@ export const applyDiscountCode = async (
     )
     return cartResponse.body
   } catch (error) {
-    console.error('Error apply discount:', error)
+    console.info('Error apply discount:', error)
     throw error
   }
 }
