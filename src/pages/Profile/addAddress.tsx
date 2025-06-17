@@ -12,21 +12,23 @@ import {
   validateStreet,
 } from '@hooks/useFormValidators'
 
+const DEFAULT_INPUT_VALUES = {
+  country: '',
+  city: '',
+  street: '',
+  postalCode: '',
+  shipping: false,
+  billing: false,
+  defaultShipping: false,
+  defaultBilling: false,
+}
+
 export const AddAddress = () => {
   const { setNotification } = useNotification()
   const setUser = useAuthStore((state) => state.setUser)
   const [isAddingAddress, setIsAddingAddress] = useState(false)
 
-  const [inputValues, setInputValues] = useState({
-    country: '',
-    city: '',
-    street: '',
-    postalCode: '',
-    shipping: false,
-    billing: false,
-    defaultShipping: false,
-    defaultBilling: false,
-  })
+  const [inputValues, setInputValues] = useState(DEFAULT_INPUT_VALUES)
 
   const [errors, setErrors] = useState({
     street: '',
@@ -89,16 +91,7 @@ export const AddAddress = () => {
       setUser(customer)
       setNotification('The address was successfully added.')
       setIsAddingAddress(false)
-      setInputValues({
-        country: '',
-        city: '',
-        street: '',
-        postalCode: '',
-        shipping: false,
-        billing: false,
-        defaultShipping: false,
-        defaultBilling: false,
-      })
+      setInputValues(DEFAULT_INPUT_VALUES)
     } catch (error) {
       console.error('Error adding new address:', error)
       setNotification('Something went wrong :-(')
@@ -243,16 +236,7 @@ export const AddAddress = () => {
                 className="button"
                 onClick={() => {
                   setIsAddingAddress(false)
-                  setInputValues({
-                    country: '',
-                    city: '',
-                    street: '',
-                    postalCode: '',
-                    shipping: false,
-                    billing: false,
-                    defaultShipping: false,
-                    defaultBilling: false,
-                  })
+                  setInputValues(DEFAULT_INPUT_VALUES)
                   setErrors({
                     street: '',
                     city: '',

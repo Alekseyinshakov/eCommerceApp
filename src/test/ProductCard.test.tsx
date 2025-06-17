@@ -93,7 +93,7 @@ describe('ProductCard', () => {
     render(<ProductCard {...defaultProps} />)
 
     fireEvent.click(screen.getByAltText('Red Rose'))
-    fireEvent.click(screen.getByAltText('Red Rose')) // second click (should be ignored)
+    fireEvent.click(screen.getByAltText('Red Rose'))
 
     resolveSlug!('flowers')
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import ProductDetailPage from '../pages/Shop/ProductDetailPage'
+import ProductDetailPage from '@pages/Shop/ProductDetailPage'
 
 const productMock = {
   id: 'product123',

@@ -1,12 +1,10 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk'
 import { ctpClient } from '@api/BuildClient'
-
 import {
   ClientBuilder,
   type PasswordAuthMiddlewareOptions,
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2'
-
 import type { TokenStore, TokenCache } from '@commercetools/sdk-client-v2'
 
 const tokenCache: TokenCache = {

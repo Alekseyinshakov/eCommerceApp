@@ -1,14 +1,10 @@
 import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-
 import type { Category } from '@store/types'
-
 import { useProductStore } from '@store/productStore'
 import { useCategoriesStore } from '@store/categoriesStore'
-
 import { ProductCard } from '@components/ProductCard/ProductCard'
 import { SortingList } from '@components/SortingList/SortingList'
-
 import styles from './ShopPage.module.scss'
 import { SortingTab } from '@components/SortingTab/SortingTab'
 

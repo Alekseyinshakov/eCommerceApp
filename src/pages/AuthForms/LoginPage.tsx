@@ -2,13 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuthPageText } from '@hooks/useAuthPageText'
 import { validateEmail, validatePassword } from '@hooks/useFormValidators'
-
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import FormInput from '@components/FormInput/FormInput'
-
 import { loginCustomer } from '@api/auth'
 import { useNotification } from '@components/Notification/NotifficationContext'
-
 import styles from './AuthForm.module.scss'
 import { useAuthStore } from '@store/authStore'
 

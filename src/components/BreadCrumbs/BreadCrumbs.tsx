@@ -35,10 +35,12 @@ export const BreadCrumbs = () => {
     }
   }
 
+  console.log(crumbs)
+
   return (
     <nav className={styles.breadCrumbs}>
       {crumbs.map((crumb, index) => (
-        <span key={index}>
+        <span key={crumb.name}>
           {index < crumbs.length - 1 ? (
             <Link to={crumb.path}>{crumb.name}</Link>
           ) : (
