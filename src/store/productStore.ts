@@ -1,13 +1,12 @@
 import { create } from 'zustand'
 import { apiRoot } from '@api/apiClient'
+import {
+  getDiscountId,
+  getDiscountPrice,
+  getPrice,
+} from '@utils/getPriceHelpers'
 
 type CommercetoolsQueryArgs = {
-  limit?: number
-  offset?: number
-  sort?: string[]
-  filter?: string[]
-  'text.en-US'?: string
-  fuzzy?: boolean
   [key: string]: string | string[] | number | boolean | undefined
 }
 
@@ -155,16 +154,9 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         variantId: p.masterVariant.id,
         slug: p.slug?.['en-US'] ?? p.key,
         name: p.name['en-US'] ?? 'No name',
-        price:
-          p.masterVariant.prices?.[0]?.value?.centAmount !== undefined
-            ? p.masterVariant.prices[0].value.centAmount / 100
-            : 0,
-        discountPrice: p.masterVariant?.prices?.[0]?.discounted?.value
-          ?.centAmount
-          ? p.masterVariant.prices[0].discounted.value.centAmount / 100
-          : 0,
-        discountId:
-          p.masterVariant?.prices?.[0]?.discounted?.discount?.id || undefined,
+        price: getPrice(p),
+        discountPrice: getDiscountPrice(p),
+        discountId: getDiscountId(p),
         image: p.masterVariant.images?.[0]?.url ?? '',
         description: p.description?.['en-US'] ?? '',
         categoryId: p.categories?.[0]?.id,

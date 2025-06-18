@@ -145,8 +145,8 @@ export const ProfileAddressComponent = ({
       </div>
       <div className={styles.colWrap + ' ' + styles.addressWrap}>
         <div className={styles.row}>
-          <div className={styles.fieldName}>Country:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Country:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <>
                 <FormInput
@@ -164,12 +164,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.country
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>City:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>City:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="city"
@@ -183,12 +183,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.city
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>Street:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Street:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="street"
@@ -202,12 +202,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.streetName
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>Postal code:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Postal code:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="postalCode"
@@ -221,12 +221,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.postalCode
             )}
-          </div>
+          </p>
         </div>
         {editMode && (
           <div className={styles.row}>
-            <div className={styles.fieldName}>Shipping:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Shipping:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="shipping"
@@ -243,14 +243,14 @@ export const ProfileAddressComponent = ({
                 disabled={!inputValues.shipping}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
         )}
 
         {editMode && (
           <div className={styles.row}>
-            <div className={styles.fieldName}>Billing:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Billing:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="billing"
@@ -267,7 +267,7 @@ export const ProfileAddressComponent = ({
                 disabled={!inputValues.billing}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
         )}
         <div className={styles.buttonsContainer}>
@@ -318,12 +318,7 @@ export const ProfileAddressComponent = ({
               Cancel
             </button>
           )}
-          <button
-            className="button"
-            onClick={() => {
-              deleteAddressHandler()
-            }}
-          >
+          <button className="button" onClick={deleteAddressHandler}>
             Delete
           </button>
         </div>

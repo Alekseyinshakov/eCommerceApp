@@ -4,6 +4,11 @@ import ProductDetailPage from '@pages/Shop/ProductDetailPage'
 import { ProductDetailType } from 'types'
 import Loader from '@components/Loader/Loader'
 import { useEffect, useState } from 'react'
+import {
+  getDiscountId,
+  getDiscountPrice,
+  getPrice,
+} from '@utils/getPriceHelpers'
 
 type Image = {
   url: string
@@ -74,17 +79,9 @@ const ProductDetail = () => {
             id: productId,
             variantId: productData.masterVariant.id,
             name: productData.name?.['en-US'] || '',
-            price: productData.masterVariant?.prices?.[0]?.value?.centAmount
-              ? productData.masterVariant.prices[0].value.centAmount / 100
-              : 0,
-            discountPrice: productData.masterVariant?.prices?.[0]?.discounted
-              ?.value?.centAmount
-              ? productData.masterVariant.prices[0].discounted.value
-                  .centAmount / 100
-              : 0,
-            discountId:
-              productData.masterVariant?.prices?.[0]?.discounted?.discount
-                ?.id || undefined,
+            price: getPrice(productData),
+            discountPrice: getDiscountPrice(productData),
+            discountId: getDiscountId(productData),
             images:
               productData.masterVariant?.images?.map((img: Image) => img.url) ||
               [],

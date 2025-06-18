@@ -29,7 +29,7 @@ const SliderProductDetails = ({ images }: ImageSlider) => {
         modules={[FreeMode, Navigation, Thumbs]}
       >
         {images.map((url, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={url}>
             <img
               src={url}
               alt={`Slide ${index + 1}`}
@@ -53,7 +53,7 @@ const SliderProductDetails = ({ images }: ImageSlider) => {
         className="sliderThumbs"
       >
         {images.map((url, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={url}>
             <img src={url} alt={`Slide ${index + 1}`} />
           </SwiperSlide>
         ))}
