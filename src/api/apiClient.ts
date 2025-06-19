@@ -43,8 +43,6 @@ export const registerCustomer = async (data: {
   defaultBillingAddress: boolean
   useSameAddress: boolean
 }) => {
-  console.log('Registering customer', data)
-
   const addresses = data.useSameAddress
     ? [
         {

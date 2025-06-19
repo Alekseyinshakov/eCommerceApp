@@ -1,26 +1,31 @@
 import { CartProp } from 'types'
-import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk'
+import {
+  ByProjectKeyRequestBuilder,
+  CartAddLineItemAction,
+} from '@commercetools/platform-sdk'
 
 export const updateCart = async (
-  item: CartProp,
+  items: CartProp | Array<CartProp>,
   apiRoot: ByProjectKeyRequestBuilder,
   cartData: string
 ) => {
   const { cartId, versionCart } = JSON.parse(cartData)
+  const itemsArray = Array.isArray(items) ? items : [items]
+
+  const actions: Array<CartAddLineItemAction> = itemsArray.map((item) => ({
+    action: 'addLineItem',
+    productId: item.productId,
+    variantId: item.variantId,
+    quantity: item.quantity,
+  }))
+
   const updateResponse = await apiRoot
     .carts()
     .withId({ ID: cartId })
     .post({
       body: {
         version: versionCart,
-        actions: [
-          {
-            action: 'addLineItem',
-            productId: item.productId,
-            variantId: item.variantId,
-            quantity: item.quantity,
-          },
-        ],
+        actions,
       },
     })
     .execute()

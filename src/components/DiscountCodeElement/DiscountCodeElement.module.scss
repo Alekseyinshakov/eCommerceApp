@@ -1,15 +1,17 @@
 .wrapper {
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   background-color: $main-light-color;
   color: $light-background-color;
   font-size: 14px;
   padding: 15px 0;
+  text-align: center;
+  gap: 5px;
   p {
     margin: 0;
     &:first-child {
-      margin-bottom: 5px;
+      width: 100%;
       font-weight: 700;
     }
   }

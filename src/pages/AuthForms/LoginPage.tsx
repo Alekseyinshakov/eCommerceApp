@@ -8,6 +8,10 @@ import { loginCustomer } from '@api/auth'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import styles from './AuthForm.module.scss'
 import { useAuthStore } from '@store/authStore'
+import { useCartStore } from '@store/cartStore'
+import { fetchCartData } from '@api/fetchCartData'
+import { mergeCarts } from '@api/mergeCarts'
+import { createCustomerCart } from '@api/createCustomerCart'
 
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
@@ -17,6 +21,7 @@ export const LoginPage = () => {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const { setNotification } = useNotification()
+  const { cart, setCart } = useCartStore()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -39,24 +44,55 @@ export const LoginPage = () => {
     setErrors(newErrors)
 
     const hasErrors = Object.values(newErrors).some(Boolean)
+    if (hasErrors) return
 
-    if (!hasErrors) {
-      try {
-        const customer = await loginCustomer(formData.email, formData.password)
+    try {
+      const customer = await loginCustomer(formData.email, formData.password)
 
-        if (customer) {
-          setUser(customer)
-        }
-
-        navigate('/home')
-      } catch (err) {
-        console.error(err)
-        setNotification('Invalid email or password')
-        setErrors({
-          email: 'Invalid email or password',
-          password: 'Invalid email or password',
-        })
+      if (customer) {
+        setUser(customer)
       }
+
+      navigate('/home')
+    } catch (err) {
+      console.error(err)
+      setNotification('Invalid email or password')
+      setErrors({
+        email: 'Invalid email or password',
+        password: 'Invalid email or password',
+      })
+    }
+
+    const cartData = localStorage.getItem('cart_data')
+    let userCart = null
+    const anonymousCart = cart
+
+    if (cartData && anonymousCart) {
+      try {
+        userCart = await fetchCartData()
+      } catch {
+        console.info('Customer cart not found')
+        userCart = await createCustomerCart()
+      }
+
+      if (userCart) {
+        const mergedCart = await mergeCarts(anonymousCart, userCart)
+        setCart(mergedCart)
+        setNotification('User cart and anonymous cart merged')
+        return
+      }
+    }
+
+    userCart = await fetchCartData()
+    if (userCart) {
+      setCart(userCart)
+      localStorage.setItem(
+        'cart_data',
+        JSON.stringify({
+          cartId: userCart.id,
+          versionCart: userCart.version,
+        })
+      )
     }
   }
 

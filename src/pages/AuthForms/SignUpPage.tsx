@@ -21,6 +21,9 @@ import { loginCustomer } from '@api/auth'
 import { useAuthStore } from '@store/authStore'
 import { CountryList } from './helpersCountry'
 import { countryCodeMap } from '@constants'
+import { useCartStore } from '@store/cartStore'
+import { mergeCarts } from '@api/mergeCarts'
+import { createCustomerCart } from '@api/createCustomerCart'
 
 const {
   main,
@@ -41,6 +44,7 @@ export const SignUpPage = () => {
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const setUser = useAuthStore((state) => state.setUser)
+  const { cart, setCart } = useCartStore()
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -134,10 +138,24 @@ export const SignUpPage = () => {
 
         setNotification('Registration successful!')
 
+        const anonymousCart = cart
         const customer = await loginCustomer(formData.email, formData.password)
 
         if (customer) {
           setUser(customer)
+        }
+
+        if (anonymousCart) {
+          const userCart = await createCustomerCart()
+          const mergedCart = await mergeCarts(anonymousCart, userCart)
+          setCart(mergedCart)
+          localStorage.setItem(
+            'cart_data',
+            JSON.stringify({
+              cartId: mergedCart.id,
+              versionCart: mergedCart.version,
+            })
+          )
         }
 
         navigate('/home')

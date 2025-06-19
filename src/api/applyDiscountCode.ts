@@ -13,7 +13,7 @@ export const applyDiscountCode = async (
   action: 'addDiscountCode' | 'removeDiscountCode'
 ) => {
   try {
-    const client = getCtpClient()
+    const client = await getCtpClient()
     const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
       projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
     })
@@ -46,7 +46,7 @@ export const applyDiscountCode = async (
     )
     return cartResponse.body
   } catch (error) {
-    console.error('Error apply discount:', error)
+    console.info('Error apply discount:', error)
     throw error
   }
 }
