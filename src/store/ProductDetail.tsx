@@ -35,10 +35,10 @@ const ProductDetail = () => {
   }
 
   const getCategoryName = async (categories: Array<{ id: string }>) => {
-    const categoryName = categories.map(async (c) => {
+    const categoryName = categories.map(async (category) => {
       const res = await apiRoot
         .categories()
-        .withId({ ID: c.id })
+        .withId({ ID: category.id })
         .get()
         .execute()
 
