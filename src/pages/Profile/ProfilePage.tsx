@@ -51,7 +51,8 @@ export const ProfilePage = () => {
             email: data.email,
           })
         } catch (error) {
-          console.error('Error fetching customer data:', error)
+          const err = error as Error
+          console.error('Error fetching customer data:', err.message)
         }
       }
     }
