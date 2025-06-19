@@ -8,3 +8,14 @@ export const countryCodeMap: Record<string, string> = {
   Belarus: 'BY',
   Poland: 'PL',
 }
+
+export const PROFILE_ERRORS = {
+  street: '',
+  city: '',
+  postalCode: '',
+  country: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  dateOfBirth: '',
+}
