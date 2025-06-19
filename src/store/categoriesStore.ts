@@ -38,7 +38,8 @@ export const useCategoriesStore = create<CategoriesStore>((set, get) => ({
       const categoryCount: Record<string, number> = {}
 
       for (const p of rawProducts) {
-        const productCategories = p.categories?.map((c) => c.id) ?? []
+        const productCategories =
+          p.categories?.map((category) => category.id) ?? []
         productCategories.forEach((catId) => {
           categoryCount[catId] = (categoryCount[catId] || 0) + 1
         })

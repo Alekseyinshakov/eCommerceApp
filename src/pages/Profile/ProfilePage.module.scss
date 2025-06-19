@@ -108,6 +108,7 @@
   color: $title-color;
   text-align: right;
   padding-top: 4px;
+  margin: 0;
   @media (max-width: 725px) {
     width: 30%;
   }
@@ -117,7 +118,7 @@
   text-align: left;
   font-style: italic;
   font-weight: 400;
-
+  margin: 0;
   @media (max-width: 725px) {
     width: 70%;
   }

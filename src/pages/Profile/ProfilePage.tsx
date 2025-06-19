@@ -6,17 +6,9 @@ import { updateCustomerData } from '@api/updateCustomerData.ts'
 import { useAuthStore } from '@store/authStore.ts'
 import { useNotification } from '@components/Notification/NotifficationContext.tsx'
 import FormInput from '@components/FormInput/FormInput.tsx'
-import {
-  validateCity,
-  validateCountry,
-  validateDate,
-  validateEmail,
-  validateName,
-  validatePostalCode,
-  validateStreet,
-} from '@hooks/useFormValidators.ts'
 import { AddAddress } from './addAddress'
 import { PasswordChange } from './PasswordChange'
+import { updateError } from './helpers/updateError'
 
 export const ProfilePage = () => {
   const setUser = useAuthStore((state) => state.setUser)
@@ -59,7 +51,8 @@ export const ProfilePage = () => {
             email: data.email,
           })
         } catch (error) {
-          console.error('Error fetching customer data:', error)
+          const err = error as Error
+          console.error('Error fetching customer data:', err.message)
         }
       }
     }
@@ -74,22 +67,7 @@ export const ProfilePage = () => {
 
     setInputValues((prev) => {
       const updated = { ...prev, [name]: value }
-
-      const updatedErrors = {
-        ...errors,
-        firstName:
-          name === 'firstName' ? validateName(value) : errors.firstName,
-        lastName: name === 'lastName' ? validateName(value) : errors.lastName,
-        email: name === 'email' ? validateEmail(value) : errors.email,
-        dateOfBirth:
-          name === 'dateOfBirth' ? validateDate(value) : errors.dateOfBirth,
-        street: name === 'street' ? validateStreet(value) : errors.street,
-        city: name === 'city' ? validateCity(value) : errors.city,
-        postalCode:
-          name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
-        country: name === 'country' ? validateCountry(value) : errors.country,
-      }
-
+      const updatedErrors = updateError(errors, value, name)
       setErrors(updatedErrors)
       return updated
     })
@@ -98,8 +76,7 @@ export const ProfilePage = () => {
   const updateMainInfo = async () => {
     if (!customerInfo) return
 
-    const hasErrors =
-      errors.lastName || errors.firstName || errors.dateOfBirth || errors.email
+    const hasErrors = Object.values(errors).some(Boolean)
 
     if (hasErrors) {
       setNotification('Fill in the fields with correct data')
@@ -128,8 +105,8 @@ export const ProfilePage = () => {
         <h2 className={styles.title}>Profile page</h2>
         <div className={styles.colWrap}>
           <div className={styles.row}>
-            <div className={styles.fieldName}>First name:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>First name:</p>
+            <p className={styles.fieldValue}>
               {editMode ? (
                 <FormInput
                   onChange={handleChange}
@@ -142,12 +119,12 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.firstName
               )}
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Last name:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Last name:</p>
+            <p className={styles.fieldValue}>
               {editMode ? (
                 <FormInput
                   onChange={handleChange}
@@ -160,11 +137,11 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.lastName
               )}
-            </div>
+            </p>
           </div>
           <div className={styles.row}>
-            <div className={styles.fieldName}>Date of birth:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Date of birth:</p>
+            <p className={styles.fieldValue}>
               {editMode ? (
                 <FormInput
                   onChange={handleChange}
@@ -177,12 +154,12 @@ export const ProfilePage = () => {
               ) : (
                 customerInfo?.dateOfBirth
               )}
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Email:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Email:</p>
+            <p className={styles.fieldValue}>
               {editMode ? (
                 <FormInput
                   onChange={handleChange}
@@ -195,7 +172,7 @@ export const ProfilePage = () => {
               ) : (
                 <span className={styles.ellipsis}>{customerInfo?.email}</span>
               )}
-            </div>
+            </p>
           </div>
           <div className={styles.row + ' ' + styles.buttonsWrapper}>
             {editMode && (

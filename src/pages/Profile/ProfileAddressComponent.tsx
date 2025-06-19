@@ -7,12 +7,8 @@ import { useState } from 'react'
 import { useNotification } from '@components/Notification/NotifficationContext'
 import { useAuthStore } from '@store/authStore.ts'
 import { deleteAddress } from '@api/deleteAddress.ts'
-import {
-  validateCity,
-  validateCountry,
-  validatePostalCode,
-  validateStreet,
-} from '@hooks/useFormValidators'
+import { updateError } from './helpers/updateError'
+import { PROFILE_ERRORS } from '@constants'
 
 export const ProfileAddressComponent = ({
   address,
@@ -47,14 +43,9 @@ export const ProfileAddressComponent = ({
 
   const [editMode, setEditMode] = useState(false)
 
-  const [errors, setErrors] = useState({
-    street: '',
-    city: '',
-    postalCode: '',
-    country: '',
-  })
+  const [errors, setErrors] = useState(PROFILE_ERRORS)
 
-  const [inputValues, setInputValues] = useState({
+  const DEFAULT_INPUT_VALUES = {
     id: address.id,
     country: address.country,
     city: address.city,
@@ -64,7 +55,9 @@ export const ProfileAddressComponent = ({
     billing: isTypeBilling,
     defaultShipping: isDefaultShipping,
     defaultBilling: isDefaultBilling,
-  })
+  }
+
+  const [inputValues, setInputValues] = useState(DEFAULT_INPUT_VALUES)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, checked, value } = e.target
@@ -82,18 +75,8 @@ export const ProfileAddressComponent = ({
       newValues.defaultShipping = false
     }
 
-    const updatedErrors = {
-      ...errors,
-
-      street: name === 'street' ? validateStreet(value) : errors.street,
-      city: name === 'city' ? validateCity(value) : errors.city,
-      postalCode:
-        name === 'postalCode' ? validatePostalCode(value) : errors.postalCode,
-      country: name === 'country' ? validateCountry(value) : errors.country,
-    }
-
+    const updatedErrors = updateError(errors, value, name)
     setErrors(updatedErrors)
-
     setInputValues(newValues)
   }
 
@@ -145,8 +128,8 @@ export const ProfileAddressComponent = ({
       </div>
       <div className={styles.colWrap + ' ' + styles.addressWrap}>
         <div className={styles.row}>
-          <div className={styles.fieldName}>Country:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Country:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <>
                 <FormInput
@@ -164,12 +147,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.country
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>City:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>City:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="city"
@@ -183,12 +166,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.city
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>Street:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Street:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="street"
@@ -202,12 +185,12 @@ export const ProfileAddressComponent = ({
             ) : (
               address.streetName
             )}
-          </div>
+          </p>
         </div>
 
         <div className={styles.row}>
-          <div className={styles.fieldName}>Postal code:</div>
-          <div className={styles.fieldValue}>
+          <p className={styles.fieldName}>Postal code:</p>
+          <p className={styles.fieldValue}>
             {editMode ? (
               <FormInput
                 name="postalCode"
@@ -221,16 +204,15 @@ export const ProfileAddressComponent = ({
             ) : (
               address.postalCode
             )}
-          </div>
+          </p>
         </div>
         {editMode && (
           <div className={styles.row}>
-            <div className={styles.fieldName}>Shipping:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Shipping:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="shipping"
-                id=""
                 checked={inputValues.shipping}
                 onChange={handleChange}
               />
@@ -238,23 +220,21 @@ export const ProfileAddressComponent = ({
               <input
                 type="checkbox"
                 name="defaultShipping"
-                id=""
                 checked={inputValues.defaultShipping}
                 disabled={!inputValues.shipping}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
         )}
 
         {editMode && (
           <div className={styles.row}>
-            <div className={styles.fieldName}>Billing:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Billing:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="billing"
-                id=""
                 checked={inputValues.billing}
                 onChange={handleChange}
               />
@@ -262,12 +242,11 @@ export const ProfileAddressComponent = ({
               <input
                 type="checkbox"
                 name="defaultBilling"
-                id=""
                 checked={inputValues.defaultBilling}
                 disabled={!inputValues.billing}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
         )}
         <div className={styles.buttonsContainer}>
@@ -295,35 +274,15 @@ export const ProfileAddressComponent = ({
             <button
               onClick={() => {
                 setEditMode(false)
-                setInputValues({
-                  id: address.id,
-                  country: address.country,
-                  city: address.city,
-                  street: address.streetName,
-                  postalCode: address.postalCode,
-                  shipping: isTypeShipping,
-                  billing: isTypeBilling,
-                  defaultShipping: isDefaultShipping,
-                  defaultBilling: isDefaultBilling,
-                })
-                setErrors({
-                  street: '',
-                  city: '',
-                  postalCode: '',
-                  country: '',
-                })
+                setInputValues(DEFAULT_INPUT_VALUES)
+                setErrors(PROFILE_ERRORS)
               }}
               className="button"
             >
               Cancel
             </button>
           )}
-          <button
-            className="button"
-            onClick={() => {
-              deleteAddressHandler()
-            }}
-          >
+          <button className="button" onClick={deleteAddressHandler}>
             Delete
           </button>
         </div>

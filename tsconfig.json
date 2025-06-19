@@ -28,7 +28,8 @@
       "@hooks/*": ["hooks/*"],
       "@api/*": ["api/*"],
       "@store/*": ["store/*"],
-      "@constants": ["constants.ts"]
+      "@constants": ["constants.ts"],
+      "@utils/*": ["utils/*"]
     },
     "types": ["vitest/globals", "@testing-library/jest-dom", "node"]
   },

@@ -35,18 +35,17 @@ export const BreadCrumbs = () => {
     }
   }
 
+  console.log(crumbs)
+
   return (
     <nav className={styles.breadCrumbs}>
-      {crumbs.map((crumb, index) => (
-        <span key={index}>
-          {index < crumbs.length - 1 ? (
-            <Link to={crumb.path}>{crumb.name}</Link>
-          ) : (
-            <span className={styles.lastCrumb}>{crumb.name}</span>
-          )}
-          {index < crumbs.length - 1 && ' / '}
+      {crumbs.slice(0, -1).map((crumb) => (
+        <span key={crumb.name}>
+          <Link to={crumb.path}>{crumb.name}</Link>
+          {' / '}
         </span>
       ))}
+      <span className={styles.lastCrumb}>{crumbs[crumbs.length - 1].name}</span>
     </nav>
   )
 }

@@ -11,10 +11,8 @@ import {
   validatePostalCode,
   validateCountry,
 } from '@hooks/useFormValidators'
-
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
 import FormInput from '@components/FormInput/FormInput'
-
 import styles from './AuthForm.module.scss'
 import { registerCustomer } from '@api/apiClient'
 import { ErrorResponse, DuplicateFieldError } from '@commercetools/platform-sdk'

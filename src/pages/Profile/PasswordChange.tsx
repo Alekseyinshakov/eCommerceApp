@@ -104,8 +104,8 @@ export const PasswordChange = () => {
       {editMode && (
         <div className={styles.colWrap}>
           <div className={styles.row}>
-            <div className={styles.fieldName}>Current pass:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Current pass:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 onChange={handleChange}
                 value={inputValues.prevPassword}
@@ -113,12 +113,12 @@ export const PasswordChange = () => {
                 type="text"
                 className={styles.resetInput}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>New:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>New:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 onChange={handleChange}
                 value={inputValues.password}
@@ -127,12 +127,12 @@ export const PasswordChange = () => {
                 className={styles.resetInput}
                 error={errors.password}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Repeat:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Repeat:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 onChange={handleChange}
                 value={inputValues.confirmPassword}
@@ -141,7 +141,7 @@ export const PasswordChange = () => {
                 className={styles.resetInput}
                 error={errors.confirmPassword}
               />
-            </div>
+            </p>
           </div>
           <div className={styles.buttonsContainer}>
             <button

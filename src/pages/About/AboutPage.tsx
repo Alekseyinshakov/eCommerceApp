@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import styles from './AboutPage.module.scss'
-
 import { teamMembers } from './aboutData'
 import { TeamMemberBlock } from '@components/TeamMemberBlock/TeamMemberBlock'
 

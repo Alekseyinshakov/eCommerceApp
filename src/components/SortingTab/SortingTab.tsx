@@ -2,6 +2,15 @@ import { useProductStore } from '@store/productStore'
 import styles from './SortingTab.module.scss'
 import { useEffect } from 'react'
 
+const sortOptions = [
+  { value: 'createdAt', label: 'New' },
+  { value: 'sale', label: 'Discounted' },
+  { value: 'name-asc', label: 'Name: A → Z' },
+  { value: 'name-desc', label: 'Name: Z → A' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+]
+
 export const SortingTab = () => {
   const searchValue = useProductStore((state) => state.searchValue)
   const setSearchValue = useProductStore((state) => state.setSearchValue)
@@ -39,12 +48,11 @@ export const SortingTab = () => {
         onChange={handleChange}
         className={styles.select}
       >
-        <option value="createdAt">New</option>
-        <option value="sale">Discounted</option>
-        <option value="name-asc">Name: A → Z</option>
-        <option value="name-desc">Name: Z → A</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
+        {sortOptions.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </select>
       <div className={styles.searchBlock}>
         <input

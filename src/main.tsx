@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-
 import { RouterProvider, Navigate, createHashRouter } from 'react-router-dom'
-
 import { ErrorPage } from '@pages/ErrorPage/ErrorPage'
 import { SignUpPage } from '@pages/AuthForms/SignUpPage'
 import { LoginPage } from '@pages/AuthForms/LoginPage'

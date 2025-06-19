@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import type { TeamMemberBlockProps } from 'types'
-
 import styles from './TeamMemberBlock.module.scss'
 
 const {

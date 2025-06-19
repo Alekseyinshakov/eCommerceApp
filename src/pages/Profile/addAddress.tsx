@@ -12,21 +12,23 @@ import {
   validateStreet,
 } from '@hooks/useFormValidators'
 
+const DEFAULT_INPUT_VALUES = {
+  country: '',
+  city: '',
+  street: '',
+  postalCode: '',
+  shipping: false,
+  billing: false,
+  defaultShipping: false,
+  defaultBilling: false,
+}
+
 export const AddAddress = () => {
   const { setNotification } = useNotification()
   const setUser = useAuthStore((state) => state.setUser)
   const [isAddingAddress, setIsAddingAddress] = useState(false)
 
-  const [inputValues, setInputValues] = useState({
-    country: '',
-    city: '',
-    street: '',
-    postalCode: '',
-    shipping: false,
-    billing: false,
-    defaultShipping: false,
-    defaultBilling: false,
-  })
+  const [inputValues, setInputValues] = useState(DEFAULT_INPUT_VALUES)
 
   const [errors, setErrors] = useState({
     street: '',
@@ -74,12 +76,7 @@ export const AddAddress = () => {
       country: validateCountry(inputValues.country),
     }
     setErrors(newErrors)
-    if (
-      newErrors.street ||
-      newErrors.city ||
-      newErrors.postalCode ||
-      newErrors.country
-    ) {
+    if (Object.values(errors).some(Boolean)) {
       setNotification('Please fix the errors before saving.')
       return
     }
@@ -89,16 +86,7 @@ export const AddAddress = () => {
       setUser(customer)
       setNotification('The address was successfully added.')
       setIsAddingAddress(false)
-      setInputValues({
-        country: '',
-        city: '',
-        street: '',
-        postalCode: '',
-        shipping: false,
-        billing: false,
-        defaultShipping: false,
-        defaultBilling: false,
-      })
+      setInputValues(DEFAULT_INPUT_VALUES)
     } catch (error) {
       console.error('Error adding new address:', error)
       setNotification('Something went wrong :-(')
@@ -123,8 +111,8 @@ export const AddAddress = () => {
       {isAddingAddress && (
         <div className={styles.colWrap}>
           <div className={styles.row}>
-            <div className={styles.fieldName}>Country:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Country:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 name="country"
                 type="text"
@@ -136,12 +124,12 @@ export const AddAddress = () => {
                 error={errors.country}
               />
               <CountryList />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>City:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>City:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 name="city"
                 type="text"
@@ -151,12 +139,12 @@ export const AddAddress = () => {
                 onChange={handleChange}
                 error={errors.city}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Street:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Street:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 name="street"
                 type="text"
@@ -166,12 +154,12 @@ export const AddAddress = () => {
                 onChange={handleChange}
                 error={errors.street}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Postal code:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Postal code:</p>
+            <p className={styles.fieldValue}>
               <FormInput
                 name="postalCode"
                 type="text"
@@ -181,12 +169,12 @@ export const AddAddress = () => {
                 onChange={handleChange}
                 error={errors.postalCode}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Shipping:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Shipping:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="shipping"
@@ -203,12 +191,12 @@ export const AddAddress = () => {
                 disabled={!inputValues.shipping}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
 
           <div className={styles.row}>
-            <div className={styles.fieldName}>Billing:</div>
-            <div className={styles.fieldValue}>
+            <p className={styles.fieldName}>Billing:</p>
+            <p className={styles.fieldValue}>
               <input
                 type="checkbox"
                 name="billing"
@@ -225,7 +213,7 @@ export const AddAddress = () => {
                 disabled={!inputValues.billing}
                 onChange={handleChange}
               />
-            </div>
+            </p>
           </div>
           <div className={styles.row + ' ' + styles.buttonsWrapper}>
             {isAddingAddress && (
@@ -243,16 +231,7 @@ export const AddAddress = () => {
                 className="button"
                 onClick={() => {
                   setIsAddingAddress(false)
-                  setInputValues({
-                    country: '',
-                    city: '',
-                    street: '',
-                    postalCode: '',
-                    shipping: false,
-                    billing: false,
-                    defaultShipping: false,
-                    defaultBilling: false,
-                  })
+                  setInputValues(DEFAULT_INPUT_VALUES)
                   setErrors({
                     street: '',
                     city: '',
