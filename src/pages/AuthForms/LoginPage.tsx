@@ -4,7 +4,6 @@ import { useAuthPageText } from '@hooks/useAuthPageText'
 import { validateEmail, validatePassword } from '@hooks/useFormValidators'
 
 import { RegisterNav } from '@components/RegisterNav/RegisterNav'
-// import { RegisterAlt } from '@components/RegisterAlt/RegisterAlt'
 import FormInput from '@components/FormInput/FormInput'
 
 import { loginCustomer } from '@api/auth'
@@ -12,15 +11,20 @@ import { useNotification } from '@components/Notification/NotifficationContext'
 
 import styles from './AuthForm.module.scss'
 import { useAuthStore } from '@store/authStore'
+import { useCartStore } from '@store/cartStore'
+import { fetchCartData } from '@api/fetchCartData'
+import { mergeCarts } from '@api/mergeCarts'
+import { createCustomerCart } from '@api/createCustomerCart'
 
 const { main, authPage, authBlock, auth, authHint, form, button } = styles
 
-export function LoginPage() {
+export const LoginPage = () => {
   const setUser = useAuthStore((state) => state.setUser)
 
   const navigate = useNavigate()
   const { submitText } = useAuthPageText()
   const { setNotification } = useNotification()
+  const { cart, setCart } = useCartStore()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -43,31 +47,55 @@ export function LoginPage() {
     setErrors(newErrors)
 
     const hasErrors = Object.values(newErrors).some(Boolean)
+    if (hasErrors) return
 
-    if (!hasErrors) {
-      try {
-        const { firstName, lastName, email } = await loginCustomer(
-          formData.email,
-          formData.password
-        )
+    try {
+      const customer = await loginCustomer(formData.email, formData.password)
 
-        if (firstName && lastName && email) {
-          setUser({
-            firstName,
-            lastName,
-            email,
-          })
-        }
-
-        navigate('/home')
-      } catch (err) {
-        console.error(err)
-        setNotification('Invalid email or password')
-        setErrors({
-          email: 'Invalid email or password',
-          password: 'Invalid email or password',
-        })
+      if (customer) {
+        setUser(customer)
       }
+
+      navigate('/home')
+    } catch (err) {
+      console.error(err)
+      setNotification('Invalid email or password')
+      setErrors({
+        email: 'Invalid email or password',
+        password: 'Invalid email or password',
+      })
+    }
+
+    const cartData = localStorage.getItem('cart_data')
+    let userCart = null
+    const anonymousCart = cart
+
+    if (cartData && anonymousCart) {
+      try {
+        userCart = await fetchCartData()
+      } catch {
+        console.info('Customer cart not found')
+        userCart = await createCustomerCart()
+      }
+
+      if (userCart) {
+        const mergedCart = await mergeCarts(anonymousCart, userCart)
+        setCart(mergedCart)
+        setNotification('User cart and anonymous cart merged')
+        return
+      }
+    }
+
+    userCart = await fetchCartData()
+    if (userCart) {
+      setCart(userCart)
+      localStorage.setItem(
+        'cart_data',
+        JSON.stringify({
+          cartId: userCart.id,
+          versionCart: userCart.version,
+        })
+      )
     }
   }
 
@@ -100,7 +128,6 @@ export function LoginPage() {
                 onChange={handleChange}
                 error={errors.email}
               />
-
               <FormInput
                 name="password"
                 type="password"
@@ -110,15 +137,11 @@ export function LoginPage() {
                 error={errors.password}
                 className="passwordText"
               />
-
-              {/* <div className={forgetful}>Forgot password?</div> */}
-
               <button className={button} type="submit">
                 {submitText}
               </button>
             </form>
           </div>
-          {/* <RegisterAlt /> */}
         </div>
       </div>
     </main>

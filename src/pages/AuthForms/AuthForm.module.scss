@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 75px);
+  min-height: calc(100vh - 130px);
 
   @media (max-width: 995px) {
     min-height: calc(100vh - 175px);
@@ -68,20 +68,6 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .forgetful {
-    width: 300px;
-    font-size: 14px;
-    color: $main-light-color;
-    cursor: pointer;
-    text-align: right;
-    margin-bottom: 10px;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: $main-light-color-hover;
-    }
   }
 
   .button {

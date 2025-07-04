@@ -1,0 +1,123 @@
+.sortingAside {
+  display: flex;
+  width: 100%;
+  max-width: 310px;
+  height: 648px;
+  margin-top: 43px;
+  padding: 1.5rem;
+  background: $gradient;
+  border: 1px solid $main-border-color;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sortingForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.sortingFieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sortingLegend {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #222;
+}
+
+.sortingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sortingItemLink {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  transition: color 0.2s ease;
+}
+
+.sortingItemLink:hover {
+  color: $main-light-color;
+}
+
+.sortingLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.sortingLabel input[type='checkbox'] {
+  accent-color: $main-light-color;
+}
+
+.sortingLabel span {
+  color: #666;
+}
+
+.sortingActive {
+  color: $main-light-color;
+  font-weight: 600;
+}
+
+.resetBlock {
+  display: flex;
+}
+
+.resetButton,
+.resetButtonDisabled {
+  border-radius: 6px;
+  min-height: 35px;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 8px 17px;
+}
+
+.resetButton {
+  background-color: $main-light-color;
+  color: $light-background-color;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: $main-light-color-hover;
+  }
+}
+
+.resetButtonDisabled {
+  background-color: $main-light-color-transparent;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 1200px) {
+  .sortingAside {
+    margin-top: 42px;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .sortingAside {
+    margin-top: 41px;
+    padding: 0.5rem;
+  }
+
+  .resetButton,
+  .resetButtonDisabled {
+    padding: 8px 5px;
+  }
+}

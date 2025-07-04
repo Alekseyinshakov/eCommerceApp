@@ -37,7 +37,6 @@ export const registerCustomer = async (data: {
   city: string
   postalCode: string
   country: string
-
   billingStreet: string
   billingCity: string
   billingPostalCode: string
@@ -46,8 +45,6 @@ export const registerCustomer = async (data: {
   defaultBillingAddress: boolean
   useSameAddress: boolean
 }) => {
-  console.log('Registering customer', data)
-
   const addresses = data.useSameAddress
     ? [
         {
@@ -108,7 +105,7 @@ export const buildCustomerClient = (email: string, password: string) => {
       clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
       user: {
         username: email,
-        password: password,
+        password,
       },
     },
     scopes,
@@ -120,9 +117,26 @@ export const buildCustomerClient = (email: string, password: string) => {
     fetch,
   }
 
-  return new ClientBuilder()
-    .withPasswordFlow(authMiddlewareOptions)
-    .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
-    .build()
+  return (
+    new ClientBuilder()
+      .withPasswordFlow(authMiddlewareOptions)
+      .withHttpMiddleware(httpMiddlewareOptions)
+      // .withLoggerMiddleware()
+      .build()
+  )
+}
+
+export const buildCustomerClientWithToken = (accessToken: string) => {
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: import.meta.env.VITE_CTP_API_URL,
+    fetch,
+  }
+
+  return (
+    new ClientBuilder()
+      .withExistingTokenFlow(accessToken, { force: true })
+      .withHttpMiddleware(httpMiddlewareOptions)
+      // .withLoggerMiddleware()
+      .build()
+  )
 }

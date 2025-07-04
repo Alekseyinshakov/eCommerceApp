@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
 import { useAuthStore } from '@store/authStore'
 import { useEffect, useRef, useState } from 'react'
+import { useCartStore } from '@store/cartStore'
 
 const {
   headerContainer,
@@ -10,42 +11,42 @@ const {
   navItem,
   activeLink,
   rightSide,
-  search,
-  cart,
+  cartStyle,
   burgerMenu,
   open,
   centerMob,
   hederElem,
+  cartCountStyle,
 } = styles
 
-function Header() {
+const routes = [
+  { path: '/home', label: 'Home' },
+  { path: '/shop', label: 'Shop' },
+  { path: '/about', label: 'About' },
+  { path: '/plant-care', label: 'Plant Care' },
+]
+
+const Header = () => {
   const navigate = useNavigate()
   const setUser = useAuthStore((state) => state.setUser)
+  const { cart, setCart } = useCartStore()
+
+  const cartCount = cart?.lineItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
 
   const email = useAuthStore((state) => state.user?.email)
 
   const handleLogout = () => {
     setUser(null)
+    setCart(null)
+    localStorage.removeItem('cart_data')
     navigate('/log-in')
   }
 
   const [isOpen, setIsOpen] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
   const navRef = useRef<HTMLElement>(null)
-
-  const handleToggleMenu = () => {
-    if (isOpen) {
-      setIsOpen(false)
-      setTimeout(() => {
-        setIsMounted(false)
-      }, 300)
-    } else {
-      setIsMounted(true)
-      setTimeout(() => {
-        setIsOpen(true)
-      }, 10)
-    }
-  }
 
   useEffect(() => {
     if (isOpen) {
@@ -63,7 +64,6 @@ function Header() {
     const handleResize = () => {
       if (window.innerWidth > 995) {
         setIsOpen(false)
-        setIsMounted(false)
         document.body.style.overflow = 'auto'
       }
     }
@@ -82,9 +82,6 @@ function Header() {
         window.innerWidth <= 995
       ) {
         setIsOpen(false)
-        setTimeout(() => {
-          setIsMounted(false)
-        }, 300)
       }
     }
 
@@ -99,19 +96,23 @@ function Header() {
       <div className={`container ${headerContainer}`}>
         <div className={logo}>
           <NavLink to="/home">
-            <img src="images/Logo.svg" alt="logo" width={150} height={35} />
+            <img src="images/Logo.svg" alt="logo" />
           </NavLink>
         </div>
         <div className={centerMob}>
           <div className={hederElem}>
             <div className={rightSide}>
-              <button className={search}></button>
-              <Link to="/cart" className={cart}>
+              <Link to="/cart" className={cartStyle}>
                 <img src="images/icons/cart-icon.svg" alt="cart" />
+                {cartCount ? (
+                  <span className={cartCountStyle}>{cartCount}</span>
+                ) : null}
               </Link>
               {email ? (
                 <>
-                  <div className={styles.userEmail}>{email}</div>
+                  <Link to="/profile" className={styles.userEmail}>
+                    {email}
+                  </Link>
                   <button onClick={handleLogout} className="button btn-logout">
                     Logout
                   </button>
@@ -128,49 +129,26 @@ function Header() {
               )}
             </div>
             <div>
-              <nav
-                ref={navRef}
-                className={`${isMounted ? styles.mounted : ''} ${isOpen ? open : ''}`}
-              >
+              <nav ref={navRef} className={`${isOpen ? open : ''}`}>
                 <ul className={navList}>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/home"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Home
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/shop"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Shop
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/about"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      About
-                    </NavLink>
-                  </li>
-                  <li className={navItem}>
-                    <NavLink
-                      className={({ isActive }) => (isActive ? activeLink : '')}
-                      to="/plant-care"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Plant Care
-                    </NavLink>
-                  </li>
+                  {routes.map(({ path, label }) => (
+                    <li key={label} className={navItem}>
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? activeLink : ''
+                        }
+                        to={path}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {label}
+                      </NavLink>
+                    </li>
+                  ))}
                 </ul>
-                <button className={burgerMenu} onClick={handleToggleMenu}>
+                <button
+                  className={burgerMenu}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
                   <span></span>
                 </button>
               </nav>

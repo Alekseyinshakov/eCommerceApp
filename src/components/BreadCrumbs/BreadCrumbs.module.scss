@@ -1,0 +1,14 @@
+.breadCrumbs {
+  color: $title-color;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  margin: 20px 0;
+  font-weight: 700;
+  text-transform: capitalize;
+  a:hover {
+    color: $main-light-color-hover;
+  }
+}
+.lastCrumb {
+  color: $main-light-color;
+}

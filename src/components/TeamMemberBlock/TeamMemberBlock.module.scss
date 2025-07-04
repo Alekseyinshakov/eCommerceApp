@@ -1,0 +1,182 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 420px;
+  max-height: 500px;
+
+  outline: 1px solid $main-light-color;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  text-align: center;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+
+  cursor: pointer;
+  overflow: hidden;
+  scrollbar-gutter: stable both-edges;
+
+  &.hovered,
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  &.active {
+    @extend .hovered;
+    transform: scale(1.03);
+    overflow-y: auto;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px $main-border-color;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      overflow: hidden;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 8px 0;
+      border-radius: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $main-light-color;
+      border-radius: 2px;
+    }
+  }
+}
+
+.extraContent {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.role {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.bio {
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.link {
+  display: inline-block;
+  color: $main-light-color;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.contribution {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  gap: 1rem;
+}
+
+.arrow {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 0.3rem 0.7rem;
+  transition: color 0.2s;
+}
+
+.arrow:hover {
+  color: #000;
+}
+
+.review {
+  font-style: italic;
+  font-size: 1rem;
+  max-width: 400px;
+  color: #555;
+}
+
+.teamCollaboration {
+  margin-top: 2rem;
+}
+
+.tip {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: $main-light-color-hover;
+}
+
+.title {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 480px) {
+  .block {
+    width: 340px;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .photo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .extraContent {
+    gap: 1rem;
+  }
+
+  .bio {
+    font-size: 1.1rem;
+  }
+
+  .tip {
+    margin-top: 35px;
+  }
+
+  .carousel {
+    gap: 0px;
+  }
+}

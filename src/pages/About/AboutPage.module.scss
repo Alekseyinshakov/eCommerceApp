@@ -1,3 +1,73 @@
+.about {
+  padding: 2rem 1rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.margin {
+  margin-top: 40px;
+}
+
 .title {
-  margin-top: 20px;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.school {
+  margin: 10px 0;
+}
+
+.logoBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+  background: url('/images/logo-rsschool3.png') no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  transition: scale 0.3s;
+
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .block {
+    width: 340px;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .photo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .extraContent {
+    gap: 1rem;
+  }
 }
