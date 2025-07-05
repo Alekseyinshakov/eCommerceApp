@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { SortingList } from '@components/SortingList/SortingList'
 import { vi } from 'vitest'
-import * as categoryModule from '@store/fetchCategorySlug'
+import * as categoryModule from '@api/fetchCategorySlug'
 
 vi.mock('@components/PriceRange/PriceRange', () => ({
   PriceRange: () => <div data-testid="price-range">PriceRange</div>,

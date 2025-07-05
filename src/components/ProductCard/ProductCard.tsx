@@ -3,7 +3,7 @@ import styles from './ProductCard.module.scss'
 import ProductPrice from '@components/ProductPrice/ProductPrice'
 import DiscountElement from '@components/DiscountElement/DiscountElement'
 import { useState } from 'react'
-import { fetchCategorySlug } from '@store/fetchCategorySlug'
+import { fetchCategorySlug } from '@api/fetchCategorySlug'
 import CartActions from '@components/AddToCart/CartActions'
 const { mainBlock, img, text, nameItem } = styles
 

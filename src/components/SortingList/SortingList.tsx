@@ -6,7 +6,7 @@ import styles from './SortingList.module.scss'
 
 import type { Category } from '@store/types'
 import { useProductStore } from '@store/productStore'
-import { fetchCategorySlug } from '@store/fetchCategorySlug'
+import { fetchCategorySlug } from '@api/fetchCategorySlug'
 
 type SortingListProps = {
   categories: Category[]

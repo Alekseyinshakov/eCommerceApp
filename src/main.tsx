@@ -15,7 +15,7 @@ import { CartPage } from '@pages/Cart/CartPage'
 import RedirectIfAuth from '@components/Redirects/RedirectIfAuth'
 import { ProfilePage } from '@pages/Profile/ProfilePage'
 import RedirectNonAuthToLogin from '@components/Redirects/RedirectNonAuthToLogin.tsx'
-import ProductDetail from '@store/ProductDetail'
+import ProductDetailContainer from '@pages/Shop/ProductDetailContainer'
 import ShopLayout from '@pages/Shop/ShopLayout'
 
 const router = createHashRouter([
@@ -68,7 +68,7 @@ const router = createHashRouter([
           },
           {
             path: 'category/:slugCategory/:slug',
-            element: <ProductDetail />,
+            element: <ProductDetailContainer />,
             handle: {
               breadcrumb: ({
                 slugCategory,
@@ -87,7 +87,7 @@ const router = createHashRouter([
           },
           {
             path: ':slug',
-            element: <ProductDetail />,
+            element: <ProductDetailContainer />,
             handle: {
               breadcrumb: ({ slug }: { slug: string }) => slug,
             },

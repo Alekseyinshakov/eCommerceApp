@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ProductCard } from '@components/ProductCard/ProductCard'
 import { vi } from 'vitest'
 import * as ReactRouter from 'react-router-dom'
-import * as categoryModule from '@store/fetchCategorySlug'
+import * as categoryModule from '@api/fetchCategorySlug'
 
 const mockedNavigate = vi.fn()
 
