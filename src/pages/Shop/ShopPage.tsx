@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import type { Category } from '@store/types'
+import type { Category } from 'types'
 
 import { useProductStore } from '@store/productStore'
 import { useCategoriesStore } from '@store/categoriesStore'
