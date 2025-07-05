@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { apiRoot } from '@api/apiClient'
-import type { Category } from '@store/types'
+import type { Category } from 'types'
 
 type CategoriesStore = {
   loading: boolean
