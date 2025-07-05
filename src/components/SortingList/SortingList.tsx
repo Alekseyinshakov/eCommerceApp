@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { PriceRange } from '@components/PriceRange/PriceRange'
 import styles from './SortingList.module.scss'
 
-import type { Category } from '@store/types'
+import type { Category } from 'types'
 import { useProductStore } from '@store/productStore'
 import { fetchCategorySlug } from '@api/fetchCategorySlug'
 
