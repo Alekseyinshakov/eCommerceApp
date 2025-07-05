@@ -1,6 +1,6 @@
 # eCommerce application
 
-[Deploy](https://pushnili-e-commerce.netlify.app/)
+[Deploy](https://green-shop2025.netlify.app/)
 
 ## About The Project
 
