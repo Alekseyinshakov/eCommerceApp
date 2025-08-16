@@ -55,3 +55,9 @@ export type TeamMemberBlockProps = {
   isActive: boolean
   onClick: () => void
 }
+
+export interface Category {
+  id: string
+  label: string
+  count: number
+}

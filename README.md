@@ -1,6 +1,6 @@
 # Green Shop application
 
-[Deploy](https://pushnili-e-commerce.netlify.app/home)
+[Deploy](https://pushnili-e-commerce.netlify.app/)
 
 ## About The Project
 
