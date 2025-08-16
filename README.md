@@ -1,4 +1,4 @@
-# eCommerce application
+# Green Shop application
 
 [Deploy](https://pushnili-e-commerce.netlify.app/home)
 
