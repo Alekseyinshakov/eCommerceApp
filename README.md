@@ -105,7 +105,7 @@ To get a local copy up and running follow these simple steps.
 3. Run the application in development mode: <pre> `npm run dev ` </pre>
 4. After launching, go to the address in your browser: http://localhost:5173 (the port may differ - see in the terminal).
 
-## Available commands
+## Available commands:
 
 - `npm run build `- Assembles the project for production.
 - `npm run preview `- Local preview of production build.
