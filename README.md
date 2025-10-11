@@ -107,7 +107,7 @@ To get a local copy up and running follow these simple steps.
 
 ## Available commands
 
-- `npm run build ` - Assembles the project for production.
+- `npm run build `- Assembles the project for production.
 - `npm run preview `- Local preview of production build.
 - `npm run lint `- Runs ESLint to analyze code quality.
 - `npm run format `- Autoformat the entire project with Prettier.
