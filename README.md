@@ -98,7 +98,7 @@ The purpose of this work is to strengthen the knowledge and skills acquired duri
 
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
+To get a local copy up and running follow these simple steps..
 
 1. Clone the repo: <pre> `git clone https://github.com/Alekseyinshakov/eCommerceApp.git ` </pre>
 2. Install NPM packages: <pre> `npm install ` </pre>
