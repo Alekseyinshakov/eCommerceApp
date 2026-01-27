@@ -11,7 +11,7 @@ eCommercial is an application developed by a team of beginner frontend developer
 under the guidance of a mentor: [Erkhan Denis](https://github.com/ErkhanDV) as final part of the frontend course at RS-School.
 The purpose of this work is to strengthen the knowledge and skills acquired during the course and to gain skills in working on a project in a team.
 
-## Tools and technologies
+## Tools and technologies:
 
 <table>
   <tr>
