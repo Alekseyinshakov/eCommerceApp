@@ -1,4 +1,4 @@
-# Green Shop application
+# GreenShop application
 
 [Deploy](https://pushnili-e-commerce.netlify.app/)
 
