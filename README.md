@@ -2,7 +2,7 @@
 
 [Deploy](https://pushnili-e-commerce.netlify.app/)
 
-## About The Project
+## About the project
 
 eCommercial is an application developed by a team of beginner frontend developers:
 [Alex Alonkin](https://github.com/nevox-alexxx),
