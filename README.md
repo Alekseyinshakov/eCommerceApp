@@ -4,12 +4,13 @@
 
 ## About the project
 
-eCommercial is an application developed by a team of beginner frontend developers:
+Greenshop is an application developed by a team of beginner frontend developers:
 [Alex Alonkin](https://github.com/nevox-alexxx),
 [Inna Fedorova](https://github.com/IFMA25),
 [Alexey Inshakov](https://github.com/Alekseyinshakov)
 under the guidance of a mentor: [Erkhan Denis](https://github.com/ErkhanDV) as final part of the frontend course at RS-School.
 The purpose of this work is to strengthen the knowledge and skills acquired during the course and to gain skills in working on a project in a team.
+The application functions as a fully features e-commerce store, powered by the **commercetools** cloud platform for backend management, product cataloging, and business logic.
 
 ## Tools and technologies:
 
